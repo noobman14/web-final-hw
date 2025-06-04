@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动态详情 - 校园生活交友平台</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="post_detail.css">
+</head>
+
+<body>
+    <header>
+        <div class="logo">校园生活交友平台</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">首页</a></li>
+                <li><a href="publish.html">发布动态</a></li>
+                <li><a href="profile.html">个人主页</a></li>
+                <li><a href="login.html">登录/注册</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="post-detail-container">
+        <div id="postDetailContent">
+            <!-- Post details will be loaded here by JavaScript -->
+            <p>加载中...</p>
+        </div>
+
+        <div class="comments-section-detail">
+            <h3>评论</h3>
+            <div id="commentsList">
+                <!-- Comments will be loaded here -->
+            </div>
+            <div class="add-comment-detail">
+                <input type="text" id="commentInputDetail" placeholder="添加评论...">
+                <button id="submitCommentDetail">评论</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 校园生活交友平台</p>
+    </footer>
+
+    <script src="data.js"></script>
+    <script src="post_detail.js"></script>
+</body>
+
+</html>

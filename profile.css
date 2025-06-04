@@ -1,0 +1,228 @@
+.profile-container {
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    padding-bottom: 25px;
+    border-bottom: 1px solid #eef2f5;
+    margin-bottom: 25px;
+}
+
+.profile-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 30px;
+    border: 4px solid #007bff;
+    padding: 3px;
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
+}
+
+.profile-info {
+    flex-grow: 1;
+}
+
+.profile-info h2 {
+    margin: 0 0 8px 0;
+    color: #2c3e50;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.profile-info p {
+    color: #666;
+    margin: 0 0 15px 0;
+    line-height: 1.6;
+    font-size: 15px;
+}
+
+.profile-stats {
+    display: flex;
+    gap: 25px;
+    margin-bottom: 15px;
+}
+
+.profile-stats span {
+    color: #555;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.profile-stats span strong {
+    color: #2c3e50;
+    font-size: 18px;
+    margin-right: 5px;
+}
+
+.profile-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+#followButton,
+#editProfileButton {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#followButton.following {
+    background-color: #6c757d;
+}
+
+#followButton:hover,
+#editProfileButton:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+#followButton.following:hover {
+    background-color: #5a6268;
+}
+
+.profile-interests,
+.profile-posts {
+    margin-bottom: 30px;
+}
+
+.profile-interests h3,
+.profile-posts h3 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #eef2f5;
+    padding-bottom: 10px;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+#interestsList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+#interestsList span {
+    background-color: #e7f3ff;
+    color: #007bff;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#interestsList span:hover {
+    background-color: #d0e8ff;
+    color: #0056b3;
+}
+
+
+/* Styling for user's posts, similar to homepage feed posts */
+
+.profile-posts .post {
+    background-color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.profile-posts .post:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.profile-posts .post h3 {
+    color: #2c3e50;
+    margin-top: 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.profile-posts .post h3 a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.profile-posts .post h3 a:hover {
+    color: #007bff;
+}
+
+.profile-posts .post p {
+    color: #333;
+    line-height: 1.7;
+    margin-bottom: 15px;
+}
+
+.profile-posts .post img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    display: block;
+}
+
+.profile-posts .post-meta {
+    font-size: 13px;
+    color: #999;
+    margin-top: 10px;
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end;
+}
+
+
+/* Responsive adjustments */
+
+@media (max-width: 768px) {
+    .profile-container {
+        margin: 20px 15px;
+        padding: 25px;
+    }
+    .profile-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    .profile-avatar {
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+    .profile-info {
+        text-align: center;
+    }
+    .profile-stats {
+        justify-content: center;
+    }
+    .profile-actions {
+        justify-content: center;
+    }
+    .profile-interests h3,
+    .profile-posts h3 {
+        text-align: center;
+    }
+    #interestsList {
+        justify-content: center;
+    }
+    .profile-posts .post-meta {
+        justify-content: center;
+    }
+}

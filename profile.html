@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户主页 - 校园生活交友平台</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="profile.css">
+</head>
+
+<body>
+    <header>
+        <div class="logo">校园生活交友平台</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">首页</a></li>
+                <li><a href="publish.html">发布动态</a></li>
+                <li><a href="#">个人主页</a></li>
+                <li><a href="login.html">登录/注册</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="profile-container">
+        <div class="profile-header">
+            <img src="https://via.placeholder.com/100" alt="Avatar" class="profile-avatar" id="profileAvatar">
+            <div class="profile-info">
+                <h2 id="profileNickname">加载中...</h2>
+                <p id="profileBio"></p>
+                <div class="profile-stats">
+                    <span>关注: <span id="followingCount">0</span></span>
+                    <span>粉丝: <span id="followersCount">0</span></span>
+                </div>
+                <div class="profile-actions">
+                    <button id="followButton">关注</button>
+                    <button id="editProfileButton">编辑个人资料</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-interests">
+            <h3>兴趣标签</h3>
+            <div id="interestsList"></div>
+        </div>
+
+        <div class="profile-posts">
+            <h3>TA的动态</h3>
+            <div class="feed" id="userPostsFeed">
+                <!-- User's posts will be loaded here -->
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 校园生活交友平台</p>
+    </footer>
+
+    <script src="profile.js"></script>
+</body>
+
+</html>
