@@ -42,16 +42,35 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (isValid) {
-            // Save studentId if "Remember Me" is checked
-            if (rememberMeCheckbox.checked) {
-                localStorage.setItem('rememberedStudentId', studentIdInput.value);
-            } else {
-                localStorage.removeItem('rememberedStudentId');
+            // Verify user credentials
+            let users = [];
+            try {
+                users = getUsers();
+            } catch (error) {
+                console.error('Error getting users:', error);
+                alert('加载用户信息失败，请稍后再试。');
+                return;
             }
 
-            alert('登录成功！');
-            // In a real application, you would authenticate with a backend
-            window.location.href = 'index.html'; // Redirect to homepage after successful login
+            const user = users.find(u => u.studentId === studentIdInput.value.trim() && u.password === passwordInput.value.trim());
+
+            if (user) {
+                // Save studentId if "Remember Me" is checked
+                if (rememberMeCheckbox.checked) {
+                    localStorage.setItem('rememberedStudentId', studentIdInput.value);
+                } else {
+                    localStorage.removeItem('rememberedStudentId');
+                }
+
+                // Set login status
+                localStorage.setItem('loggedInUser', user.studentId);
+                localStorage.setItem('userNickname', user.nickname);
+
+                alert('登录成功！');
+                window.location.href = 'index.html'; // Redirect to homepage after successful login
+            } else {
+                alert('学号或密码错误，请重试。');
+            }
         } else {
             alert('请检查您的输入。');
         }

@@ -17,14 +17,18 @@ function initializeData() {
                 content: '今天学校的图书馆又扩建了，环境更好了！学习氛围一级棒！#图书馆 #学习日常',
                 image: '',
                 likes: 35,
-                comments: [],
+                comments: [{
+                    author: 'Bob',
+                    content: '真不错！我也经常去图书馆学习。',
+                    timestamp: '2023-10-27 14:30'
+                }],
                 timestamp: '2023-10-27 14:00'
             },
             {
                 id: 2,
                 authorId: '20230002', // Link to Bob
-                content: '参加了校运动会，虽然没有拿到奖牌，但体验感十足，青春就该这样！#运动会 #青春',
-                image: 'https://via.placeholder.com/400x200?text=Sports+Day',
+                content: '玩了赛博朋克2077，太好玩啦！ #游戏 #青春',
+                image: 'pic/default.png',
                 likes: 50,
                 comments: [],
                 timestamp: '2023-10-26 10:00'
@@ -90,6 +94,11 @@ function updateUser(updatedUser) {
 function getPostsByAuthorId(authorId) {
     const posts = getPosts();
     return posts.filter(post => post.authorId === authorId);
+}
+
+// Function to get current logged-in user
+function getLoggedInUser() {
+    return localStorage.getItem('loggedInUser');
 }
 
 // Initialize data when this script is loaded

@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+            // Removed updateNavigation as it's now in common.js
             const feedSection = document.querySelector('.feed');
 
             // Function to render posts
@@ -21,11 +22,11 @@ document.addEventListener('DOMContentLoaded', () => {
                                 const postElement = document.createElement('div');
                                 postElement.classList.add('post');
 
-                                let postImage = post.image ? `<img src="${post.image}" alt="Post Image">` : '';
+                                let postImage = post.image ? `<img src="${post.image}" alt="Post Image" onerror="this.onerror=null; this.src='pic/default.png';">` : '';
 
                                 postElement.innerHTML = `
                 <div class="post-header">
-                    <img src="${author ? author.avatar : 'https://via.placeholder.com/50'}" alt="Avatar" class="post-avatar">
+                    <img src="${author ? author.avatar : 'https://via.placeholder.com/50'}" alt="Avatar" class="post-avatar" onerror="this.onerror=null; this.src='pic/default.png';">
                     <h3><a href="profile.html?id=${post.authorId}">${author ? author.nickname : '未知用户'}</a></h3>
                 </div>
                 <p><a href="post_detail.html?id=${post.id}">${post.content}</a></p>
@@ -51,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.like-button').forEach(button => {
             button.addEventListener('click', (e) => {
                 const postId = parseInt(e.target.dataset.postId);
-                handleLike(postId);
+                handleLike(postId, renderPosts); // Pass renderPosts as callback
             });
         });
 
@@ -61,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const commentInput = document.querySelector(`.comment-input[data-post-id="${postId}"]`);
                 const commentText = commentInput.value.trim();
                 if (commentText) {
-                    handleAddComment(postId, commentText);
+                    handleAddComment(postId, commentText, (id, comments) => renderComments(`comments-${id}`, comments)); // Pass renderComments as callback
                     commentInput.value = ''; // Clear input
                 }
             });
@@ -70,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.comment-button').forEach(button => {
             button.addEventListener('click', (e) => {
                 const postId = parseInt(e.target.dataset.postId);
-                toggleComments(postId);
+                toggleComments(`comments-${postId}`); // Pass commentsContainerId
             });
         });
 
@@ -78,78 +79,13 @@ document.addEventListener('DOMContentLoaded', () => {
             button.addEventListener('click', (e) => {
                 const postId = parseInt(e.target.dataset.postId);
                 if (confirm('确定要删除这条动态吗？')) {
-                    handleDeletePost(postId);
+                    handleDeletePost(postId, renderPosts); // Pass renderPosts as callback
                 }
             });
         });
 
         // Render all comments initially (or only when clicked)
-        posts.forEach(post => renderComments(post.id, post.comments));
-    };
-
-    // Get current logged-in user (mocking with localStorage)
-    const getLoggedInUser = () => {
-        return localStorage.getItem('loggedInUser'); // Assuming 'loggedInUser' stores the student ID
-    };
-
-    // Handle post deletion
-    const handleDeletePost = (postId) => {
-        let posts = getPosts();
-        // Filter out the post to be deleted
-        posts = posts.filter(post => post.id !== postId);
-        savePosts(posts);
-        renderPosts(); // Re-render to update the feed
-        alert('动态已删除。');
-    };
-
-    // Handle like functionality
-    const handleLike = (postId) => {
-        let posts = getPosts();
-        const post = posts.find(p => p.id === postId);
-        if (post) {
-            post.likes++;
-            savePosts(posts);
-            renderPosts(); // Re-render to update like count
-        }
-    };
-
-    // Handle adding a comment
-    const handleAddComment = (postId, commentText) => {
-        let posts = getPosts();
-        const post = posts.find(p => p.id === postId);
-        if (post) {
-            const currentUser = getLoggedInUser(); 
-            const author = getUserByStudentId(currentUser || 'Guest'); 
-            const newComment = {
-                author: author ? author.nickname : '游客',
-                content: commentText,
-                timestamp: new Date().toLocaleString()
-            };
-            post.comments.push(newComment);
-            savePosts(posts);
-            renderComments(postId, post.comments); // Re-render comments for this post
-        }
-    };
-
-    // Render comments for a specific post
-    const renderComments = (postId, comments) => {
-        const commentsSection = document.getElementById(`comments-${postId}`);
-        commentsSection.innerHTML = ''; // Clear existing comments
-        comments.forEach(comment => {
-            const commentElement = document.createElement('div');
-            commentElement.classList.add('comment');
-            commentElement.innerHTML = `
-                <p><strong>${comment.author}</strong>: ${comment.content}</p>
-                <span>${comment.timestamp}</span>
-            `;
-            commentsSection.appendChild(commentElement);
-        });
-    };
-
-    // Toggle comments section visibility
-    const toggleComments = (postId) => {
-        const commentsSection = document.getElementById(`comments-${postId}`);
-        commentsSection.style.display = commentsSection.style.display === 'block' ? 'none' : 'block';
+        posts.forEach(post => renderComments(`comments-${post.id}`, post.comments));
     };
 
     // Initial render of posts when the page loads

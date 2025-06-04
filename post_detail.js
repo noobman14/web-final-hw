@@ -4,6 +4,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const commentInputDetail = document.getElementById('commentInputDetail');
     const submitCommentDetail = document.getElementById('submitCommentDetail');
 
+    // Check if user is logged in
+    const checkLogin = () => {
+        const loggedInUser = localStorage.getItem('loggedInUser');
+        if (!loggedInUser) {
+            postDetailContent.innerHTML = '<p>请先登录后再查看动态详情。</p>';
+            commentsList.innerHTML = '';
+            commentInputDetail.style.display = 'none';
+            submitCommentDetail.style.display = 'none';
+            return false;
+        }
+        return true;
+    };
+
     // Function to get post ID from URL
     const getPostIdFromUrl = () => {
         const params = new URLSearchParams(window.location.search);
@@ -12,6 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to render a single post detail
     const renderPostDetail = (postId) => {
+        if (!checkLogin()) return;
+
         const posts = getPosts();
         const post = posts.find(p => p.id === postId);
 
