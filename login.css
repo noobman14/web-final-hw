@@ -1,4 +1,11 @@
+/*
+ * 登录页面样式表
+ * 负责登录表单的布局、美观、响应式适配等视觉效果
+ * 设计理念：简洁、现代、易用，适配不同屏幕
+ */
+
 .login-container {
+    /* 主要容器，居中显示，白色背景，圆角和阴影提升层次感 */
     max-width: 550px;
     margin: 50px auto;
     padding: 35px;
@@ -8,6 +15,7 @@
 }
 
 .login-container h2 {
+    /* 标题居中，深色字体，突出显示 */
     text-align: center;
     color: #2c3e50;
     margin-bottom: 30px;
@@ -16,10 +24,12 @@
 }
 
 .form-group {
+    /* 每个表单项的间距 */
     margin-bottom: 20px;
 }
 
 .form-group label {
+    /* 标签样式，增强可读性 */
     display: block;
     margin-bottom: 8px;
     color: #555;
@@ -28,8 +38,8 @@
 
 .form-group input[type="text"],
 .form-group input[type="password"] {
+    /* 输入框样式，圆角、内边距、过渡动画 */
     width: calc(100% - 24px);
-    /* Adjust for padding */
     padding: 12px;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
@@ -38,18 +48,21 @@
 }
 
 .form-group input:focus {
+    /* 输入聚焦时高亮边框和阴影，提升交互体验 */
     border-color: #007bff;
     outline: none;
     box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
 }
 
 .form-group input[type="checkbox"]+label {
+    /* 复选框后标签样式 */
     display: inline;
     margin-left: 5px;
     font-weight: normal;
 }
 
 .error-message {
+    /* 错误提示信息，红色字体，适当缩小字号 */
     color: #e74c3c;
     font-size: 13px;
     margin-top: 5px;
@@ -57,6 +70,7 @@
 }
 
 .form-options {
+    /* 表单选项区，左右分布，适配小屏 */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -65,6 +79,7 @@
 }
 
 .form-options a {
+    /* 链接样式，蓝色高亮，悬停变色 */
     color: #007bff;
     text-decoration: none;
     font-weight: 600;
@@ -77,6 +92,7 @@
 }
 
 button[type="submit"] {
+    /* 提交按钮样式，蓝色背景，圆角，交互动画 */
     width: 100%;
     padding: 15px;
     background-color: #007bff;
@@ -90,11 +106,13 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
+    /* 按钮悬停时变深色并微微上移，增强反馈 */
     background-color: #0056b3;
     transform: translateY(-2px);
 }
 
 .register-prompt {
+    /* 注册提示文字，居中显示 */
     text-align: center;
     margin-top: 25px;
     font-size: 15px;
@@ -102,6 +120,7 @@ button[type="submit"]:hover {
 }
 
 .register-prompt a {
+    /* 注册链接样式，蓝色高亮，悬停变色 */
     color: #007bff;
     text-decoration: none;
     font-weight: 600;
@@ -117,6 +136,7 @@ button[type="submit"]:hover {
 /* Responsive adjustments */
 
 @media (max-width: 600px) {
+    /* 移动端适配：缩小边距、字体和按钮尺寸，表单选项竖排，提升小屏体验 */
     .login-container {
         margin: 30px 15px;
         padding: 25px;

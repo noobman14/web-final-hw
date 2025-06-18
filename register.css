@@ -1,4 +1,11 @@
+/*
+ * 注册页面样式表
+ * 负责注册表单的布局、美观、响应式适配等视觉效果
+ * 设计理念：简洁、现代、易用，适配不同屏幕
+ */
+
 .register-container {
+    /* 主要容器，居中显示，白色背景，圆角和阴影提升层次感 */
     max-width: 550px;
     margin: 50px auto;
     padding: 35px;
@@ -8,6 +15,7 @@
 }
 
 .register-container h2 {
+    /* 标题居中，深色字体，突出显示 */
     text-align: center;
     color: #2c3e50;
     margin-bottom: 30px;
@@ -16,10 +24,12 @@
 }
 
 .form-group {
+    /* 每个表单项的间距 */
     margin-bottom: 20px;
 }
 
 .form-group label {
+    /* 标签样式，增强可读性 */
     display: block;
     margin-bottom: 8px;
     color: #555;
@@ -30,6 +40,7 @@
 .form-group input[type="password"],
 .form-group input[type="url"],
 .form-group textarea {
+    /* 输入框和文本域样式，圆角、内边距、过渡动画 */
     width: calc(100% - 24px);
     /* Adjust for padding */
     padding: 12px;
@@ -40,18 +51,21 @@
 }
 
 .form-group textarea {
+    /* 文本域可垂直缩放，最小高度100px */
     resize: vertical;
     min-height: 100px;
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
+    /* 输入聚焦时高亮边框和阴影，提升交互体验 */
     border-color: #007bff;
     outline: none;
     box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
 }
 
 .error-message {
+    /* 错误提示信息，红色字体，适当缩小字号 */
     color: #e74c3c;
     font-size: 13px;
     margin-top: 5px;
@@ -59,6 +73,7 @@
 }
 
 button[type="submit"] {
+    /* 提交按钮样式，蓝色背景，圆角，交互动画 */
     width: 100%;
     padding: 15px;
     background-color: #007bff;
@@ -72,6 +87,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
+    /* 按钮悬停时变深色并微微上移，增强反馈 */
     background-color: #0056b3;
     transform: translateY(-2px);
 }
@@ -80,6 +96,7 @@ button[type="submit"]:hover {
 /* Responsive adjustments for smaller screens */
 
 @media (max-width: 600px) {
+    /* 移动端适配：缩小边距、字体和按钮尺寸，提升小屏体验 */
     .register-container {
         margin: 30px 15px;
         padding: 25px;

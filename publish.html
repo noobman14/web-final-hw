@@ -1,17 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
+<!-- 
+    校园生活交友平台 - 发布动态页面
+    功能：用户发布新动态、图片上传、标签添加
+    包含：动态内容编辑、图片上传预览、话题标签
+-->
 
 <head>
     <meta charset="UTF-8">
+    <!-- 响应式视口设置，确保在移动设备上正常显示 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>发布动态 - 校园生活交友平台</title>
+    <!-- 引入全局样式和发布页面专用样式 -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="publish.css">
 </head>
 
 <body>
+    <!-- 页面头部区域 -->
     <header>
+        <!-- 网站Logo/名称 -->
         <div class="logo">校园生活交友平台</div>
+        <!-- 导航菜单 -->
         <nav>
             <ul>
                 <li><a href="index.html">首页</a></li>
@@ -22,37 +32,58 @@
         </nav>
     </header>
 
+    <!-- 主要内容区域 - 发布动态表单 -->
     <main class="publish-container">
+        <!-- 页面标题 -->
         <h2>发布新动态</h2>
+        <!-- 发布动态表单 -->
         <form id="publishForm">
+            <!-- 动态内容输入组 -->
             <div class="form-group">
                 <label for="postContent">内容:</label>
+                <!-- 动态内容文本域，支持多行输入 -->
                 <textarea id="postContent" name="postContent" rows="10" required></textarea>
+                <!-- 内容错误提示信息 -->
                 <span class="error-message" id="postContentError"></span>
             </div>
+            <!-- 图片上传组 -->
             <div class="form-group">
                 <label for="imageUpload">上传图片:</label>
+                <!-- 图片文件选择器，限制为图片格式 -->
                 <input type="file" id="imageUpload" name="imageUpload" accept="image/*">
+                <!-- 图片预览容器 -->
                 <div class="image-preview" id="imagePreview"></div>
             </div>
+            <!-- 图片URL输入组 -->
             <div class="form-group">
                 <label for="imageUrl">或图片链接:</label>
+                <!-- 图片URL输入框，提供备选方案 -->
                 <input type="url" id="imageUrl" name="imageUrl" placeholder="输入图片URL">
             </div>
+            <!-- 话题标签输入组 -->
             <div class="form-group">
                 <label for="tags">话题标签 (可选，逗号分隔):</label>
+                <!-- 标签输入框，支持多个标签 -->
                 <input type="text" id="tags" name="tags" placeholder="例如：#校园日常, #学习">
             </div>
+            <!-- 发布提交按钮 -->
             <button type="submit">发布</button>
         </form>
     </main>
 
+    <!-- 页面底部 -->
     <footer>
-        <p>&copy; 2023 校园生活交友平台</p>
+        <p>&copy; 2025 校园生活交友平台</p>
     </footer>
 
+    <!-- JavaScript文件引入 -->
+    <!-- 注意：引入顺序很重要，依赖关系为 data.js -> common.js -> publish.js -->
+
+    <!-- 数据管理模块：提供动态数据存储功能 -->
     <script src="data.js"></script>
+    <!-- 公共功能模块：提供导航栏等通用功能 -->
     <script src="common.js"></script>
+    <!-- 发布逻辑模块：处理动态发布和图片上传功能 -->
     <script src="publish.js"></script>
 </body>
 
