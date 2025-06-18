@@ -72,10 +72,19 @@
 .image-preview img {
     max-width: 160px;
     max-height: 160px;
+    width: auto;
+    height: auto;
     object-fit: cover;
     border-radius: 8px;
     border: 1px solid #ddd;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.image-preview img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .error-message {
@@ -123,5 +132,19 @@ button[type="submit"]:hover {
     button[type="submit"] {
         font-size: 16px;
         padding: 12px;
+    }
+    /* 移动端图片预览调整 */
+    .image-preview img {
+        max-width: 120px;
+        /* 移动端减少预览图片大小 */
+        max-height: 120px;
+        /* 移动端减少预览图片大小 */
+    }
+    /* 移动端图片预览悬停效果调整 */
+    .image-preview img:hover {
+        transform: none;
+        /* 移动端禁用放大效果，避免触摸设备上的问题 */
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        /* 保持原有阴影 */
     }
 }

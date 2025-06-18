@@ -174,11 +174,21 @@
 
 .profile-posts .post img {
     max-width: 100%;
+    max-height: 400px;
+    width: auto;
     height: auto;
     border-radius: 8px;
     margin-top: 15px;
     margin-bottom: 15px;
     display: block;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-posts .post img:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .profile-posts .post-meta {
@@ -224,5 +234,21 @@
     }
     .profile-posts .post-meta {
         justify-content: center;
+    }
+    /* 个人资料页面动态图片响应式调整 */
+    .profile-posts .post img {
+        max-height: 300px;
+        /* 移动端最大高度限制为300px，节省屏幕空间 */
+        margin-top: 10px;
+        /* 减少顶部外边距 */
+        margin-bottom: 10px;
+        /* 减少底部外边距 */
+    }
+    /* 移动端图片悬停效果调整 */
+    .profile-posts .post img:hover {
+        transform: none;
+        /* 移动端禁用放大效果，避免触摸设备上的问题 */
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        /* 减少阴影强度 */
     }
 }
