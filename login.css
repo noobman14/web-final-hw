@@ -28,6 +28,20 @@
     margin-bottom: 20px;
 }
 
+#password-wrapper {
+  position: relative;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px; 
+  top: 50%;
+  transform: translateY(50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
 .form-group label {
     /* 标签样式，增强可读性 */
     display: block;
@@ -39,12 +53,13 @@
 .form-group input[type="text"],
 .form-group input[type="password"] {
     /* 输入框样式，圆角、内边距、过渡动画 */
-    width: calc(100% - 24px);
-    padding: 12px;
+    width: 100%;
+    padding: 12px 40px 12px 15px;;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     font-size: 16px;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box;
 }
 
 .form-group input:focus {
@@ -69,7 +84,7 @@
     display: block;
 }
 
-.form-options {
+.pw-options {
     /* 表单选项区，左右分布，适配小屏 */
     display: flex;
     justify-content: space-between;
@@ -78,7 +93,7 @@
     font-size: 14px;
 }
 
-.form-options a {
+.pw-options a {
     /* 链接样式，蓝色高亮，悬停变色 */
     color: #007bff;
     text-decoration: none;
@@ -86,7 +101,7 @@
     transition: color 0.3s ease;
 }
 
-.form-options a:hover {
+.pw-options a:hover {
     color: #0056b3;
     text-decoration: underline;
 }
