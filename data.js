@@ -92,6 +92,15 @@ function initializeData() {
                 bio: '文学院中文系，热爱写作和诗歌。用文字记录青春的美好时光。',
                 interests: ['literature', 'writing', 'poetry'],
                 avatar: 'https://randomuser.me/api/portraits/women/8.jpg'
+            },
+            // 个人账号 - 梁智炜
+            {
+                studentId: '2023150138',
+                password: '123456',
+                nickname: '宇文姜残',
+                bio: '文明其精神，野蛮其体魄。',
+                interests: ['E', 'G', 'E'],
+                avatar: 'https://tse4-mm.cn.bing.net/th/id/OIP-C.7ag4zYfDiYVP85AVDvPhFwHaGl'
             }
         ];
         // 将用户数据存储到localStorage

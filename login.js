@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const rememberMeCheckbox = document.getElementById('rememberMe'); // 记住我复选框
     const forgotPasswordLink = document.getElementById('forgotPassword'); // 忘记密码链接
     const icon = document.querySelector('i');
+    togglePasswordButton.type = 'button';
     // 眼睛图标"显示密码"功能
     togglePasswordButton.addEventListener('click', (e) => {
         e.preventDefault();
@@ -33,7 +34,11 @@ document.addEventListener('DOMContentLoaded', () => {
         studentIdInput.value = localStorage.getItem('rememberedStudentId');
         rememberMeCheckbox.checked = true; // 自动勾选记住我
     }
-
+    document.addEventListener('keydown', (e) => {
+        if(e.key === 'Enter') {
+            loginForm.requestSubmit();
+        }
+    });
     // 登录表单提交事件处理
     loginForm.addEventListener('submit', (e) => {
         e.preventDefault(); // 阻止表单默认提交行为
