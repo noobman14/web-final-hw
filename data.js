@@ -100,7 +100,7 @@ function initializeData() {
                 nickname: '宇文姜残',
                 bio: '文明其精神，野蛮其体魄。',
                 interests: ['E', 'G', 'E'],
-                avatar: 'https://tse4-mm.cn.bing.net/th/id/OIP-C.7ag4zYfDiYVP85AVDvPhFwHaGl'
+                avatar: 'https://c-ssl.duitang.com/uploads/blog/202306/26/lGSLAxQ1ux0WEDE.jpeg'
             }
         ];
         // 将用户数据存储到localStorage
