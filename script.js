@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <img src="${author ? author.avatar : 'https://via.placeholder.com/50'}" alt="Avatar" class="post-avatar" onerror="this.onerror=null; this.src='pic/default.png';">
                     <h3><a href="profile.html?id=${post.authorId}">${author ? author.nickname : '未知用户'}</a></h3>
                 </div>
-                <p><a href="post_detail.html?id=${post.id}">${post.content}</a></p>
+                <p><a href="post_detail.html?id=${post.id}">${highlightHashtags(post.content)}</a></p>
                 ${postImage}
                 <div class="post-actions">
                     <span class="like-button" data-post-id="${post.id}">👍 ${post.likes}</span>
@@ -101,10 +101,15 @@ document.addEventListener('DOMContentLoaded', () => {
         addPostEventListeners(hotPostsSection);
     };
 
+    function highlightHashtags(text) {
+    return text.replace(/#([\u4e00-\u9fa5\w]+)/g, '<span class="hashtag">#$1</span>');
+}
     /**
      * 渲染最新动态流
      * 功能：按时间顺序显示所有用户发布的动态
      */
+
+
     const renderPosts = () => {
         const posts = getPosts(); // 从data.js获取所有动态数据
         const loggedInUser = getLoggedInUser(); // 获取当前登录用户
@@ -141,13 +146,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     <img src="${author ? author.avatar : 'https://via.placeholder.com/50'}" alt="Avatar" class="post-avatar" onerror="this.onerror=null; this.src='pic/default.png';">
                     <h3><a href="profile.html?id=${post.authorId}">${author ? author.nickname : '未知用户'}</a></h3>
                 </div>
-                <p><a href="post_detail.html?id=${post.id}">${post.content}</a></p>
+                <p><a href="post_detail.html?id=${post.id}">${highlightHashtags(post.content)}</a></p>
                 ${postImage}
                 <div class="post-actions">
                     <span class="like-button" data-post-id="${post.id}">👍 ${post.likes}</span>
                     <span class="comment-button" data-post-id="${post.id}">💬 ${post.comments.length}</span>
                     <span class="timestamp">${post.timestamp}</span>
                     ${isCurrentUserAuthor ? `<span class="delete-button" data-post-id="${post.id}">🗑️ 删除</span>` : ''}
+                    ${isCurrentUserAuthor ? `<span class="edit-button" data-post-id="${post.id}">✏️ 编辑</span>` : ''}
                 </div>
                 <div class="comments-section" id="comments-${post.id}">
                     <!-- 评论内容将通过JavaScript动态加载 -->
@@ -222,6 +228,14 @@ document.addEventListener('DOMContentLoaded', () => {
                         renderPosts();    // 重新渲染最新动态（移除被删除的动态）
                     });
                 }
+            });
+        });
+
+        // 编辑按钮事件监听器
+        container.querySelectorAll('.edit-button').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const postId = parseInt(e.target.dataset.postId);
+            window.location.href = `edit_post.html?id=${postId}`;
             });
         });
 

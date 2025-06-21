@@ -219,3 +219,33 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
             /* 保持原有阴影 */
         }
+    }
+
+    /* 编辑按钮样式 */
+#editPostButton {
+    position: relative;
+    width: auto; /* 宽度占满容器 */
+    padding: 10px; /* 内边距 */
+    left: 90%;
+    background-color: white; 
+    color: black; 
+    border: none; /* 无边框 */
+    border-radius: 8px; /* 圆角 */
+    font-size: 15px; /* 字体大小 */
+    cursor: pointer; /* 鼠标指针样式 */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* 过渡动画 */
+    margin-top: 20px; /* 顶部外边距 */
+}
+
+/* 编辑按钮悬停效果 */
+#editPostButton:hover {
+    transform: translateY(-2px); /* 悬停时微微上移 */
+}
+
+/* 移动端适配 */
+@media (max-width: 600px) {
+    #editPostButton {
+        font-size: 16px; /* 缩小字体大小 */
+        padding: 12px; /* 缩小内边距 */
+    }
+}

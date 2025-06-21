@@ -28,7 +28,8 @@ function initializeData() {
                 nickname: 'Alice',
                 bio: '计算机科学专业，热爱编程和阅读。正在学习前端开发，希望能和大家一起交流技术！',
                 interests: ['coding', 'reading', 'frontend'],
-                avatar: 'https://randomuser.me/api/portraits/women/1.jpg'
+                avatar: 'https://randomuser.me/api/portraits/women/1.jpg',
+                friends: ['20230002', '20230003']
             },
             // 体育学院 - 篮球校队成员
             {
@@ -122,7 +123,8 @@ function initializeData() {
                     { author: 'Alice', content: '加油！期待看你们比赛！', timestamp: '2025-01-15 16:30' },
                     { author: '小美', content: '下次比赛记得通知我，我要去拍照！', timestamp: '2025-01-15 16:45' }
                 ],
-                timestamp: '2025-01-15 16:00'
+                timestamp: '2025-01-15 16:00',
+                visibility: 'public'
             },
             // 动态2：编程学习
             {
@@ -135,7 +137,8 @@ function initializeData() {
                     { author: '学霸小明', content: '异步编程确实是个难点，加油！', timestamp: '2025-01-15 15:20' },
                     { author: '创业青年', content: '要不要一起做个项目？', timestamp: '2025-01-15 15:35' }
                 ],
-                timestamp: '2025-01-15 15:00'
+                timestamp: '2025-01-15 15:00',
+                visibility: 'public'
             },
             // 动态3：美食推荐
             {
@@ -149,7 +152,8 @@ function initializeData() {
                     { author: 'Bob', content: '运动完正好可以去吃，哈哈', timestamp: '2025-01-15 14:30' },
                     { author: '文学少女', content: '听起来就很诱人，明天就去试试！', timestamp: '2025-01-15 14:45' }
                 ],
-                timestamp: '2025-01-15 14:00'
+                timestamp: '2025-01-15 14:00',
+                visibility: 'public'
             },
             // 动态4：摄影作品
             {
@@ -163,7 +167,8 @@ function initializeData() {
                     { author: '音乐小王子', content: '春天的校园确实很美，适合写歌', timestamp: '2025-01-15 13:35' },
                     { author: '文学少女', content: '樱花如诗，美不胜收', timestamp: '2025-01-15 13:50' }
                 ],
-                timestamp: '2025-01-15 13:00'
+                timestamp: '2025-01-15 13:00',
+                visibility: 'public'
             },
             // 动态5：音乐练习
             {
@@ -176,7 +181,8 @@ function initializeData() {
                     { author: '小美', content: '下次能听你现场演奏吗？', timestamp: '2025-01-15 12:15' },
                     { author: '文学少女', content: '音乐和诗歌一样，都是心灵的表达', timestamp: '2025-01-15 12:30' }
                 ],
-                timestamp: '2025-01-15 12:00'
+                timestamp: '2025-01-15 12:00',
+                visibility: 'public'
             },
             // 动态6：科研实验
             {
@@ -189,7 +195,8 @@ function initializeData() {
                     { author: 'Alice', content: '太厉害了！量子物理听起来就很深奥', timestamp: '2025-01-15 11:20' },
                     { author: '创业青年', content: '这种精神值得学习！', timestamp: '2025-01-15 11:35' }
                 ],
-                timestamp: '2025-01-15 11:00'
+                timestamp: '2025-01-15 11:00',
+                visibility: 'public'
             },
             // 动态7：创业想法
             {
@@ -202,7 +209,8 @@ function initializeData() {
                     { author: 'Alice', content: '需要程序员吗？我可以帮忙！', timestamp: '2025-01-15 10:15' },
                     { author: '美食达人', content: '听起来很有趣，加油！', timestamp: '2025-01-15 10:30' }
                 ],
-                timestamp: '2025-01-15 10:00'
+                timestamp: '2025-01-15 10:00',
+                visibility: 'public'
             },
             // 动态8：诗歌创作
             {
@@ -215,7 +223,8 @@ function initializeData() {
                     { author: '小美', content: '能分享一下你的诗吗？', timestamp: '2025-01-15 09:20' },
                     { author: '音乐小王子', content: '诗歌和音乐都是艺术的表现形式', timestamp: '2025-01-15 09:35' }
                 ],
-                timestamp: '2025-01-15 09:00'
+                timestamp: '2025-01-15 09:00',
+                visibility: 'public'
             },
             // 动态9：编程比赛
             {
@@ -228,7 +237,8 @@ function initializeData() {
                     { author: 'Bob', content: '下次比赛加油！', timestamp: '2025-01-15 08:15' },
                     { author: '创业青年', content: '要不要一起组队参加下次比赛？', timestamp: '2025-01-15 08:30' }
                 ],
-                timestamp: '2025-01-15 08:00'
+                timestamp: '2025-01-15 08:00',
+                visibility: 'public'
             },
             // 动态10：烹饪体验
             {
@@ -242,7 +252,8 @@ function initializeData() {
                     { author: 'Bob', content: '运动完正好需要补充能量，哈哈', timestamp: '2025-01-15 07:35' },
                     { author: '文学少女', content: '美食如诗，都是生活的艺术', timestamp: '2025-01-15 07:50' }
                 ],
-                timestamp: '2025-01-15 07:00'
+                timestamp: '2025-01-15 07:00',
+                visibility: 'public'
             },
             // 动态11：绘画创作
             {
@@ -255,7 +266,8 @@ function initializeData() {
                     { author: 'Alice', content: '能看看你的画吗？', timestamp: '2025-01-15 06:15' },
                     { author: '音乐小王子', content: '艺术都是相通的，很美', timestamp: '2025-01-15 06:30' }
                 ],
-                timestamp: '2025-01-15 06:00'
+                timestamp: '2025-01-15 06:00',
+                visibility: 'public'
             },
             // 动态12：音乐练习
             {
@@ -268,7 +280,8 @@ function initializeData() {
                     { author: '小美', content: '辛苦了！期待你的演出', timestamp: '2025-01-15 05:20' },
                     { author: '学霸小明', content: '科研也需要这种坚持的精神', timestamp: '2025-01-15 05:35' }
                 ],
-                timestamp: '2025-01-15 05:00'
+                timestamp: '2025-01-15 05:00',
+                visibility: 'public'
             }
         ];
         // 将动态数据存储到localStorage
@@ -299,7 +312,29 @@ function saveUsers(users) {
  */
 function getPosts() {
     initializeData(); // 确保数据已初始化
-    return JSON.parse(localStorage.getItem('posts'));
+    const posts = JSON.parse(localStorage.getItem('posts'));
+    return posts;
+}
+
+/**
+ * 获取当前登录用户可见的动态（基于可见范围）
+ * @returns {Array} 可见动态数组
+ */
+function getVisiblePostsForUser() {
+    const posts = getPosts();
+    const currentUserId = getLoggedInUser();
+
+    return posts.filter(post => {
+        if (post.visibility === 'public') return true;
+        if (!currentUserId) return false;
+
+        if (post.visibility === 'friends') {
+            const author = getUserByStudentId(post.authorId);
+            return author && author.friends && author.friends.includes(currentUserId);
+        }
+
+        return false;
+    });
 }
 
 /**
