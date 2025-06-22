@@ -8,11 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const checkLogin = () => {
         const loggedInUser = localStorage.getItem('loggedInUser');
         if (!loggedInUser) {
-            postDetailContent.innerHTML = '<p>请先登录后再查看动态详情。</p>';
-            commentsList.innerHTML = '';
-            commentInputDetail.style.display = 'none';
-            submitCommentDetail.style.display = 'none';
-            return false;
+            // 允许游客查看动态内容
+            return true;
         }
         return true;
     };
@@ -20,9 +17,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //這個函數用來後續處理點擊名字進入主頁
     function getStudentIdByNickname(nickname) {
-    const users = getUsers();
-    const user = users.find(user => user.nickname === nickname);
-    return user ? user.studentId : null;
+        const users = getUsers();
+        const user = users.find(user => user.nickname === nickname);
+        return user ? user.studentId : null;
     }
 
     /**
@@ -30,18 +27,27 @@ document.addEventListener('DOMContentLoaded', () => {
      * @returns {number} 动态ID
      */
 
-/*已解決*/
+    /*已解決*/
 
     const getPostIdFromUrl = () => {
         const params = new URLSearchParams(window.location.search);
         return parseInt(params.get('id'));
     };
 
+    function highlightHashtags(text) {
+        return text.replace(/#([\u4e00-\u9fa5\w]+)/g, '<span class="hashtag">#$1</span>');
+    }
+
+    let currentPostId = null;
+    let currentPost = null;
+
     const renderPostDetail = (postId) => {
         if (!checkLogin()) return;
 
         const posts = getPosts();
         const post = posts.find(p => p.id === postId);
+        currentPostId = postId;
+        currentPost = post;
 
         if (!post) {
             postDetailContent.innerHTML = '<p>动态未找到。</p>';
@@ -53,26 +59,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const author = getUserByStudentId(post.authorId);
         let postImage = post.image ? `<img src="${post.image}" alt="Post Image">` : '';
-
-
         const highlightedContent = highlightHashtags(post.content);
 
         postDetailContent.innerHTML = `
             <div class="post-detail-content">
                 <div class="post-header">
                     <img src="${author ? author.avatar : 'https://via.placeholder.com/50'}" alt="Avatar" class="post-avatar">
-                    <h3><a href="profile.html?id=${post.authorId}">${author ? author.nickname : '未知用户'}</a></h3>
+                    <div class="post-header-info">
+                        <h3><a href="profile.html?id=${post.authorId}">${author ? author.nickname : '未知用户'}</a></h3>
+                        <span class="post-timestamp">${post.timestamp}</span>
+                    </div>
                 </div>
-                <h2>${post.content.substring(0, 50)}...</h2>
-                <p>${highlightedContent}</p>
+                <h2 class="post-title">${post.content.substring(0, 50)}...</h2>
+                <p class="post-content">${highlightedContent}</p>
                 ${postImage}
-                <div class="post-detail-meta">
-                    <span>👍 ${post.likes}</span>
-                    <span>💬 ${post.comments.length}</span>
-                    <span>${post.timestamp}</span>
-                </div>
             </div>
         `;
+
+        // 更新评论区标题和点赞数
+        const commentsSectionTitle = document.querySelector('.comments-section-detail h3');
+        if (commentsSectionTitle) {
+            commentsSectionTitle.innerHTML = `评论 <span class="post-likes" id="likeCount">👍 ${post.likes}</span> <button id="likeBtn" class="like-btn">点赞</button>`;
+        }
 
         renderComments(post.comments);
 
@@ -81,6 +89,25 @@ document.addEventListener('DOMContentLoaded', () => {
             editPostButton.style.display = 'block';
         } else {
             editPostButton.style.display = 'none';
+        }
+
+        commentInputDetail.style.display = loggedInUser ? 'block' : 'none';
+        submitCommentDetail.style.display = loggedInUser ? 'block' : 'none';
+
+        // 绑定点赞按钮事件
+        const likeBtn = document.getElementById('likeBtn');
+        if (likeBtn) {
+            likeBtn.onclick = () => {
+                handleLike(postId, () => {
+                    // 重新渲染点赞数
+                    const posts = getPosts();
+                    const post = posts.find(p => p.id === postId);
+                    const likeCount = document.getElementById('likeCount');
+                    if (likeCount && post) {
+                        likeCount.innerHTML = `👍 ${post.likes}`;
+                    }
+                });
+            };
         }
     };
 
@@ -96,9 +123,9 @@ document.addEventListener('DOMContentLoaded', () => {
             commentElement.classList.add('comment-detail');
             const studentId = getStudentIdByNickname(comment.author);
             //這裏添加點擊評論名字能進入主頁的功能
-            const authorHtml = studentId 
-                ? `<a href="profile.html?user=${studentId}"><strong>${comment.author}</strong></a>`
-                : `<strong>${comment.author}</strong>`;
+            const authorHtml = studentId ?
+                `<a href="profile.html?user=${studentId}"><strong>${comment.author}</strong></a>` :
+                `<strong>${comment.author}</strong>`;
             commentElement.innerHTML = `
                 <p>${authorHtml}: ${comment.content}</p>
                 <span>${comment.timestamp}</span>
@@ -110,6 +137,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // 处理添加评论功能
 
     submitCommentDetail.addEventListener('click', () => {
+        const currentUser = localStorage.getItem('loggedInUser');
+        if (!currentUser) {
+            alert('请先登录后再发表评论。');
+            return;
+        }
         const commentText = commentInputDetail.value.trim();
         const postId = getPostIdFromUrl();
         if (commentText && postId) {
@@ -117,8 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const post = posts.find(p => p.id === postId);
 
             if (post) {
-                const currentUser = localStorage.getItem('loggedInUser');
-                const author = getUserByStudentId(currentUser || 'Guest');
+                const author = getUserByStudentId(currentUser);
                 const newComment = {
                     author: author ? author.nickname : '游客',
                     content: commentText,

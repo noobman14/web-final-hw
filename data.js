@@ -105,8 +105,14 @@ function initializeData() {
                 role: 'admin'
             }
         ];
-        // 将用户数据存储到localStorage
+        ensureUserRelations(defaultUsers);
         localStorage.setItem('users', JSON.stringify(defaultUsers));
+    } else {
+        // 补全已存在的用户数据
+        let users = JSON.parse(localStorage.getItem('users'));
+        if (ensureUserRelations(users)) {
+            localStorage.setItem('users', JSON.stringify(users));
+        }
     }
 
     // 检查并初始化动态数据
@@ -296,7 +302,11 @@ function initializeData() {
  */
 function getUsers() {
     initializeData(); // 确保数据已初始化
-    return JSON.parse(localStorage.getItem('users'));
+    let users = JSON.parse(localStorage.getItem('users'));
+    if (ensureUserRelations(users)) {
+        localStorage.setItem('users', JSON.stringify(users));
+    }
+    return users;
 }
 
 /**
@@ -396,6 +406,21 @@ function getPostsByAuthorId(authorId) {
  */
 function getLoggedInUser() {
     return localStorage.getItem('loggedInUser');
+}
+
+function ensureUserRelations(users) {
+    let changed = false;
+    users.forEach(user => {
+        if (!Array.isArray(user.friends)) {
+            user.friends = [];
+            changed = true;
+        }
+        if (!Array.isArray(user.followers)) {
+            user.followers = [];
+            changed = true;
+        }
+    });
+    return changed;
 }
 
 // 页面加载时初始化数据

@@ -43,36 +43,49 @@ document.addEventListener('DOMContentLoaded', () => {
     // 发布表单提交事件处理
     publishForm.addEventListener('submit', (e) => {
         e.preventDefault(); // 阻止表单默认提交行为
-        let isValid = true; // 表单验证状态标志
+        let isValid = true; // 表单校验状态标志
+
+        // 登录校验
+        const currentUser = localStorage.getItem('loggedInUser');
+        if (!currentUser) {
+            alert('请先登录后再发布动态。');
+            window.location.href = 'login.html';
+            return;
+        }
 
         // 清除之前的错误信息
         postContentError.textContent = '';
 
-        // 动态内容验证
+        // 动态内容校验
         if (postContent.value.trim() === '') {
             postContentError.textContent = '动态内容不能为空。';
             isValid = false;
         }
 
-        // 如果验证通过
+        // 如果校验通过
         if (isValid) {
- 
             // 获取可见范围
             const visible = visibilitySelect.value;
-
-            // 在实际应用中，您会将此数据发送到后端服务器
+            // 处理图片字段
+            let image = '';
+            if (imageUpload.files.length > 0) {
+                image = imageUpload.files[0].name;
+            } else if (imageUrl.value.trim() !== '') {
+                image = imageUrl.value.trim();
+            }
+            // 处理标签
+            const tags = tagsInput.value.split(',').map(tag => tag.trim()).filter(tag => tag !== '');
+            // 构建新动态对象
             const newPost = {
-                content: postContent.value.trim(), // 动态内容
-                image: imageUpload.files.length > 0 ? imageUpload.files[0].name : imageUrl.value.trim(), // 图片信息
-                tags: tags, // 标签数组
-                timestamp: new Date().toLocaleString(), // 发布时间
-                likes: 0, // 初始点赞数
-                comments: [], // 初始评论数组
-                visibility// 可见范围
+                authorId: currentUser,
+                content: postContent.value.trim(),
+                image: image,
+                tags: tags,
+                timestamp: new Date().toLocaleString(),
+                likes: 0,
+                comments: [],
+                visibility
             };
-            console.log('新动态:', newPost); // 在控制台输出新动态信息
-            alert('动态发布成功！');
-
             // 获取所有动态数据
             let posts = getPosts();
             // 生成新的动态ID
@@ -82,8 +95,8 @@ document.addEventListener('DOMContentLoaded', () => {
             posts.push(newPost);
             // 保存更新后的动态数据
             savePosts(posts);
-
-            // 重定向到主页查看动态流
+            alert('动态发布成功！');
+            // 跳转到主页
             window.location.href = 'index.html';
         } else {
             alert('请检查您的输入。');

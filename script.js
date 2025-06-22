@@ -11,39 +11,39 @@
 let currentFeedType = "all"; // 新增：当前视图类型
 
 document.addEventListener('DOMContentLoaded', () => {
-    const feedSection = document.querySelector('.feed'); // 最新动态区域
-    const hotPostsSection = document.querySelector('.hot-posts'); // 热门推荐区域
+            const feedSection = document.querySelector('.feed'); // 最新动态区域
+            const hotPostsSection = document.querySelector('.hot-posts'); // 热门推荐区域
 
-    // 热门推荐逻辑不变
-    const getHotPosts = () => {
-        const posts = getPosts();
-        return posts
-            .sort((a, b) => b.likes - a.likes)
-            .slice(0, 3)
-            .filter(post => post.likes > 0);
-    };
+            // 热门推荐逻辑不变
+            const getHotPosts = () => {
+                const posts = getPosts();
+                return posts
+                    .sort((a, b) => b.likes - a.likes)
+                    .slice(0, 3)
+                    .filter(post => post.likes > 0);
+            };
 
-    const renderHotPosts = () => {
-        const hotPosts = getHotPosts();
-        const loggedInUser = getLoggedInUser();
+            const renderHotPosts = () => {
+                    const hotPosts = getHotPosts();
+                    const loggedInUser = getLoggedInUser();
 
-        if (hotPosts.length === 0) {
-            hotPostsSection.style.display = 'none';
-            return;
-        }
+                    if (hotPosts.length === 0) {
+                        hotPostsSection.style.display = 'none';
+                        return;
+                    }
 
-        hotPostsSection.style.display = 'block';
-        hotPostsSection.innerHTML = '<h2>🔥 热门推荐</h2>';
+                    hotPostsSection.style.display = 'block';
+                    hotPostsSection.innerHTML = '<h2>🔥 热门推荐</h2>';
 
-        hotPosts.forEach((post, index) => {
-            const author = getUserByStudentId(post.authorId);
-            const isCurrentUserAuthor = loggedInUser && loggedInUser === post.authorId;
-            const postElement = document.createElement('div');
-            postElement.classList.add('post', 'hot-post');
-            const rankingBadge = index < 3 ? `<span class="ranking-badge rank-${index + 1}">${index + 1}</span>` : '';
-            let postImage = post.image ? `<img src="${post.image}" alt="Post Image" onerror="this.onerror=null; this.src='pic/default.png';">` : '';
+                    hotPosts.forEach((post, index) => {
+                                const author = getUserByStudentId(post.authorId);
+                                const isCurrentUserAuthor = loggedInUser && loggedInUser === post.authorId;
+                                const postElement = document.createElement('div');
+                                postElement.classList.add('post', 'hot-post');
+                                const rankingBadge = index < 3 ? `<span class="ranking-badge rank-${index + 1}">${index + 1}</span>` : '';
+                                let postImage = post.image ? `<img src="${post.image}" alt="Post Image" onerror="this.onerror=null; this.src='pic/default.png';">` : '';
 
-            postElement.innerHTML = `
+                                postElement.innerHTML = `
                 ${rankingBadge}
                 <div class="post-header">
                     <a href="profile.html?id=${post.authorId}"><img src="${author ? author.avatar : 'https://via.placeholder.com/50'}" alt="Avatar" class="post-avatar" onerror="this.onerror=null; this.src='pic/default.png';"></a>
@@ -129,6 +129,15 @@ document.addEventListener('DOMContentLoaded', () => {
             postElement.classList.add('post');
             let postImage = post.image ? `<img src="${post.image}" alt="Post Image" onerror="this.onerror=null; this.src='pic/default.png';">` : '';
 
+            // 评论输入和按钮，未登录用户隐藏
+            let addCommentHtml = '';
+            if (loggedInUser) {
+                addCommentHtml = `<div class="add-comment">
+                    <input type="text" class="comment-input" data-post-id="${post.id}" placeholder="添加评论...">
+                    <button class="submit-comment" data-post-id="${post.id}">评论</button>
+                </div>`;
+            }
+
             postElement.innerHTML = `
                 <div class="post-header">
                     <a href="profile.html?id=${post.authorId}"><img src="${author ? author.avatar : 'https://via.placeholder.com/50'}" alt="Avatar" class="post-avatar" onerror="this.onerror=null; this.src='pic/default.png';"></a>
@@ -144,10 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     ${isCurrentUserAuthor ? `<span class="edit-button" data-post-id="${post.id}">✏️ 编辑</span>` : ''}
                 </div>
                 <div class="comments-section" id="comments-${post.id}"></div>
-                <div class="add-comment">
-                    <input type="text" class="comment-input" data-post-id="${post.id}" placeholder="添加评论...">
-                    <button class="submit-comment" data-post-id="${post.id}">评论</button>
-                </div>
+                ${addCommentHtml}
             `;
             feedSection.appendChild(postElement);
         });
