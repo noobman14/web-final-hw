@@ -16,7 +16,6 @@
 </head>
 
 <body>
-    <!-- 页面头部区域 -->
     <header>
         <!-- 网站Logo/名称 -->
         <div class="logo">校园生活</div>
@@ -32,12 +31,16 @@
                 <li><a href="profile.html">个人主页</a></li>
                 <!-- 登录/注册页面链接 -->
                 <li><a href="login.html">登录/注册</a></li>
+                
             </ul>
         </nav>
     </header>
 
     <!-- 主要内容区域 -->
     <main>
+        
+        <h2 ><a style="text-decoration: none; text-align:center;" href="search.html">搜索</a></h2>
+        <h2>猜你喜欢：</h2>
         <!-- 热门推荐区域 -->
         <!-- 显示点赞数最多的前3条动态，具有特殊样式和排名徽章 -->
         <section class="hot-posts">
@@ -49,11 +52,6 @@
         <!-- 按时间顺序显示所有用户发布的动态 -->
         <section class="feed">
             <h2>最新动态</h2>
-            <!-- 在這裏添加了兩種視圖模式的轉換按鈕-->
-            <div class="feed-switch">
-                <button id="allFeedBtn" class="active">全站动态</button>
-                <button id="followingFeedBtn">关注动态</button>
-            </div>
             <!-- 动态内容将通过JavaScript动态加载 -->
         </section>
     </main>

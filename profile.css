@@ -252,30 +252,24 @@
         /* 减少阴影强度 */
     }
 }
+.settings-link-container {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    height: 0;
+}
 
-/* 表情选择框样式 */
-#emojiPicker {
+.settings-link {
     position: absolute;
-    background-color: white;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    z-index: 10;
+    top: 10px;  /* 调整与顶部的距离 */
+    right: 10px; /* 调整与右侧的距离 */
+    text-decoration: none;
+    color: #333; /* 设置链接颜色 */
+    font-size: 20px; /* 设置字体大小 */
+    z-index: 10; /* 确保在最上层 */
 }
 
-/* 自定义按钮样式 */
-.action-button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 20px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.action-button:hover {
-    background-color: #0056b3;
+.settings-link:hover {
+    color: #1a73e8; /* 鼠标悬停时的颜色 */
+    text-decoration: underline; /* 鼠标悬停时显示下划线 */
 }

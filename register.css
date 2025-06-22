@@ -56,14 +56,6 @@
     min-height: 100px;
 }
 
-.form-group input::placeholder,
-.form-group textarea::placeholder {
-    color: #999;
-    font-size: 14px;
-    font-family: inherit; 
-    opacity: 1; 
-}
-
 .form-group input:focus,
 .form-group textarea:focus {
     /* 输入聚焦时高亮边框和阴影，提升交互体验 */

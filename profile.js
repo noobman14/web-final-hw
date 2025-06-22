@@ -5,10 +5,6 @@
  * 版本：1.0
  */
 
-function highlightHashtags(text) {
-    return text.replace(/#([\u4e00-\u9fa5\w]+)/g, '<span class="hashtag">#$1</span>');
-}
-
 // 等待DOM完全加载后执行
 document.addEventListener('DOMContentLoaded', () => {
             // 获取页面中的主要元素
@@ -60,16 +56,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     profileAvatar.src = currentUser.avatar || 'https://via.placeholder.com/100';
                     profileNickname.textContent = currentUser.nickname;
                     profileBio.textContent = currentUser.bio;
-                    if (Array.isArray(currentUser.friends)) {
-                        followingCount.textContent = currentUser.friends.length;
-                    } else {
-                        followingCount.textContent = '0';
-                    }
-                    if (Array.isArray(currentUser.followers)) {
-                        followersCount.textContent = currentUser.followers.length;
-                    } else {
-                        followersCount.textContent = '0';
-                    }
+                    followingCount.textContent = currentUser.following || 0;
+                    followersCount.textContent = currentUser.followers || 0;
 
                     // 根据是否为用户自己的资料页面显示/隐藏编辑按钮
                     if (isOwnProfile) {
@@ -105,23 +93,19 @@ document.addEventListener('DOMContentLoaded', () => {
                                     const postElement = document.createElement('div');
                                     postElement.classList.add('post');
                                     let postImage = post.image ? `<img src="${post.image}" alt="Post Image">` : ''; // 处理动态图片
-                                    const highlightedContent = highlightHashtags(post.content);
                                     postElement.innerHTML = `
                     <h3><a href="post_detail.html?id=${post.id}">${post.content.substring(0, 50)}...</a></h3>
-                    <p>${highlightedContent}</p>
+                    <p>${post.content}</p>
                     ${postImage}
                     <div class="post-meta">
                         <span>${post.likes}赞</span>
                         <span>${post.comments.length}评论</span>
                         <span>${post.timestamp}</span>
                     </div>
-                    ${isOwnProfile ? `<div class="post-actions"><span class="delete-button" data-post-id="${post.id}">🗑️ 删除</span>
-                    <span class="edit-button" data-post-id="${post.id}">✏️ 编辑</span>
-                    </div>` : ''}
+                    ${isOwnProfile ? `<div class="post-actions"><span class="delete-button" data-post-id="${post.id}">🗑️ 删除</span></div>` : ''}
                 `;
                 userPostsFeed.appendChild(postElement);
             });
-
 
             // 为用户动态的删除按钮添加事件监听器
             if (isOwnProfile) {
@@ -133,12 +117,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                     });
                 });
-                document.querySelectorAll('.edit-button').forEach(button => {
-                    button.addEventListener('click', (e) => {
-                    const postId = parseInt(e.target.dataset.postId);
-                    window.location.href = `edit_post.html?id=${postId}`; // 跳转到编辑动态页面
-                    });
-                });
             }
         } else {
             userPostsFeed.innerHTML = '<p style="text-align: center;">暂无动态。</p>';
@@ -146,8 +124,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 更新关注按钮状态（仅当不是自己的资料页面时）
         if (!isOwnProfile) {
+            // 检查是否有登录用户来确定是否可以关注
             if (getLoggedInUser()) {
-                if (checkIsFollowing()) {
+                if (isFollowing) {
                     followButton.textContent = '已关注';
                     followButton.classList.add('following');
                 } else {
@@ -155,54 +134,28 @@ document.addEventListener('DOMContentLoaded', () => {
                     followButton.classList.remove('following');
                 }
             } else {
-                followButton.style.display = 'none';
+                followButton.style.display = 'none'; // 如果没有登录用户则隐藏关注按钮
             }
         }
     };
 
-    // 判断当前登录用户是否已关注该用户
-    function checkIsFollowing() {
-        const loggedInUserId = getLoggedInUser();
-        if (!loggedInUserId || isOwnProfile) return false;
-        const loggedInUser = getUserByStudentId(loggedInUserId);
-        if (!loggedInUser) return false;
-        if (!Array.isArray(loggedInUser.friends)) return false;
-        return loggedInUser.friends.includes(currentUserId);
-    }
-
-    // 关注/取关功能
-    function handleFollowToggle() {
-        const loggedInUserId = getLoggedInUser();
-        if (!loggedInUserId || isOwnProfile) return;
-        const loggedInUser = getUserByStudentId(loggedInUserId);
-        const targetUser = getUserByStudentId(currentUserId);
-        if (!loggedInUser || !targetUser) return;
-        if (!Array.isArray(loggedInUser.friends)) loggedInUser.friends = [];
-        if (!Array.isArray(targetUser.followers)) targetUser.followers = [];
-        let changed = false;
-        if (checkIsFollowing()) {
-            // 取关
-            loggedInUser.friends = loggedInUser.friends.filter(id => id !== currentUserId);
-            targetUser.followers = targetUser.followers.filter(id => id !== loggedInUserId);
-            changed = true;
-            alert('已取消关注');
-        } else {
-            // 关注
-            loggedInUser.friends.push(currentUserId);
-            targetUser.followers.push(loggedInUserId);
-            changed = true;
-            alert('关注成功');
-        }
-        if (changed) {
-            updateUser(loggedInUser);
-            updateUser(targetUser);
-            renderProfile();
-        }
-    }
-
     // 关注/取消关注功能
+    // 只有当当前用户存在且不是自己的资料页面时才添加事件监听器
     if (currentUser && !isOwnProfile && getLoggedInUser()) {
-        followButton.onclick = handleFollowToggle;
+        followButton.addEventListener('click', () => {
+            if (isFollowing) {
+                // 模拟取消关注
+                if (currentUser.followers > 0) currentUser.followers--;
+                alert('已取消关注');
+            } else {
+                // 模拟关注
+                currentUser.followers++;
+                alert('关注成功');
+            }
+            isFollowing = !isFollowing; // 切换关注状态
+            updateUser(currentUser); // 保存更改到模拟用户数据
+            renderProfile(); // 重新渲染以更新计数和按钮文本
+        });
     }
 
     // 编辑资料功能

@@ -39,8 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-
-
 /**
  * 处理动态删除功能
  * @param {number} postId 要删除的动态ID
@@ -62,11 +60,6 @@ function handleDeletePost(postId, renderCallback) {
  * @param {Function} renderCallback 点赞后需要调用的重新渲染函数
  */
 function handleLike(postId, renderCallback) {
-    const currentUser = getLoggedInUser();
-    if (!currentUser) {
-        alert('请先登录后再点赞。');
-        return;
-    }
     let posts = getPosts(); // 获取所有动态数据
     const post = posts.find(p => p.id === postId); // 查找指定动态
     if (post) {
@@ -85,15 +78,11 @@ function handleLike(postId, renderCallback) {
  * @param {Function} renderCommentsCallback 添加评论后需要调用的重新渲染评论函数
  */
 function handleAddComment(postId, commentText, renderCommentsCallback) {
-    const currentUser = getLoggedInUser();
-    if (!currentUser) {
-        alert('请先登录后再发表评论。');
-        return;
-    }
     let posts = getPosts(); // 获取所有动态数据
     const post = posts.find(p => p.id === postId); // 查找指定动态
     if (post) {
-        const author = getUserByStudentId(currentUser); // 获取用户信息
+        const currentUser = getLoggedInUser(); // 获取当前登录用户
+        const author = getUserByStudentId(currentUser || 'Guest'); // 获取用户信息
         const newComment = {
             author: author ? author.nickname : '游客', // 评论作者
             content: commentText, // 评论内容

@@ -61,8 +61,6 @@ header {
 }
 
 
-/* 网站Logo/名称样式 */
-
 .logo {
     font-size: 28px;
     /* 大号字体，突出品牌 */
@@ -122,25 +120,6 @@ nav a:hover {
 
 
 /* ==================== 主要内容区域 ==================== */
-
-/* 添加的視圖轉換按鈕的樣式*/
-.feed-switch {
-    margin-bottom: 15px;
-}
-.feed-switch button {
-    border: none;
-    background: #eee;
-    color: #333;
-    padding: 6px 20px;
-    margin-right: 10px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-.feed-switch button.active,
-.feed-switch button:hover {
-    background: #007bff;
-    color: #fff;
-}
 
 
 /* 主要内容容器 */
@@ -869,51 +848,4 @@ footer {
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         /* 减少阴影强度 */
     }
-}
-
-/* 在原有样式基础上添加 */
-
-/* 编辑按钮样式 */
-.edit-button {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 12px;
-    border-radius: 20px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    color: #27ae60; /* 绿色表示编辑 */
-}
-
-/* 编辑按钮悬停效果 */
-.edit-button:hover {
-    background-color: #eafaf1; /* 浅绿色背景 */
-    color: #219653; /* 深绿色文字 */
-}
-
-/* 移动端响应式调整 */
-@media (max-width: 768px) {
-    .post-actions {
-        /* 确保在移动端按钮有足够空间 */
-        flex-wrap: wrap;
-        gap: 8px;
-    }
-    
-    .edit-button, 
-    .delete-button {
-        flex: 1;
-        text-align: center;
-        justify-content: center;
-    }
-}
-
-.hashtag {
-    color: #007bff;
-    font-weight: bold;
-    cursor: pointer;
-    text-decoration: none;
-}
-
-.hashtag:hover {
-    text-decoration: underline;
 }
