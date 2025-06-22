@@ -2,103 +2,116 @@
  * 用户登录页面JavaScript文件
  * 功能：处理用户登录验证、记住密码和忘记密码功能
  * 作者：校园生活交友平台开发团队
- * 版本：1.0
+ * 版本：1.1 (修复重复弹窗问题并优化代码结构)
  */
 
 // 等待DOM完全加载后执行
 document.addEventListener('DOMContentLoaded', () => {
     // 获取页面中的主要元素
-    const loginForm = document.getElementById('loginForm'); // 登录表单
-    const studentIdInput = document.getElementById('studentId'); // 学号输入框
-    const passwordInput = document.getElementById('password'); // 密码输入框
-    const togglePasswordButton = document.getElementById('togglePassword'); // 显示密码复选框
-    const rememberMeCheckbox = document.getElementById('rememberMe'); // 记住我复选框
-    const forgotPasswordLink = document.getElementById('forgotPassword'); // 忘记密码链接
-    const icon = document.querySelector('i');
+    const loginForm = document.getElementById('loginForm');
+    const studentIdInput = document.getElementById('studentId');
+    const passwordInput = document.getElementById('password');
+    const togglePasswordButton = document.getElementById('togglePassword');
+    const rememberMeCheckbox = document.getElementById('rememberMe');
+    const forgotPasswordLink = document.getElementById('forgotPassword');
+
+    // 显示/隐藏密码功能
     togglePasswordButton.type = 'button';
-    // 眼睛图标"显示密码"功能
     togglePasswordButton.addEventListener('click', (e) => {
         e.preventDefault();
-        if (passwordInput.type === 'password') {
-            passwordInput.type = 'text'; // 显示密码
-            togglePasswordButton.querySelector('i').classList.replace('fa-eye-slash','fa-eye');
-        } else {
-            passwordInput.type = 'password'; // 隐藏密码
-            togglePasswordButton.querySelector('i').classList.replace('fa-eye','fa-eye-slash');
-        }
+        const isPasswordVisible = passwordInput.type === 'text';
+        passwordInput.type = isPasswordVisible ? 'password' : 'text';
+        const icon = togglePasswordButton.querySelector('i');
+        icon.classList.toggle('fa-eye', !isPasswordVisible);
+        icon.classList.toggle('fa-eye-slash', isPasswordVisible);
     });
 
-    // "记住我"功能
-    // 如果存在保存的学号，则加载到输入框中
+    // "记住我"功能初始化
     if (localStorage.getItem('rememberedStudentId')) {
         studentIdInput.value = localStorage.getItem('rememberedStudentId');
-        rememberMeCheckbox.checked = true; // 自动勾选记住我
+        rememberMeCheckbox.checked = true;
     }
+
+    // 回车键提交表单
     document.addEventListener('keydown', (e) => {
-        if(e.key === 'Enter') {
+        if (e.key === 'Enter') {
+            e.preventDefault();
             loginForm.requestSubmit();
         }
     });
-    // 登录表单提交事件处理
-    loginForm.addEventListener('submit', (e) => {
-        e.preventDefault(); // 阻止表单默认提交行为
-        let isValid = true; // 表单验证状态标志
 
-        // 清除之前的错误信息
+    // 登录表单提交处理
+    loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
         document.querySelectorAll('.error-message').forEach(span => span.textContent = '');
 
-        // 学号基本验证
-        if (studentIdInput.value.trim() === '') {
+        const studentId = studentIdInput.value.trim();
+        const password = passwordInput.value.trim();
+        let isValid = true;
+
+        if (!studentId) {
             document.getElementById('studentIdError').textContent = '学号不能为空。';
             isValid = false;
         }
 
-        // 密码基本验证
-        if (passwordInput.value.trim() === '') {
+        if (!password) {
             document.getElementById('passwordError').textContent = '密码不能为空。';
             isValid = false;
         }
 
-        // 如果基本验证通过
-        if (isValid) {
-            // 验证用户凭据
-            let users = [];
-            try {
-                users = getUsers(); // 获取用户列表
-            } catch (error) {
-                console.error('Error getting users:', error);
-                alert('加载用户信息失败，请稍后再试。');
-                return;
-            }
+        if (!isValid) {
+            showAlert('请检查您的输入。');
+            return;
+        }
 
-            // 查找匹配的用户
-            const user = users.find(u => u.studentId === studentIdInput.value.trim() && u.password === passwordInput.value.trim());
+        try {
+            const users = await getUsers();
+            const user = users.find(u => u.studentId === studentId && u.password === password);
 
             if (user) {
-                // 如果勾选了"记住我"，保存学号
-                if (rememberMeCheckbox.checked) {
-                    localStorage.setItem('rememberedStudentId', studentIdInput.value);
-                } else {
-                    localStorage.removeItem('rememberedStudentId'); // 否则删除保存的学号
+                if (user.isActive === false) {
+                    showAlert('您的账号已被封禁，无法登录。');
+                    return; // 阻止继续登录
                 }
+                if (rememberMeCheckbox.checked) {
+                    localStorage.setItem('rememberedStudentId', studentId);
+                } else {
+                    localStorage.removeItem('rememberedStudentId');
+                }
+                localStorage.setItem('loggedInUser', user.studentId);
+                localStorage.setItem('userNickname', user.nickname);
 
-                // 设置登录状态
-                localStorage.setItem('loggedInUser', user.studentId); // 保存登录用户ID
-                localStorage.setItem('userNickname', user.nickname); // 保存用户昵称
-
-                alert('登录成功！');
-                window.location.href = 'index.html'; // 登录成功后重定向到主页
+                showAlert('登录成功！', () => {
+                    window.location.href = 'index.html';
+                });
             } else {
-                alert('学号或密码错误，请重试。');
+                showAlert('学号或密码错误，请重试。');
             }
-        } else {
-            alert('请检查您的输入。');
+        } catch (error) {
+            console.error('加载用户信息失败:', error);
+            showAlert('加载用户信息失败，请稍后再试。');
         }
     });
 
+
     // "忘记密码"链接事件处理
     forgotPasswordLink.addEventListener('click', (e) => {
-        e.preventDefault(); // 阻止默认链接行为
-        alert('忘记密码功能正在开发中，请联系管理员重置密码。');
+        e.preventDefault();
+        showAlert('忘记密码功能正在开发中，请联系管理员重置密码。');
     });
+
+    /**
+     * 显示提示消息
+     * @param {string} message 提示消息内容
+     * @param {function} [callback] 回调函数
+     */
+    function showAlert(message, callback) {
+        // 这里可以使用更优雅的通知方式替代alert
+        alert(message);
+        if (callback && typeof callback === 'function') {
+            callback();
+        }
+    }
 });

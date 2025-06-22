@@ -1,8 +1,16 @@
 // 权限检查
-const currentUser = JSON.parse(localStorage.getItem('loggedInUser') || '{}');
-if (!currentUser || currentUser.role !== 'admin') {
-    alert('无权访问管理员页面！');
+// 权限检查
+const loggedInUserId = localStorage.getItem('loggedInUser');
+if (!loggedInUserId) {
+    alert('请先登录！');
     window.location.href = 'login.html';
+} else {
+    const users = getUsers();
+    const currentUser = users.find(user => user.studentId === loggedInUserId);
+    if (!currentUser || currentUser.role !== 'admin') {
+        alert('无权访问管理员页面！');
+        window.location.href = 'login.html';
+    }
 }
 
 // DOM元素
@@ -38,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function loadUserData(filter = '') {
     const users = getUsers().map(user => ({
         ...user,
-        registerTime: user.registerTime || '2023-01-01' // 默认注册时间
+        registerTime: user.registerTime || '2025-01-01' // 默认注册时间
     }));
 
     // 过滤用户
@@ -128,7 +136,7 @@ function handleTableActions(e) {
     } else if (e.target.classList.contains('reset-btn')) {
         showModal(
             '重置密码',
-            `确定要将用户 ${user.nickname} 的密码重置为 "123456" 吗？`,
+            `确定要将用户 ${user.nickname} 的密码重置为 "123456AA" 吗？`,
             'resetPassword'
         );
     } else if (e.target.classList.contains('view-btn')) {
@@ -139,48 +147,72 @@ function handleTableActions(e) {
 // 管理员功能方法
 // 修正后的toggleUserBan函数
 // 封禁/解封用户（安全版）
+// 修改 confirmAction 函数中的 toggleBan 调用，传入 selectedUserId
+
+function confirmAction() {
+    switch (state.currentAction) {
+        case 'toggleBan': 
+            toggleUserBan(state.selectedUserId); 
+            break;
+        case 'resetPassword': 
+            resetUserPassword(); 
+            break;
+    }
+    hideModal();
+}
+
+// 修改 toggleUserBan，接收studentId参数
 function toggleUserBan(studentId) {
     const users = getUsers();
     const userIndex = users.findIndex(u => u.studentId === studentId);
-    
+
     if (userIndex === -1) {
         console.error('用户不存在');
         return false;
     }
 
-    // 更新状态
     users[userIndex].isActive = !users[userIndex].isActive;
     saveUsers(users);
 
-    // 强制登出被禁用户
+    // 如果当前登录用户被封禁，强制登出
     const loggedInUser = getLoggedInUser();
-    if (loggedInUser && loggedInUser.studentId === studentId && !users[userIndex].isActive) {
+    if (loggedInUser === studentId && !users[userIndex].isActive) {
         localStorage.removeItem('loggedInUser');
         alert('您的账号已被封禁');
         window.location.href = 'login.html';
     }
 
+    showToast(`用户 ${users[userIndex].nickname} 已${users[userIndex].isActive ? '解封' : '封禁'}`);
+    
+    // 刷新数据和界面
+    loadUserData();
+
     return true;
 }
 
+
+//重置密码功能
 function resetUserPassword() {
     const users = getUsers();
     const user = users.find(u => u.studentId === state.selectedUserId);
 
     if (user) {
-        user.password = '123456';
+        user.password = '123456AA';
         saveUsers(users);
-        showToast(`用户 ${user.nickname} 的密码已重置为 123456`);
+        showToast(`用户 ${user.nickname} 的密码已重置为 123456AA`);
     }
 }
 
+// 查看详情弹窗，增加显示用户类型
 function viewUserDetails(user) {
+    const userType = user.role === 'admin' ? '管理员' : '普通用户';
     const details = `
         <strong>学号:</strong> ${user.studentId}<br>
         <strong>昵称:</strong> ${user.nickname}<br>
         <strong>简介:</strong> ${user.bio || '无'}<br>
         <strong>兴趣标签:</strong> ${user.interests?.join(', ') || '无'}<br>
-        <strong>状态:</strong> ${user.isActive !== false ? '正常' : '封禁'}
+        <strong>状态:</strong> ${user.isActive !== false ? '正常' : '封禁'}<br>
+        <strong>用户类型:</strong> ${userType}
     `;
     showModal('用户详情', details);
 }
@@ -203,14 +235,6 @@ function showModal(title, message, actionType = null) {
 function hideModal() {
     elements.confirmModal.style.display = 'none';
     state.currentAction = null;
-}
-
-function confirmAction() {
-    switch (state.currentAction) {
-        case 'toggleBan': toggleUserBan(); break;
-        case 'resetPassword': resetUserPassword(); break;
-    }
-    hideModal();
 }
 
 // 辅助功能
