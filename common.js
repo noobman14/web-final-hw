@@ -39,6 +39,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+
+
 /**
  * 处理动态删除功能
  * @param {number} postId 要删除的动态ID
