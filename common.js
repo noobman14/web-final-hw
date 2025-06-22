@@ -62,6 +62,11 @@ function handleDeletePost(postId, renderCallback) {
  * @param {Function} renderCallback 点赞后需要调用的重新渲染函数
  */
 function handleLike(postId, renderCallback) {
+    const currentUser = getLoggedInUser();
+    if (!currentUser) {
+        alert('请先登录后再点赞。');
+        return;
+    }
     let posts = getPosts(); // 获取所有动态数据
     const post = posts.find(p => p.id === postId); // 查找指定动态
     if (post) {
