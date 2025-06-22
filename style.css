@@ -123,6 +123,25 @@ nav a:hover {
 
 /* ==================== 主要内容区域 ==================== */
 
+/* 添加的視圖轉換按鈕的樣式*/
+.feed-switch {
+    margin-bottom: 15px;
+}
+.feed-switch button {
+    border: none;
+    background: #eee;
+    color: #333;
+    padding: 6px 20px;
+    margin-right: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.feed-switch button.active,
+.feed-switch button:hover {
+    background: #007bff;
+    color: #fff;
+}
+
 
 /* 主要内容容器 */
 

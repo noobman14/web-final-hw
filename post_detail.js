@@ -18,9 +18,19 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
 
-    function highlightHashtags(text) {
-        return text.replace(/#([\u4e00-\u9fa5\w]+)/g, '<span class="hashtag">#$1</span>');
+    //這個函數用來後續處理點擊名字進入主頁
+    function getStudentIdByNickname(nickname) {
+    const users = getUsers();
+    const user = users.find(user => user.nickname === nickname);
+    return user ? user.studentId : null;
     }
+
+    /**
+     * 从URL参数中获取动态ID
+     * @returns {number} 动态ID
+     */
+
+/*已解決*/
 
     const getPostIdFromUrl = () => {
         const params = new URLSearchParams(window.location.search);
@@ -84,13 +94,20 @@ document.addEventListener('DOMContentLoaded', () => {
         comments.forEach(comment => {
             const commentElement = document.createElement('div');
             commentElement.classList.add('comment-detail');
+            const studentId = getStudentIdByNickname(comment.author);
+            //這裏添加點擊評論名字能進入主頁的功能
+            const authorHtml = studentId 
+                ? `<a href="profile.html?user=${studentId}"><strong>${comment.author}</strong></a>`
+                : `<strong>${comment.author}</strong>`;
             commentElement.innerHTML = `
-                <p><strong>${comment.author}</strong>: ${comment.content}</p>
+                <p>${authorHtml}: ${comment.content}</p>
                 <span>${comment.timestamp}</span>
             `;
             commentsList.appendChild(commentElement);
         });
     };
+
+    // 处理添加评论功能
 
     submitCommentDetail.addEventListener('click', () => {
         const commentText = commentInputDetail.value.trim();
