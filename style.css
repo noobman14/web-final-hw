@@ -1,3 +1,6 @@
+/* 引入 FontAwesome 图标库 */
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css");
+
 /**
  * 全局样式文件 - style.css
  * 
@@ -14,6 +17,19 @@
  * - 辅助色：#777 (中灰) - 次要信息
  */
 
+/* 主题变量 */
+:root {
+    --bg-color: #eef2f5;
+    --main-bg: #ffffff;
+    --text-color: #333;
+    --primary-color: #007aff;
+}
+[data-theme="dark"] {
+    --bg-color: #1e1e1e;
+    --main-bg: #2e2e2e;
+    --text-color: #ddd;
+    --primary-color: #0a84ff;
+}
 
 /* ==================== 基础样式 ==================== */
 
@@ -21,13 +37,13 @@
 /* 页面整体样式 */
 
 body {
-    /* 字体设置：优先使用系统字体，确保跨平台一致性 */
-    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    /* 字体设置：优先使用校园市场风格字体和系统字体 */
+    font-family: 'PingFang SC', 'Noto Sans SC', 'Microsoft YaHei', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     margin: 0;
     /* 移除默认边距 */
-    background-color: #eef2f5;
+    background-color: var(--bg-color);
     /* 浅灰蓝背景，营造舒适感 */
-    color: #333;
+    color: var(--text-color);
     /* 深灰色文字，确保良好的可读性 */
     line-height: 1.6;
     /* 行高设置，提升文字阅读体验 */
@@ -96,28 +112,24 @@ nav ul {
 /* 导航链接样式 */
 
 nav a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     text-decoration: none;
-    /* 移除下划线 */
     color: #555;
-    /* 中灰色，不抢眼但清晰 */
     font-weight: 600;
-    /* 半粗体，增强可读性 */
     font-size: 16px;
-    /* 适中的字体大小 */
-    transition: color 0.3s ease, border-bottom 0.3s ease;
-    /* 平滑过渡动画 */
-    padding-bottom: 5px;
-    /* 底部内边距，为下划线留空间 */
+    transition: background-color 0.3s ease, color 0.3s ease;
+    padding: 6px 12px;
+    border-radius: 6px;
 }
 
 
 /* 导航链接悬停效果 */
 
 nav a:hover {
-    color: #007bff;
-    /* 悬停时变为主题蓝色 */
-    border-bottom: 2px solid #007bff;
-    /* 添加蓝色下划线 */
+    background-color: rgba(var(--primary-color), 0.1);
+    color: var(--primary-color);
 }
 
 
@@ -152,7 +164,7 @@ main {
     /* 最大宽度，确保在大屏幕上不会过宽 */
     margin: 30px auto;
     /* 水平居中，上下30px外边距 */
-    background-color: #ffffff;
+    background-color: var(--main-bg);
     /* 白色背景 */
     border-radius: 12px;
     /* 圆角，现代化设计 */
@@ -916,4 +928,35 @@ footer {
 
 .hashtag:hover {
     text-decoration: underline;
+}
+
+/* ==================== 通用控件样式 (macOS 风格) ==================== */
+button, input[type="button"], input[type="submit"], .toggle-password {
+    border: none;
+    border-radius: 8px;
+    background-color: #007aff;
+    color: #fff;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+button:hover, input[type="button"]:hover, input[type="submit"]:hover, .toggle-password:hover {
+    background-color: #005fcc;
+    box-shadow: 0 2px 8px rgba(0, 122, 255, 0.3);
+}
+
+input, textarea, select {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 8px;
+    font-size: 14px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus, textarea:focus, select:focus {
+    border-color: #007aff;
+    outline: none;
+    box-shadow: 0 0 6px rgba(0, 122, 255, 0.4);
 }

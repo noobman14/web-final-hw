@@ -7,6 +7,16 @@
 
 // 等待DOM完全加载后执行
 document.addEventListener('DOMContentLoaded', () => {
+    // 初始化主题（浅色/深色）
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    // 语言国际化
+    const lang = localStorage.getItem('lang') || 'zh';
+    const t = lang === 'en' ? {
+        home: 'Home', publish: 'Publish', search: 'Search', profile: 'Profile', login: 'Login/Register', logout: 'Logout', settings: 'Settings'
+    } : {
+        home: '首页', publish: '发布动态', search: '搜索', profile: '个人主页', login: '登录/注册', logout: '退出登录', settings: '设置'
+    };
     const nav = document.querySelector('nav ul'); // 获取导航菜单
     const loggedInUser = localStorage.getItem('loggedInUser'); // 获取登录用户ID
     const userNickname = localStorage.getItem('userNickname'); // 获取用户昵称
@@ -14,10 +24,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // 如果用户已登录，显示登录后的导航菜单
     if (loggedInUser) {
         nav.innerHTML = `
-            <li><a href="index.html">首页</a></li>
-            <li><a href="publish.html">发布动态</a></li>
-            <li><a href="profile.html">个人主页</a></li>
-            <li><a href="#" id="logoutLink">退出登录 (${userNickname})</a></li>
+            <li><a href="index.html"><i class="fa fa-home"></i><span>${t.home}</span></a></li>
+            <li><a href="publish.html"><i class="fa fa-plus-circle"></i><span>${t.publish}</span></a></li>
+            <li><a href="search.html"><i class="fa fa-search"></i><span>${t.search}</span></a></li>
+            <li><a href="profile.html"><i class="fa fa-user"></i><span>${t.profile}</span></a></li>
+            <li><a href="#" id="logoutLink"><i class="fa fa-sign-out-alt"></i><span>${t.logout} (${userNickname})</span></a></li>
+            <li><a href="setting.html"><i class="fa fa-cog"></i><span>${t.settings}</span></a></li>
         `;
 
         // 为退出登录链接添加事件监听器
@@ -31,10 +43,12 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         // 如果用户未登录，显示未登录的导航菜单
         nav.innerHTML = `
-            <li><a href="index.html">首页</a></li>
-            <li><a href="publish.html">发布动态</a></li>
-            <li><a href="profile.html">个人主页</a></li>
-            <li><a href="login.html">登录/注册</a></li>
+            <li><a href="index.html"><i class="fa fa-home"></i><span>${t.home}</span></a></li>
+            <li><a href="publish.html"><i class="fa fa-plus-circle"></i><span>${t.publish}</span></a></li>
+            <li><a href="search.html"><i class="fa fa-search"></i><span>${t.search}</span></a></li>
+            <li><a href="profile.html"><i class="fa fa-user"></i><span>${t.profile}</span></a></li>
+            <li><a href="login.html"><i class="fa fa-sign-in-alt"></i><span>${t.login}</span></a></li>
+            <li><a href="setting.html"><i class="fa fa-cog"></i><span>${t.settings}</span></a></li>
         `;
     }
 });
