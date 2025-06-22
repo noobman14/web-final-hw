@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<!-- 
+    校园生活交友平台 - 动态详情页面
+    功能：展示动态详细内容、评论列表、添加评论
+    包含：动态内容展示、评论区域、交互功能
+-->
+
+<head>
+    <meta charset="UTF-8">
+    <!-- 响应式视口设置，确保在移动设备上正常显示 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动态详情 - 校园生活交友平台</title>
+    <!-- 引入全局样式和动态详情页面专用样式 -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="post_detail.css">
+</head>
+
+<body>
+    <!-- 页面头部区域 -->
+    <header>
+        <!-- 网站Logo/名称 -->
+        <div class="logo">校园生活交友平台</div>
+        <!-- 导航菜单 -->
+        <nav>
+            <ul>
+                <li><a href="index.html">首页</a></li>
+                <li><a href="publish.html">发布动态</a></li>
+                <li><a href="profile.html">个人主页</a></li>
+                <li><a href="login.html">登录/注册</a></li>
+                <li><a href="search.html">搜索</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- 主要内容区域 - 动态详情展示 -->
+    <main class="post-detail-container">
+        <!-- 动态详情内容容器 -->
+        <div id="postDetailContent">
+            <!-- 动态详情将通过JavaScript动态加载到这里 -->
+            <p>加载中...</p>
+        </div>
+
+        <!-- 评论区域 -->
+        <div class="comments-section-detail">
+            <!-- 评论区域标题 -->
+            <h3>评论</h3>
+            <!-- 评论列表容器 -->
+            <div id="commentsList">
+                <!-- 评论将通过JavaScript动态加载到这里 -->
+            </div>
+            <!-- 添加评论区域 -->
+            <div class="add-comment-detail">
+                <!-- 评论输入框 -->
+                <input type="text" id="commentInputDetail" placeholder="添加评论...">
+                <!-- 提交评论按钮 -->
+                <button id="submitCommentDetail">评论</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- 页面底部 -->
+    <footer>
+        <p>&copy; 2025 校园生活交友平台</p>
+    </footer>
+
+    <!-- JavaScript文件引入 -->
+    <!-- 注意：引入顺序很重要，依赖关系为 data.js -> common.js -> post_detail.js -->
+
+    <!-- 数据管理模块：提供动态数据和评论数据访问功能 -->
+    <script src="data.js"></script>
+    <!-- 公共功能模块：提供导航栏等通用功能 -->
+    <script src="common.js"></script>
+    <!-- 动态详情逻辑模块：处理动态展示和评论功能 -->
+    <script src="post_detail.js"></script>
+</body>
+
+</html>

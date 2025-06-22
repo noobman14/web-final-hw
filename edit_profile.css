@@ -1,0 +1,114 @@
+/*
+ * 编辑个人资料页面样式表
+ * 主要负责编辑资料表单的布局、美观、响应式适配等视觉效果
+ * 设计理念：简洁、现代、易用，适配不同屏幕
+ */
+
+.edit-profile-container {
+    /* 主要容器，居中显示，白色背景，圆角和阴影提升层次感 */
+    max-width: 650px;
+    margin: 50px auto;
+    padding: 35px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.edit-profile-container h2 {
+    /* 标题居中，深色字体，突出显示 */
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.form-group {
+    /* 每个表单项的间距 */
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    /* 标签样式，增强可读性 */
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+    font-weight: 600;
+}
+
+.form-group input[type="text"],
+.form-group input[type="url"],
+.form-group textarea {
+    /* 输入框和文本域样式，圆角、内边距、过渡动画 */
+    width: calc(100% - 24px);
+    /* Adjust for padding */
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group textarea {
+    /* 文本域可垂直缩放，最小高度100px */
+    resize: vertical;
+    min-height: 100px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    /* 输入聚焦时高亮边框和阴影，提升交互体验 */
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+.error-message {
+    /* 错误提示信息，红色字体，适当缩小字号 */
+    color: #e74c3c;
+    font-size: 13px;
+    margin-top: 5px;
+    display: block;
+}
+
+button[type="submit"] {
+    /* 提交按钮样式，蓝色背景，圆角，交互动画 */
+    width: 100%;
+    padding: 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button[type="submit"]:hover {
+    /* 按钮悬停时变深色并微微上移，增强反馈 */
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+
+/* Responsive adjustments for smaller screens */
+
+@media (max-width: 600px) {
+    /* 移动端适配：缩小边距、字体和按钮尺寸，提升小屏体验 */
+    .edit-profile-container {
+        margin: 30px 15px;
+        padding: 25px;
+    }
+    .edit-profile-container h2 {
+        font-size: 24px;
+    }
+    .form-group input,
+    .form-group textarea {
+        font-size: 15px;
+    }
+    button[type="submit"] {
+        font-size: 16px;
+        padding: 12px;
+    }
+}

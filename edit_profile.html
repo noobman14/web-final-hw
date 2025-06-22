@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<!-- 
+    校园生活交友平台 - 编辑个人资料页面
+    功能：用户编辑个人资料、信息更新、表单验证
+    包含：昵称编辑、简介修改、兴趣标签、头像更新
+-->
+
+<head>
+    <meta charset="UTF-8">
+    <!-- 响应式视口设置，确保在移动设备上正常显示 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>编辑个人资料 - 校园生活交友平台</title>
+    <!-- 引入全局样式和编辑资料页面专用样式 -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="edit_profile.css">
+</head>
+
+<body>
+    <!-- 页面头部区域 -->
+    <header>
+        <!-- 网站Logo/名称 -->
+        <div class="logo">校园生活交友平台</div>
+        <!-- 导航菜单 -->
+        <nav> 
+            <ul>
+                <li><a href="index.html">首页</a></li>
+                <li><a href="publish.html">发布动态</a></li>
+                <li><a href="profile.html">个人主页</a></li>
+                <li><a href="login.html">登录/注册</a></li> 
+                
+            </ul>
+        </nav>
+    </header>
+
+    <!-- 主要内容区域 - 编辑个人资料表单 -->
+    <main class="edit-profile-container">
+        <!-- 页面标题 -->
+        <h2>编辑个人资料</h2>
+        <!-- 编辑个人资料表单 -->
+        <form id="editProfileForm">
+            <!-- 昵称编辑组 -->
+            <div class="form-group">
+                <label for="editNickname">昵称:</label>
+                <!-- 昵称输入框，必填项 -->
+                <input type="text" id="editNickname" name="editNickname" required>
+                <!-- 昵称错误提示信息 -->
+                <span class="error-message" id="editNicknameError"></span>
+            </div>
+            <!-- 个人简介编辑组 -->
+            <div class="form-group">
+                <label for="editBio">个人简介:</label>
+                <!-- 个人简介文本域，支持多行输入 -->
+                <textarea id="editBio" name="editBio"></textarea>
+            </div>
+            <!-- 兴趣标签编辑组 -->
+            <div class="form-group">
+                <label for="editInterests">兴趣标签 (逗号分隔):</label>
+                <!-- 兴趣标签输入框，支持多个标签 -->
+                <input type="text" id="editInterests" name="editInterests">
+            </div>
+            <!-- 头像URL编辑组 -->
+            <div class="form-group">
+                <label for="editAvatar">头像 (URL):</label>
+                <!-- 头像URL输入框，支持外部图片链接 -->
+                <input type="url" id="editAvatar" name="editAvatar">
+            </div>
+            <!-- 保存修改按钮 -->
+            <button type="submit">保存修改</button>
+        </form>
+    </main>
+
+    <!-- 页面底部 -->
+    <footer>
+        <p>&copy; 2025 校园生活交友平台</p>
+    </footer>
+
+    <!-- JavaScript文件引入 -->
+    <!-- 注意：引入顺序很重要，依赖关系为 data.js -> common.js -> edit_profile.js -->
+
+    <!-- 数据管理模块：提供用户数据存储和更新功能 -->
+    <script src="data.js"></script>
+    <!-- 公共功能模块：提供导航栏等通用功能 -->
+    <script src="common.js"></script>
+    <!-- 编辑资料逻辑模块：处理表单验证和数据更新功能 -->
+    <script src="edit_profile.js"></script>
+</body>
+
+</html>

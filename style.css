@@ -1,0 +1,851 @@
+/**
+ * 全局样式文件 - style.css
+ * 
+ * 设计理念：
+ * 1. 现代化UI设计：采用简洁、清爽的视觉风格
+ * 2. 响应式布局：适配桌面端和移动端设备
+ * 3. 用户体验优化：流畅的动画效果和交互反馈
+ * 4. 视觉层次分明：通过颜色、阴影、间距建立清晰的信息层级
+ * 
+ * 色彩方案：
+ * - 主色调：#007bff (蓝色) - 用于链接、按钮等交互元素
+ * - 背景色：#eef2f5 (浅灰蓝) - 页面背景，营造舒适感
+ * - 文字色：#333 (深灰) - 主要文字内容
+ * - 辅助色：#777 (中灰) - 次要信息
+ */
+
+
+/* ==================== 基础样式 ==================== */
+
+
+/* 页面整体样式 */
+
+body {
+    /* 字体设置：优先使用系统字体，确保跨平台一致性 */
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    margin: 0;
+    /* 移除默认边距 */
+    background-color: #eef2f5;
+    /* 浅灰蓝背景，营造舒适感 */
+    color: #333;
+    /* 深灰色文字，确保良好的可读性 */
+    line-height: 1.6;
+    /* 行高设置，提升文字阅读体验 */
+}
+
+
+/* ==================== 页面头部 ==================== */
+
+
+/* 页面头部容器 */
+
+header {
+    background-color: #ffffff;
+    /* 白色背景，突出头部区域 */
+    padding: 15px 30px;
+    /* 内边距：上下15px，左右30px */
+    display: flex;
+    /* 弹性布局 */
+    justify-content: space-between;
+    /* 两端对齐：Logo在左，导航在右 */
+    align-items: center;
+    /* 垂直居中对齐 */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    /* 轻微阴影，营造层次感 */
+    position: sticky;
+    /* 粘性定位，滚动时保持在顶部 */
+    top: 0;
+    /* 距离顶部0px */
+    z-index: 1000;
+    /* 高层级，确保在其他元素之上 */
+}
+
+
+.logo {
+    font-size: 28px;
+    /* 大号字体，突出品牌 */
+    font-weight: 700;
+    /* 粗体字重，增强视觉冲击力 */
+    color: #2c3e50;
+    /* 深蓝灰色，专业感 */
+    text-transform: uppercase;
+    /* 全大写，增强品牌感 */
+    letter-spacing: 1px;
+    /* 字母间距，提升可读性 */
+}
+
+
+/* 导航菜单容器 */
+
+nav ul {
+    list-style: none;
+    /* 移除默认列表样式 */
+    margin: 0;
+    /* 移除默认外边距 */
+    padding: 0;
+    /* 移除默认内边距 */
+    display: flex;
+    /* 弹性布局，水平排列 */
+    gap: 25px;
+    /* 菜单项之间的间距 */
+}
+
+
+/* 导航链接样式 */
+
+nav a {
+    text-decoration: none;
+    /* 移除下划线 */
+    color: #555;
+    /* 中灰色，不抢眼但清晰 */
+    font-weight: 600;
+    /* 半粗体，增强可读性 */
+    font-size: 16px;
+    /* 适中的字体大小 */
+    transition: color 0.3s ease, border-bottom 0.3s ease;
+    /* 平滑过渡动画 */
+    padding-bottom: 5px;
+    /* 底部内边距，为下划线留空间 */
+}
+
+
+/* 导航链接悬停效果 */
+
+nav a:hover {
+    color: #007bff;
+    /* 悬停时变为主题蓝色 */
+    border-bottom: 2px solid #007bff;
+    /* 添加蓝色下划线 */
+}
+
+
+/* ==================== 主要内容区域 ==================== */
+
+
+/* 主要内容容器 */
+
+main {
+    padding: 30px 20px;
+    /* 内边距：上下30px，左右20px */
+    max-width: 1000px;
+    /* 最大宽度，确保在大屏幕上不会过宽 */
+    margin: 30px auto;
+    /* 水平居中，上下30px外边距 */
+    background-color: #ffffff;
+    /* 白色背景 */
+    border-radius: 12px;
+    /* 圆角，现代化设计 */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    /* 阴影效果，营造卡片感 */
+}
+
+
+/* 最新动态标题 */
+
+.feed h2 {
+    text-align: center;
+    /* 居中对齐 */
+    color: #2c3e50;
+    /* 深蓝灰色 */
+    margin-bottom: 30px;
+    /* 底部外边距 */
+    font-size: 28px;
+    /* 大号字体 */
+    font-weight: 700;
+    /* 粗体字重 */
+}
+
+
+/* ==================== 热门推荐区域样式 ==================== */
+
+
+/* 热门推荐容器 */
+
+.hot-posts {
+    margin-bottom: 40px;
+    /* 底部外边距，与最新动态区域分离 */
+    padding: 30px;
+    /* 内边距 */
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    /* 渐变背景，突出热门推荐 */
+    border-radius: 15px;
+    /* 圆角 */
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+    /* 带颜色的阴影，增强视觉效果 */
+}
+
+
+/* 热门推荐标题 */
+
+.hot-posts h2 {
+    text-align: center;
+    /* 居中对齐 */
+    color: #ffffff;
+    /* 白色文字，与渐变背景形成对比 */
+    margin-bottom: 30px;
+    /* 底部外边距 */
+    font-size: 28px;
+    /* 大号字体 */
+    font-weight: 700;
+    /* 粗体字重 */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    /* 文字阴影，增强立体感 */
+}
+
+
+/* 热门动态卡片样式 */
+
+.hot-post {
+    position: relative;
+    /* 相对定位，为排名徽章提供定位基准 */
+    background: rgba(255, 255, 255, 0.95);
+    /* 半透明白色背景 */
+    backdrop-filter: blur(10px);
+    /* 背景模糊效果，现代化设计 */
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    /* 半透明边框 */
+    margin-bottom: 25px;
+    /* 底部外边距 */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /* 平滑过渡动画 */
+}
+
+
+/* 热门动态悬停效果 */
+
+.hot-post:hover {
+    transform: translateY(-8px);
+    /* 向上移动8px，营造悬浮效果 */
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    /* 增强阴影效果 */
+}
+
+
+/* 排名徽章样式 */
+
+.ranking-badge {
+    position: absolute;
+    /* 绝对定位 */
+    top: -10px;
+    /* 向上偏移，部分超出卡片 */
+    left: -10px;
+    /* 向左偏移，部分超出卡片 */
+    width: 40px;
+    /* 宽度 */
+    height: 40px;
+    /* 高度 */
+    border-radius: 50%;
+    /* 圆形 */
+    display: flex;
+    /* 弹性布局 */
+    align-items: center;
+    /* 垂直居中 */
+    justify-content: center;
+    /* 水平居中 */
+    font-weight: bold;
+    /* 粗体 */
+    font-size: 18px;
+    /* 字体大小 */
+    color: white;
+    /* 白色文字 */
+    z-index: 10;
+    /* 高层级，确保在其他元素之上 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    /* 阴影效果 */
+}
+
+
+/* 第一名徽章样式 */
+
+.ranking-badge.rank-1 {
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    /* 金色渐变 */
+    color: #333;
+    /* 深色文字，确保在金色背景上的可读性 */
+}
+
+
+/* 第二名徽章样式 */
+
+.ranking-badge.rank-2 {
+    background: linear-gradient(135deg, #c0c0c0, #e5e5e5);
+    /* 银色渐变 */
+    color: #333;
+    /* 深色文字 */
+}
+
+
+/* 第三名徽章样式 */
+
+.ranking-badge.rank-3 {
+    background: linear-gradient(135deg, #cd7f32, #daa520);
+    /* 铜色渐变 */
+    color: white;
+    /* 白色文字 */
+}
+
+
+/* ==================== 动态卡片样式 ==================== */
+
+
+/* 动态卡片容器 */
+
+.post {
+    background-color: #ffffff;
+    /* 白色背景 */
+    border: none;
+    /* 无边框 */
+    border-radius: 10px;
+    /* 圆角 */
+    padding: 20px;
+    /* 内边距 */
+    margin-bottom: 20px;
+    /* 底部外边距 */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    /* 轻微阴影 */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    /* 平滑过渡动画 */
+}
+
+
+/* 动态卡片悬停效果 */
+
+.post:hover {
+    transform: translateY(-5px);
+    /* 向上移动5px */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    /* 增强阴影效果 */
+}
+
+
+/* 动态头部区域 */
+
+.post-header {
+    display: flex;
+    /* 弹性布局 */
+    align-items: center;
+    /* 垂直居中对齐 */
+    margin-bottom: 15px;
+    /* 底部外边距 */
+}
+
+
+/* 用户头像样式 */
+
+.post-avatar {
+    width: 48px;
+    /* 宽度 */
+    height: 48px;
+    /* 高度 */
+    border-radius: 50%;
+    /* 圆形 */
+    object-fit: cover;
+    /* 图片填充方式 */
+    margin-right: 15px;
+    /* 右边距 */
+    border: 2px solid #007bff;
+    /* 蓝色边框 */
+    padding: 2px;
+    /* 内边距，为边框留空间 */
+}
+
+
+/* 用户名样式 */
+
+.post-header h3 {
+    margin: 0;
+    /* 移除默认外边距 */
+    font-size: 18px;
+    /* 字体大小 */
+    color: #2c3e50;
+    /* 深蓝灰色 */
+}
+
+
+/* 用户名链接样式 */
+
+.post-header h3 a {
+    text-decoration: none;
+    /* 移除下划线 */
+    color: #2c3e50;
+    /* 深蓝灰色 */
+    font-weight: 600;
+    /* 半粗体 */
+}
+
+
+/* 用户名链接悬停效果 */
+
+.post-header h3 a:hover {
+    color: #007bff;
+    /* 悬停时变为主题蓝色 */
+}
+
+
+/* 动态内容文字样式 */
+
+.post p {
+    color: #333;
+    /* 深灰色 */
+    line-height: 1.7;
+    /* 行高 */
+    margin-bottom: 15px;
+    /* 底部外边距 */
+}
+
+
+/* 动态内容链接样式 */
+
+.post p a {
+    color: inherit;
+    /* 继承父元素颜色 */
+    text-decoration: none;
+    /* 移除下划线 */
+}
+
+
+/* 动态内容链接悬停效果 */
+
+.post p a:hover {
+    text-decoration: underline;
+    /* 悬停时显示下划线 */
+}
+
+
+/* 动态图片样式 */
+
+.post img {
+    max-width: 100%;
+    /* 最大宽度100%，响应式 */
+    max-height: 400px;
+    /* 最大高度400px，防止图片过高影响阅读 */
+    width: auto;
+    /* 宽度自适应，保持图片比例 */
+    height: auto;
+    /* 高度自适应，保持图片比例 */
+    border-radius: 8px;
+    /* 圆角 */
+    margin-top: 15px;
+    /* 顶部外边距 */
+    margin-bottom: 15px;
+    /* 底部外边距 */
+    display: block;
+    /* 块级元素 */
+    object-fit: cover;
+    /* 图片填充方式：保持比例裁剪 */
+    cursor: pointer;
+    /* 鼠标指针样式，提示可点击 */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /* 平滑过渡动画 */
+}
+
+
+/* 动态图片悬停效果 */
+
+.post img:hover {
+    transform: scale(1.02);
+    /* 悬停时轻微放大 */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    /* 悬停时添加阴影效果 */
+}
+
+
+/* 动态图片容器样式 */
+
+.post .image-container {
+    position: relative;
+    /* 相对定位，为可能的覆盖层提供基准 */
+    display: inline-block;
+    /* 行内块级元素 */
+    max-width: 100%;
+    /* 最大宽度100% */
+    border-radius: 8px;
+    /* 圆角 */
+    overflow: hidden;
+    /* 隐藏溢出部分 */
+}
+
+
+/* 图片加载状态样式 */
+
+.post img[src*="default.png"] {
+    opacity: 0.7;
+    /* 默认图片透明度降低 */
+    background-color: #f8f9fa;
+    /* 浅灰色背景 */
+}
+
+
+/* 图片加载失败时的样式 */
+
+.post img:not([src]),
+.post img[src=""],
+.post img[src*="error"] {
+    display: none;
+    /* 隐藏无效图片 */
+}
+
+
+/* ==================== 动态操作区域 ==================== */
+
+
+/* 动态操作按钮容器 */
+
+.post-actions {
+    margin-top: 15px;
+    /* 顶部外边距 */
+    padding-top: 15px;
+    /* 顶部内边距 */
+    border-top: 1px solid #f0f2f5;
+    /* 顶部边框，分隔线 */
+    display: flex;
+    /* 弹性布局 */
+    justify-content: space-around;
+    /* 均匀分布 */
+    align-items: center;
+    /* 垂直居中对齐 */
+    font-size: 15px;
+    /* 字体大小 */
+    color: #777;
+    /* 中灰色 */
+}
+
+
+/* 点赞、评论、删除按钮通用样式 */
+
+.like-button,
+.comment-button,
+.delete-button {
+    cursor: pointer;
+    /* 鼠标指针样式 */
+    display: flex;
+    /* 弹性布局 */
+    align-items: center;
+    /* 垂直居中对齐 */
+    gap: 8px;
+    /* 图标和文字之间的间距 */
+    padding: 8px 12px;
+    /* 内边距 */
+    border-radius: 20px;
+    /* 圆角，胶囊形状 */
+    transition: background-color 0.3s ease, color 0.3s ease;
+    /* 平滑过渡动画 */
+}
+
+
+/* 点赞按钮悬停效果 */
+
+.like-button:hover {
+    background-color: #e7f3ff;
+    /* 浅蓝色背景 */
+    color: #007bff;
+    /* 蓝色文字 */
+}
+
+
+/* 评论按钮悬停效果 */
+
+.comment-button:hover {
+    background-color: #e7f3ff;
+    /* 浅蓝色背景 */
+    color: #007bff;
+    /* 蓝色文字 */
+}
+
+
+/* 删除按钮样式 */
+
+.delete-button {
+    color: #e74c3c;
+    /* 红色，表示危险操作 */
+}
+
+
+/* 删除按钮悬停效果 */
+
+.delete-button:hover {
+    background-color: #fce7e7;
+    /* 浅红色背景 */
+    color: #c0392b;
+    /* 深红色文字 */
+}
+
+
+/* 时间戳样式 */
+
+.timestamp {
+    font-size: 13px;
+    /* 小号字体 */
+    color: #999;
+    /* 浅灰色 */
+    margin-left: auto;
+    /* 左边距自动，推到最右边 */
+}
+
+
+/* ==================== 评论区域样式 ==================== */
+
+
+/* 评论区域容器 */
+
+.comments-section {
+    margin-top: 20px;
+    /* 顶部外边距 */
+    border-top: 1px solid #f0f2f5;
+    /* 顶部边框，分隔线 */
+    padding-top: 15px;
+    /* 顶部内边距 */
+    display: none;
+    /* 默认隐藏 */
+}
+
+
+/* 单条评论样式 */
+
+.comment {
+    background-color: #f7f7f7;
+    /* 浅灰色背景 */
+    border-radius: 8px;
+    /* 圆角 */
+    padding: 10px 15px;
+    /* 内边距 */
+    margin-bottom: 10px;
+    /* 底部外边距 */
+    font-size: 14px;
+    /* 字体大小 */
+    border: 1px solid #e0e0e0;
+    /* 边框 */
+}
+
+
+/* 评论内容样式 */
+
+.comment p {
+    margin: 0 0 5px 0;
+    /* 外边距 */
+    color: #333;
+    /* 深灰色 */
+}
+
+
+/* 评论作者名样式 */
+
+.comment strong {
+    color: #2c3e50;
+    /* 深蓝灰色 */
+}
+
+
+/* 评论时间样式 */
+
+.comment span {
+    font-size: 11px;
+    /* 小号字体 */
+    color: #999;
+    /* 浅灰色 */
+    display: block;
+    /* 块级元素 */
+    text-align: right;
+    /* 右对齐 */
+}
+
+
+/* ==================== 添加评论区域 ==================== */
+
+
+/* 添加评论容器 */
+
+.add-comment {
+    display: flex;
+    /* 弹性布局 */
+    margin-top: 15px;
+    /* 顶部外边距 */
+    gap: 10px;
+    /* 元素之间的间距 */
+}
+
+
+/* 评论输入框样式 */
+
+.comment-input {
+    flex-grow: 1;
+    /* 弹性增长，占据剩余空间 */
+    padding: 10px;
+    /* 内边距 */
+    border: 1px solid #ddd;
+    /* 边框 */
+    border-radius: 20px;
+    /* 圆角，胶囊形状 */
+    font-size: 14px;
+    /* 字体大小 */
+    outline: none;
+    /* 移除默认轮廓 */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    /* 平滑过渡动画 */
+}
+
+
+/* 评论输入框聚焦效果 */
+
+.comment-input:focus {
+    border-color: #007bff;
+    /* 聚焦时边框变为蓝色 */
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+    /* 聚焦时添加蓝色阴影 */
+}
+
+
+/* 提交评论按钮样式 */
+
+.submit-comment {
+    background-color: #007bff;
+    /* 蓝色背景 */
+    color: white;
+    /* 白色文字 */
+    border: none;
+    /* 无边框 */
+    padding: 10px 20px;
+    /* 内边距 */
+    border-radius: 20px;
+    /* 圆角，胶囊形状 */
+    font-size: 14px;
+    /* 字体大小 */
+    cursor: pointer;
+    /* 鼠标指针样式 */
+    transition: background-color 0.3s ease;
+    /* 平滑过渡动画 */
+}
+
+
+/* 提交评论按钮悬停效果 */
+
+.submit-comment:hover {
+    background-color: #0056b3;
+    /* 悬停时变为深蓝色 */
+}
+
+
+/* ==================== 页面底部 ==================== */
+
+
+/* 页脚样式 */
+
+footer {
+    text-align: center;
+    /* 居中对齐 */
+    padding: 25px;
+    /* 内边距 */
+    color: #888;
+    /* 中灰色 */
+    font-size: 14px;
+    /* 字体大小 */
+    margin-top: 40px;
+    /* 顶部外边距 */
+    background-color: #ffffff;
+    /* 白色背景 */
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
+    /* 顶部阴影 */
+}
+
+
+/* ==================== 响应式设计 ==================== */
+
+
+/* 移动端适配（屏幕宽度小于768px） */
+
+@media (max-width: 768px) {
+    /* 头部响应式调整 */
+    header {
+        flex-direction: column;
+        /* 改为垂直排列 */
+        padding: 15px 15px;
+        /* 减少内边距 */
+    }
+    /* 导航菜单响应式调整 */
+    nav ul {
+        margin-top: 15px;
+        /* 顶部外边距 */
+        flex-wrap: wrap;
+        /* 允许换行 */
+        justify-content: center;
+        /* 居中对齐 */
+    }
+    /* 主要内容区域响应式调整 */
+    main {
+        margin: 20px 10px;
+        /* 减少外边距 */
+        padding: 20px;
+        /* 减少内边距 */
+    }
+    /* 热门推荐区域响应式调整 */
+    .hot-posts {
+        padding: 20px 15px;
+        /* 减少内边距 */
+        margin-bottom: 30px;
+        /* 减少底部外边距 */
+    }
+    /* 热门推荐标题响应式调整 */
+    .hot-posts h2 {
+        font-size: 24px;
+        /* 减少字体大小 */
+        margin-bottom: 20px;
+        /* 减少底部外边距 */
+    }
+    /* 排名徽章响应式调整 */
+    .ranking-badge {
+        width: 35px;
+        /* 减少宽度 */
+        height: 35px;
+        /* 减少高度 */
+        font-size: 16px;
+        /* 减少字体大小 */
+        top: -8px;
+        /* 调整位置 */
+        left: -8px;
+        /* 调整位置 */
+    }
+    /* 动态操作按钮响应式调整 */
+    .post-actions {
+        flex-wrap: wrap;
+        /* 允许换行 */
+        justify-content: center;
+        /* 居中对齐 */
+        gap: 10px;
+        /* 增加间距 */
+    }
+    /* 时间戳响应式调整 */
+    .timestamp {
+        flex-basis: 100%;
+        /* 占据整行 */
+        text-align: center;
+        /* 居中对齐 */
+        margin-top: 10px;
+        /* 顶部外边距 */
+    }
+    /* 添加评论区域响应式调整 */
+    .add-comment {
+        flex-direction: column;
+        /* 改为垂直排列 */
+    }
+    /* 提交评论按钮响应式调整 */
+    .submit-comment {
+        width: 100%;
+        /* 占据整行宽度 */
+    }
+    /* 动态图片响应式调整 */
+    .post img {
+        max-height: 300px;
+        /* 移动端最大高度限制为300px，节省屏幕空间 */
+        margin-top: 10px;
+        /* 减少顶部外边距 */
+        margin-bottom: 10px;
+        /* 减少底部外边距 */
+    }
+    /* 移动端图片悬停效果调整 */
+    .post img:hover {
+        transform: none;
+        /* 移动端禁用放大效果，避免触摸设备上的问题 */
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        /* 减少阴影强度 */
+    }
+}

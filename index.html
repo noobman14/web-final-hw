@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<!-- 
+    校园生活交友平台 - 首页
+    功能：展示热门推荐动态和最新动态流
+    包含：导航菜单、热门推荐区域、最新动态区域、页脚
+-->
+
+<head>
+    <meta charset="UTF-8">
+    <!-- 响应式视口设置，确保在移动设备上正常显示 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>校园生活</title>
+    <!-- 引入全局样式文件 -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <!-- 网站Logo/名称 -->
+        <div class="logo">校园生活</div>
+
+        <!-- 导航菜单 -->
+        <nav>
+            <ul>
+                <!-- 首页链接 - 当前页面 -->
+                <li><a href="index.html">首页</a></li>
+                <!-- 发布动态页面链接 -->
+                <li><a href="publish.html">发布动态</a></li>
+                <!-- 个人主页链接 -->
+                <li><a href="profile.html">个人主页</a></li>
+                <!-- 登录/注册页面链接 -->
+                <li><a href="login.html">登录/注册</a></li>
+                
+            </ul>
+        </nav>
+    </header>
+
+    <!-- 主要内容区域 -->
+    <main>
+        
+        <h2 ><a style="text-decoration: none; text-align:center;" href="search.html">搜索</a></h2>
+        <h2>猜你喜欢：</h2>
+        <!-- 热门推荐区域 -->
+        <!-- 显示点赞数最多的前3条动态，具有特殊样式和排名徽章 -->
+        <section class="hot-posts">
+            <h2>🔥 热门推荐</h2>
+            <!-- 热门动态内容将通过JavaScript动态加载 -->
+        </section>
+
+        <!-- 最新动态流区域 -->
+        <!-- 按时间顺序显示所有用户发布的动态 -->
+        <section class="feed">
+            <h2>最新动态</h2>
+            <!-- 动态内容将通过JavaScript动态加载 -->
+        </section>
+    </main>
+
+    <!-- 页面底部 -->
+    <footer>
+        <p>&copy; 2025 校园生活平台</p>
+    </footer>
+
+    <!-- JavaScript文件引入 -->
+    <!-- 注意：引入顺序很重要，依赖关系为 data.js -> common.js -> script.js -->
+
+    <!-- 数据管理模块：提供用户和动态数据的增删改查功能 -->
+    <script src="data.js"></script>
+
+    <!-- 公共功能模块：提供点赞、评论、删除等通用功能 -->
+    <script src="common.js"></script>
+
+    <!-- 首页逻辑模块：负责热门推荐和动态流的渲染和交互 -->
+    <script src="script.js"></script>
+</body>
+
+</html>
