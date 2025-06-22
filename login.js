@@ -11,16 +11,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.getElementById('loginForm'); // 登录表单
     const studentIdInput = document.getElementById('studentId'); // 学号输入框
     const passwordInput = document.getElementById('password'); // 密码输入框
-    const showPasswordCheckbox = document.getElementById('showPassword'); // 显示密码复选框
+    const togglePasswordButton = document.getElementById('togglePassword'); // 显示密码复选框
     const rememberMeCheckbox = document.getElementById('rememberMe'); // 记住我复选框
-    const forgotPasswordLink = document.getElementById('forgotPasswordLink'); // 忘记密码链接
-
-    // "显示密码"功能
-    showPasswordCheckbox.addEventListener('change', () => {
-        if (showPasswordCheckbox.checked) {
+    const forgotPasswordLink = document.getElementById('forgotPassword'); // 忘记密码链接
+    const icon = document.querySelector('i');
+    togglePasswordButton.type = 'button';
+    // 眼睛图标"显示密码"功能
+    togglePasswordButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (passwordInput.type === 'password') {
             passwordInput.type = 'text'; // 显示密码
+            togglePasswordButton.querySelector('i').classList.replace('fa-eye-slash','fa-eye');
         } else {
             passwordInput.type = 'password'; // 隐藏密码
+            togglePasswordButton.querySelector('i').classList.replace('fa-eye','fa-eye-slash');
         }
     });
 
@@ -30,7 +34,11 @@ document.addEventListener('DOMContentLoaded', () => {
         studentIdInput.value = localStorage.getItem('rememberedStudentId');
         rememberMeCheckbox.checked = true; // 自动勾选记住我
     }
-
+    document.addEventListener('keydown', (e) => {
+        if(e.key === 'Enter') {
+            loginForm.requestSubmit();
+        }
+    });
     // 登录表单提交事件处理
     loginForm.addEventListener('submit', (e) => {
         e.preventDefault(); // 阻止表单默认提交行为

@@ -2,58 +2,143 @@
  * 用户注册页面JavaScript文件
  * 功能：处理用户注册表单验证和提交
  * 作者：校园生活交友平台开发团队
- * 版本：1.0
+ * 版本：2.1
  */
 
-// 等待DOM完全加载后执行
 document.addEventListener('DOMContentLoaded', () => {
-    // 获取注册表单元素
     const registerForm = document.getElementById('registerForm');
+    const studentIdInput = document.getElementById('studentId');
+    const passwordInput = document.getElementById('password');
+    const confirmPasswordInput = document.getElementById('confirmPassword');
+    const nicknameInput = document.getElementById('nickname');
 
-    // 为注册表单添加提交事件监听器
-    registerForm.addEventListener('submit', (e) => {
-        e.preventDefault(); // 阻止表单默认提交行为
-        let isValid = true; // 表单验证状态标志
-
-        // 清除之前的错误信息
-        document.querySelectorAll('.error-message').forEach(span => span.textContent = '');
-
-        // 学号验证（示例：必须是8位数字）
-        const studentId = document.getElementById('studentId').value;
-        if (!/^[0-9]{8}$/.test(studentId)) {
-            document.getElementById('studentIdError').textContent = '学号必须是8位数字。';
-            isValid = false;
-        }
-
-        // 密码验证（示例：至少6个字符）
-        const password = document.getElementById('password').value;
-        if (password.length < 6) {
-            document.getElementById('passwordError').textContent = '密码至少需要6个字符。';
-            isValid = false;
-        }
-
-        // 确认密码验证
-        const confirmPassword = document.getElementById('confirmPassword').value;
-        if (password !== confirmPassword) {
-            document.getElementById('confirmPasswordError').textContent = '两次输入的密码不一致。';
-            isValid = false;
-        }
-
-        // 昵称验证（示例：不能为空）
-        const nickname = document.getElementById('nickname').value;
-        if (nickname.trim() === '') {
-            document.getElementById('nicknameError').textContent = '昵称不能为空。';
-            isValid = false;
-        }
-
-        // 如果所有验证都通过
-        if (isValid) {
-            alert('注册成功！');
-            // 在实际应用中，您会将此数据发送到后端服务器
-            // 对于此模拟，我们可以重定向到登录页面或主页
-            window.location.href = 'index.html'; // 注册成功后重定向到主页
+    // 实时学号验证
+    studentIdInput.addEventListener('input', (e) => {
+        const studentId = e.target.value;
+        const errorElement = document.getElementById('studentIdError');
+        
+        if (studentId.length > 0 && !/^\d*$/.test(studentId)) {
+            errorElement.textContent = '学号只能包含数字';
+        } else if (studentId.length > 0 && studentId.length < 10) {
+            errorElement.textContent = '学号不足10位';
+        } else if (studentId.length > 10) {
+            errorElement.textContent = '学号不能超过10位';
         } else {
-            alert('请检查您的输入。');
+            errorElement.textContent = '';
         }
     });
+
+    // 实时密码验证
+    passwordInput.addEventListener('input', (e) => {
+        const password = e.target.value;
+        const errorElement = document.getElementById('passwordError');
+        
+        if (password.length > 0 && password.length < 8) {
+            errorElement.textContent = '密码至少需要8个字符';
+        } else if (password.length >= 8 && !/[A-Z]/.test(password)) {
+            errorElement.textContent = '密码必须包含至少一个大写字母';
+        } else {
+            errorElement.textContent = '';
+        }
+        
+        // 触发密码确认验证
+        if (confirmPasswordInput.value.length > 0) {
+            confirmPasswordInput.dispatchEvent(new Event('input'));
+        }
+    });
+
+    // 实时密码匹配验证
+    confirmPasswordInput.addEventListener('input', (e) => {
+        const confirmPassword = e.target.value;
+        const password = passwordInput.value;
+        const errorElement = document.getElementById('confirmPasswordError');
+        
+        if (confirmPassword.length > 0 && password !== confirmPassword) {
+            errorElement.textContent = '两次输入的密码不一致';
+        } else {
+            errorElement.textContent = '';
+        }
+    });
+
+    // 实时昵称验证
+    nicknameInput.addEventListener('input', (e) => {
+        const nickname = e.target.value;
+        const errorElement = document.getElementById('nicknameError');
+        
+        if (!/^[\u4e00-\u9fa5a-zA-Z0-9_]{0,20}$/.test(nickname)) {
+            errorElement.textContent = '只能包含中文、字母、数字和下划线';
+        } else if (nickname.length > 20) {
+            errorElement.textContent = '昵称不能超过20个字符';
+        } else {
+            errorElement.textContent = '';
+        }
+    });
+
+    // 表单提交验证
+    registerForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        let isValid = true;
+
+        // 学号最终验证
+        const studentId = studentIdInput.value;
+        if (!/^\d{8}$/.test(studentId)) {
+            showError('studentIdError', '学号必须是8位数字');
+            isValid = false;
+        }
+
+        // 密码最终验证
+        const password = passwordInput.value;
+        if (password.length < 8) {
+            showError('passwordError', '密码至少需要8个字符');
+            isValid = false;
+        } else if (!/[A-Z]/.test(password)) {
+            showError('passwordError', '密码必须包含至少一个大写字母');
+            isValid = false;
+        }
+
+        // 密码匹配最终验证
+        const confirmPassword = confirmPasswordInput.value;
+        if (password !== confirmPassword) {
+            showError('confirmPasswordError', '两次输入的密码不一致');
+            isValid = false;
+        }
+
+        // 昵称最终验证
+        const nickname = nicknameInput.value;
+        if (nickname.trim() === '') {
+            showError('nicknameError', '昵称不能为空');
+            isValid = false;
+        } else if (!/^[\u4e00-\u9fa5a-zA-Z0-9_]{2,20}$/.test(nickname)) {
+            showError('nicknameError', '昵称只能包含中文、字母、数字和下划线(2-20位)');
+            isValid = false;
+        }
+
+        if (isValid) {
+            registerUser({
+                studentId,
+                password,
+                nickname
+            });
+        } else {
+            alert('请检查您的输入是否正确');
+        }
+    });
+
+    function showError(elementId, message) {
+        const errorElement = document.getElementById(elementId);
+        errorElement.textContent = message;
+        errorElement.style.color = 'red';
+        errorElement.style.fontSize = '0.8rem';
+    }
+
+    function registerUser(userData) {
+        try {
+            console.log('注册用户数据:', userData);
+            alert('注册成功！即将跳转到登录页面');
+            window.location.href = 'login.html';
+        } catch (error) {
+            console.error('注册失败:', error);
+            alert('注册失败，请稍后重试');
+        }
+    }
 });

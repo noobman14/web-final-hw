@@ -11,6 +11,8 @@
     <!-- 响应式视口设置，确保在移动设备上正常显示 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>登录 - 校园生活交友平台</title>
+    <!-- 引入 Font Awesome 图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- 引入全局样式和登录页面专用样式 -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="login.css">
@@ -28,7 +30,6 @@
                 <li><a href="publish.html">发布动态</a></li>
                 <li><a href="profile.html">个人主页</a></li>
                 <li><a href="login.html">登录/注册</a></li>
-                <li><a href="search.html">搜索</a></li>
             </ul>
         </nav>
     </header>
@@ -42,26 +43,25 @@
             <!-- 学号输入组 -->
             <div class="form-group">
                 <label for="studentId">学号:</label>
-                <input type="text" id="studentId" name="studentId" required>
+                <input type="text" id="studentId" name="studentId" required placeholder="请输入您的学号">
                 <!-- 学号错误提示信息 -->
                 <span class="error-message" id="studentIdError"></span>
             </div>
             <!-- 密码输入组 -->
-            <div class="form-group">
+            <div id="password-wrapper" class="form-group">
                 <label for="password">密码:</label>
-                <input type="password" id="password" name="password" required>
+                <input type="password" id="password" name="password" required placeholder="请输入您的密码">
+                <button type="button" id="togglePassword" class="toggle-password"><i class="fas fa-eye-slash"></i></button>
                 <!-- 密码错误提示信息 -->
                 <span class="error-message" id="passwordError"></span>
-                <!-- 显示密码复选框 -->
-                <input type="checkbox" id="showPassword"> <label for="showPassword">显示密码</label>
             </div>
-            <!-- 登录选项组 -->
-            <div class="form-options">
+            <!-- 密码选项组 -->
+            <div class="pw-options">
                 <!-- 记住我复选框 -->
-                <input type="checkbox" id="rememberMe"> <label for="rememberMe">记住我</label>
-                <!-- 忘记密码链接 -->
-                <a href="#" id="forgotPasswordLink">忘记密码?</a>
+                <div id="remember"><input type="checkbox" id="rememberMe"> <label for="rememberMe">记住我</label></div>
+                <div id="forgot"><a href="" id="forgotPassword">忘记密码?</a></div>
             </div>
+            
             <!-- 登录提交按钮 -->
             <button type="submit">登录</button>
             <!-- 注册提示链接 -->
@@ -83,6 +83,7 @@
     <script src="common.js"></script>
     <!-- 登录逻辑模块：处理登录表单验证和提交 -->
     <script src="login.js"></script>
+    
 </body>
 
 </html>

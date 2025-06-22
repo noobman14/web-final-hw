@@ -1,10 +1,3 @@
-/**
- * 发布动态页面JavaScript文件
- * 功能：处理动态发布表单、图片预览和内容验证
- * 作者：校园生活交友平台开发团队
- * 版本：1.0
- */
-
 // 等待DOM完全加载后执行
 document.addEventListener('DOMContentLoaded', () => {
     // 获取页面中的主要元素
@@ -14,6 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const imageUrl = document.getElementById('imageUrl'); // 图片URL输入框
     const imagePreview = document.getElementById('imagePreview'); // 图片预览区域
     const postContentError = document.getElementById('postContentError'); // 内容错误提示
+    const tagsInput = document.getElementById('tags'); // 话题标签输入框
+    const visibilitySelect = document.getElementById('visibility'); // 可见范围选择框
 
     // 图片预览功能 - 处理文件上传
     imageUpload.addEventListener('change', (event) => {
@@ -48,34 +43,73 @@ document.addEventListener('DOMContentLoaded', () => {
     // 发布表单提交事件处理
     publishForm.addEventListener('submit', (e) => {
         e.preventDefault(); // 阻止表单默认提交行为
-        let isValid = true; // 表单验证状态标志
+        let isValid = true; // 表单校验状态标志
+
+        // 登录校验
+        const currentUser = localStorage.getItem('loggedInUser');
+        if (!currentUser) {
+            alert('请先登录后再发布动态。');
+            window.location.href = 'login.html';
+            return;
+        }
 
         // 清除之前的错误信息
         postContentError.textContent = '';
 
-        // 动态内容验证
+        // 动态内容校验
         if (postContent.value.trim() === '') {
             postContentError.textContent = '动态内容不能为空。';
             isValid = false;
         }
 
-        // 如果验证通过
+        // 如果校验通过
         if (isValid) {
-            // 在实际应用中，您会将此数据发送到后端服务器
+            // 获取可见范围
+            const visible = visibilitySelect.value;
+            // 处理图片字段
+            let image = '';
+            if (imageUpload.files.length > 0) {
+                image = imageUpload.files[0].name;
+            } else if (imageUrl.value.trim() !== '') {
+                image = imageUrl.value.trim();
+            }
+            // 处理标签
+            const tags = tagsInput.value.split(',').map(tag => tag.trim()).filter(tag => tag !== '');
+            // 构建新动态对象
             const newPost = {
-                content: postContent.value.trim(), // 动态内容
-                image: imageUpload.files.length > 0 ? imageUpload.files[0].name : imageUrl.value.trim(), // 图片信息
-                tags: document.getElementById('tags').value.split(',').map(tag => tag.trim()).filter(tag => tag !== ''), // 标签数组
-                timestamp: new Date().toLocaleString(), // 发布时间
-                likes: 0, // 初始点赞数
-                comments: 0 // 初始评论数
+                authorId: currentUser,
+                content: postContent.value.trim(),
+                image: image,
+                tags: tags,
+                timestamp: new Date().toLocaleString(),
+                likes: 0,
+                comments: [],
+                visibility
             };
-            console.log('新动态:', newPost); // 在控制台输出新动态信息
+            // 获取所有动态数据
+            let posts = getPosts();
+            // 生成新的动态ID
+            const newPostId = posts.length > 0 ? Math.max(...posts.map(post => post.id)) + 1 : 1;
+            newPost.id = newPostId;
+            // 添加新动态到数据中
+            posts.push(newPost);
+            // 保存更新后的动态数据
+            savePosts(posts);
             alert('动态发布成功！');
-            // 目前，我们将重定向到主页查看动态流（没有实际的新动态渲染）
+            // 跳转到主页
             window.location.href = 'index.html';
         } else {
             alert('请检查您的输入。');
         }
     });
 });
+
+// 获取所有动态数据的函数
+function getPosts() {
+    return JSON.parse(localStorage.getItem('posts')) || [];
+}
+
+// 保存动态数据到localStorage的函数
+function savePosts(posts) {
+    localStorage.setItem('posts', JSON.stringify(posts));
+}

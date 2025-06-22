@@ -1,21 +1,12 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<!-- 
-    校园生活交友平台 - 发布动态页面
-    功能：用户发布新动态、图片上传、标签添加
-    包含：动态内容编辑、图片上传预览、话题标签
--->
-
 <head>
     <meta charset="UTF-8">
-    <!-- 响应式视口设置，确保在移动设备上正常显示 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>发布动态 - 校园生活交友平台</title>
-    <!-- 引入全局样式和发布页面专用样式 -->
+    <title>编辑动态 - 校园生活交友平台</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="publish.css">
+    <link rel="stylesheet" href="edit_post.css">
 </head>
-
 <body>
     <!-- 页面头部区域 -->
     <header>
@@ -26,19 +17,19 @@
             <ul>
                 <li><a href="index.html">首页</a></li>
                 <li><a href="publish.html">发布动态</a></li>
-                <li><a href="#">个人主页</a></li>
+                <li><a href="profile.html">个人主页</a></li>
                 <li><a href="login.html">登录/注册</a></li>
             </ul>
         </nav>
     </header>
 
-    <!-- 主要内容区域 - 发布动态表单 -->
-    <main class="publish-container">
+    <!-- 主要内容区域 - 编辑动态表单 -->
+    <main class="edit-post-container">
         <!-- 页面标题 -->
-        <h2>发布新动态</h2>
-        <!-- 发布动态表单 -->
-        <form id="publishForm">
-            <!-- 动态内容输入组 -->
+        <h2>编辑动态</h2>
+        <!-- 编辑动态表单 -->
+        <form id="editPostForm">
+            <!-- 动态内容编辑组 -->
             <div class="form-group">
                 <label for="postContent">内容:</label>
                 <!-- 动态内容文本域，支持多行输入 -->
@@ -66,15 +57,8 @@
                 <!-- 标签输入框，支持多个标签 -->
                 <input type="text" id="tags" name="tags" placeholder="例如：#校园日常, #学习">
             </div>
-            <div class="form-group">
-                <label for="visibility">可见范围:</label>
-                <select id="visibility" name="visibility">
-                    <option value="public">公开</option>
-                    <option value="friends">仅好友</option>
-                </select>
-            </div>
-            <!-- 发布提交按钮 -->
-            <button type="submit">发布</button>
+            <!-- 保存修改按钮 -->
+            <button type="submit">保存修改</button>
         </form>
     </main>
 
@@ -84,14 +68,8 @@
     </footer>
 
     <!-- JavaScript文件引入 -->
-    <!-- 注意：引入顺序很重要，依赖关系为 data.js -> common.js -> publish.js -->
-
-    <!-- 数据管理模块：提供动态数据存储功能 -->
     <script src="data.js"></script>
-    <!-- 公共功能模块：提供导航栏等通用功能 -->
     <script src="common.js"></script>
-    <!-- 发布逻辑模块：处理动态发布和图片上传功能 -->
-    <script src="publish.js"></script>
+    <script src="edit_post.js"></script>
 </body>
-
 </html>
