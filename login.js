@@ -21,10 +21,10 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         if (passwordInput.type === 'password') {
             passwordInput.type = 'text'; // 显示密码
-            togglePasswordButton.querySelector('i').classList.replace('fa-eye-slash','fa-eye');
+            togglePasswordButton.querySelector('i').classList.replace('fa-eye-slash', 'fa-eye');
         } else {
             passwordInput.type = 'password'; // 隐藏密码
-            togglePasswordButton.querySelector('i').classList.replace('fa-eye','fa-eye-slash');
+            togglePasswordButton.querySelector('i').classList.replace('fa-eye', 'fa-eye-slash');
         }
     });
 
@@ -35,7 +35,8 @@ document.addEventListener('DOMContentLoaded', () => {
         rememberMeCheckbox.checked = true; // 自动勾选记住我
     }
     document.addEventListener('keydown', (e) => {
-        if(e.key === 'Enter') {
+        if (e.key === 'Enter') {
+            e.preventDefault();
             loginForm.requestSubmit();
         }
     });
@@ -75,22 +76,29 @@ document.addEventListener('DOMContentLoaded', () => {
             const user = users.find(u => u.studentId === studentIdInput.value.trim() && u.password === passwordInput.value.trim());
 
             if (user) {
+                // ✅ 新增封禁检查
+                if (user.isActive === false) {
+                    alert('该账号已被封禁，无法登录。');
+                    return;
+                }
+
                 // 如果勾选了"记住我"，保存学号
                 if (rememberMeCheckbox.checked) {
                     localStorage.setItem('rememberedStudentId', studentIdInput.value);
                 } else {
-                    localStorage.removeItem('rememberedStudentId'); // 否则删除保存的学号
+                    localStorage.removeItem('rememberedStudentId');
                 }
 
                 // 设置登录状态
-                localStorage.setItem('loggedInUser', user.studentId); // 保存登录用户ID
-                localStorage.setItem('userNickname', user.nickname); // 保存用户昵称
+                localStorage.setItem('loggedInUser', user.studentId);
+                localStorage.setItem('userNickname', user.nickname);
 
                 alert('登录成功！');
-                window.location.href = 'index.html'; // 登录成功后重定向到主页
+                window.location.href = 'index.html';
             } else {
                 alert('学号或密码错误，请重试。');
             }
+
         } else {
             alert('请检查您的输入。');
         }

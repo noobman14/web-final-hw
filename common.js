@@ -10,38 +10,58 @@ document.addEventListener('DOMContentLoaded', () => {
     // 初始化主题（浅色/深色）
     const savedTheme = localStorage.getItem('theme') || 'light';
     document.documentElement.setAttribute('data-theme', savedTheme);
+
     // 语言国际化
     const lang = localStorage.getItem('lang') || 'zh';
     const t = lang === 'en' ? {
-        home: 'Home', publish: 'Publish', search: 'Search', profile: 'Profile', login: 'Login/Register', logout: 'Logout', settings: 'Settings'
+        home: 'Home',
+        publish: 'Publish',
+        search: 'Search',
+        profile: 'Profile',
+        login: 'Login/Register',
+        logout: 'Logout',
+        settings: 'Settings',
+        admin: 'Admin Panel'
     } : {
-        home: '首页', publish: '发布动态', search: '搜索', profile: '个人主页', login: '登录/注册', logout: '退出登录', settings: '设置'
+        home: '首页',
+        publish: '发布动态',
+        search: '搜索',
+        profile: '个人主页',
+        login: '登录/注册',
+        logout: '退出登录',
+        settings: '设置',
+        admin: '管理面板'
     };
+
     const nav = document.querySelector('nav ul'); // 获取导航菜单
+    if (!nav) return; // 页面没有导航区域则不继续执行
+
     const loggedInUser = localStorage.getItem('loggedInUser'); // 获取登录用户ID
     const userNickname = localStorage.getItem('userNickname'); // 获取用户昵称
+    const currentUser = loggedInUser ? getUserByStudentId(loggedInUser) : null;
+    const isAdmin = currentUser?.role === 'admin';
 
-    // 如果用户已登录，显示登录后的导航菜单
     if (loggedInUser) {
         nav.innerHTML = `
             <li><a href="index.html"><i class="fa fa-home"></i><span>${t.home}</span></a></li>
             <li><a href="publish.html"><i class="fa fa-plus-circle"></i><span>${t.publish}</span></a></li>
             <li><a href="search.html"><i class="fa fa-search"></i><span>${t.search}</span></a></li>
             <li><a href="profile.html"><i class="fa fa-user"></i><span>${t.profile}</span></a></li>
-            <li><a href="#" id="logoutLink"><i class="fa fa-sign-out-alt"></i><span>${t.logout} (${userNickname})</span></a></li>
+            ${isAdmin ? `<li><a href="admin.html"><i class="fa fa-user-shield"></i><span>${t.admin}</span></a></li>` : ''}
             <li><a href="setting.html"><i class="fa fa-cog"></i><span>${t.settings}</span></a></li>
+            <li><a href="#" id="logoutLink"><i class="fa fa-sign-out-alt"></i><span>${t.logout} (${userNickname})</span></a></li>
         `;
 
-        // 为退出登录链接添加事件监听器
-        document.getElementById('logoutLink').addEventListener('click', (e) => {
-            e.preventDefault(); // 阻止默认链接行为
-            localStorage.removeItem('loggedInUser'); // 清除登录用户ID
-            localStorage.removeItem('userNickname'); // 清除用户昵称
-            // 直接跳转到首页，确保页面完全重新加载
-            window.location.href = 'index.html';
-        });
+        const logoutLink = document.getElementById('logoutLink');
+        if (logoutLink) {
+            logoutLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                localStorage.removeItem('loggedInUser');
+                localStorage.removeItem('userNickname');
+                window.location.href = 'index.html';
+            });
+        }
     } else {
-        // 如果用户未登录，显示未登录的导航菜单
         nav.innerHTML = `
             <li><a href="index.html"><i class="fa fa-home"></i><span>${t.home}</span></a></li>
             <li><a href="publish.html"><i class="fa fa-plus-circle"></i><span>${t.publish}</span></a></li>
@@ -52,7 +72,6 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
     }
 });
-
 
 
 /**
@@ -158,3 +177,11 @@ function toggleComments(commentsContainerId) {
         commentsSection.style.display = commentsSection.style.display === 'block' ? 'none' : 'block';
     }
 }
+
+/**
+ * 下面假设有以下辅助函数，请确保它们在项目中存在：
+ * getUserByStudentId(studentId) - 根据学号获取用户对象（包括角色和昵称等）
+ * getLoggedInUser() - 获取当前登录用户ID（或 null）
+ * getPosts() - 获取动态列表数据（数组）
+ * savePosts(posts) - 保存动态列表数据
+ */
