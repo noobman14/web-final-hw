@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function loadUserData(filter = '') {
     const users = getUsers().map(user => ({
         ...user,
-        registerTime: user.registerTime || '2023-01-01' // 默认注册时间
+        registerTime: user.registerTime || '2025-01-01' // 默认注册时间
     }));
 
     // 过滤用户
