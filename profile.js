@@ -5,6 +5,10 @@
  * 版本：1.0
  */
 
+ function highlightHashtags(text) {
+        return text.replace(/#([\u4e00-\u9fa5\w]+)/g, '<span class="hashtag">#$1</span>');
+    }
+
 // 等待DOM完全加载后执行
 document.addEventListener('DOMContentLoaded', () => {
             // 获取页面中的主要元素
@@ -93,19 +97,23 @@ document.addEventListener('DOMContentLoaded', () => {
                                     const postElement = document.createElement('div');
                                     postElement.classList.add('post');
                                     let postImage = post.image ? `<img src="${post.image}" alt="Post Image">` : ''; // 处理动态图片
+                                     const highlightedContent = highlightHashtags(post.content);
                                     postElement.innerHTML = `
                     <h3><a href="post_detail.html?id=${post.id}">${post.content.substring(0, 50)}...</a></h3>
-                    <p>${post.content}</p>
+                    <p>${highlightedContent}</p>
                     ${postImage}
                     <div class="post-meta">
                         <span>${post.likes}赞</span>
                         <span>${post.comments.length}评论</span>
                         <span>${post.timestamp}</span>
                     </div>
-                    ${isOwnProfile ? `<div class="post-actions"><span class="delete-button" data-post-id="${post.id}">🗑️ 删除</span></div>` : ''}
+                    ${isOwnProfile ? `<div class="post-actions"><span class="delete-button" data-post-id="${post.id}">🗑️ 删除</span>
+                    <span class="edit-button" data-post-id="${post.id}">✏️ 编辑</span>
+                    </div>` : ''}
                 `;
                 userPostsFeed.appendChild(postElement);
             });
+
 
             // 为用户动态的删除按钮添加事件监听器
             if (isOwnProfile) {
@@ -115,6 +123,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (confirm('确定要删除这条动态吗？')) {
                             handleDeletePost(postId, renderProfile); // 调用全局删除函数，传入重新渲染回调
                         }
+                    });
+                });
+                document.querySelectorAll('.edit-button').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                    const postId = parseInt(e.target.dataset.postId);
+                    window.location.href = `edit_post.html?id=${postId}`; // 跳转到编辑动态页面
                     });
                 });
             }

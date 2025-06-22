@@ -70,10 +70,11 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     function highlightHashtags(text) {
+
         return text.replace(/#([\u4e00-\u9fa5\w]+)/g, '<span class="hashtag">#$1</span>');
     }
 
-    // 渲染最新动态流，核心只加切换视图部分，其他内容原样保留
+
     const renderPosts = () => {
         // 1. 渲染标题和切换按钮
         feedSection.innerHTML = `
@@ -201,7 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        // 编辑
+
         container.querySelectorAll('.edit-button').forEach(button => {
             button.addEventListener('click', (e) => {
                 const postId = parseInt(e.target.dataset.postId);
@@ -212,6 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 初始化评论
         const posts = getPosts();
         posts.forEach(post => renderComments(`comments-${post.id}`, post.comments));
+
     };
 
     // 页面加载时初始化渲染

@@ -73,6 +73,10 @@
 ├── post_detail.css     # 动态详情页面的专属样式
 ├── post_detail.js      # 动态详情页面的JavaScript逻辑
 │
+├── edit_post.html    # 编辑动态页面
+├── edit_post.css     # 编辑动态的专属样式
+├── edit_post.js      # 编辑动态的JavaScript逻辑
+│
 ├── data.js             # 核心数据管理文件，使用 localStorage 存储数据
 │
 └── pic/                # 图片资源目录
