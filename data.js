@@ -29,7 +29,8 @@ function initializeData() {
                 bio: '计算机科学专业，热爱编程和阅读。正在学习前端开发，希望能和大家一起交流技术！',
                 interests: ['coding', 'reading', 'frontend'],
                 avatar: 'https://randomuser.me/api/portraits/women/1.jpg',
-                friends: ['20230002', '20230003']
+                friends: ['20230002', '20230003'],
+                isActive: true
             },
             // 体育学院 - 篮球校队成员
             {
@@ -38,7 +39,8 @@ function initializeData() {
                 nickname: 'Bob',
                 bio: '体育学院学生，篮球校队成员。喜欢运动和音乐，欢迎大家来球场切磋！',
                 interests: ['sports', 'music', 'basketball'],
-                avatar: 'https://randomuser.me/api/portraits/men/2.jpg'
+                avatar: 'https://randomuser.me/api/portraits/men/2.jpg',
+                isActive: true
             },
             // 艺术学院 - 设计专业
             {
@@ -47,7 +49,8 @@ function initializeData() {
                 nickname: '小美',
                 bio: '艺术学院设计专业，喜欢画画和摄影。记录生活中的美好瞬间～',
                 interests: ['art', 'photography', 'design'],
-                avatar: 'https://randomuser.me/api/portraits/women/3.jpg'
+                avatar: 'https://randomuser.me/api/portraits/women/3.jpg',
+                isActive: true
             },
             // 物理学院 - 研究生
             {
@@ -56,7 +59,8 @@ function initializeData() {
                 nickname: '学霸小明',
                 bio: '物理学院研究生，专注于量子物理研究。偶尔也会打打游戏放松一下。',
                 interests: ['physics', 'research', 'gaming'],
-                avatar: 'https://randomuser.me/api/portraits/men/4.jpg'
+                avatar: 'https://randomuser.me/api/portraits/men/4.jpg',
+                isActive: true
             },
             // 音乐学院 - 钢琴专业
             {
@@ -65,7 +69,8 @@ function initializeData() {
                 nickname: '音乐小王子',
                 bio: '音乐学院钢琴专业，热爱古典音乐。希望能用音乐传递快乐！',
                 interests: ['music', 'piano', 'classical'],
-                avatar: 'https://randomuser.me/api/portraits/men/5.jpg'
+                avatar: 'https://randomuser.me/api/portraits/men/5.jpg',
+                isActive: true
             },
             // 食品科学专业 - 美食达人
             {
@@ -74,7 +79,8 @@ function initializeData() {
                 nickname: '美食达人',
                 bio: '食品科学专业，喜欢研究各种美食。分享校园美食攻略，带你吃遍校园！',
                 interests: ['food', 'cooking', 'travel'],
-                avatar: 'https://randomuser.me/api/portraits/women/6.jpg'
+                avatar: 'https://randomuser.me/api/portraits/women/6.jpg',
+                isActive: true
             },
             // 商学院 - 创业青年
             {
@@ -83,7 +89,8 @@ function initializeData() {
                 nickname: '创业青年',
                 bio: '商学院学生，正在筹备自己的创业项目。喜欢和志同道合的朋友交流想法。',
                 interests: ['business', 'startup', 'networking'],
-                avatar: 'https://randomuser.me/api/portraits/men/7.jpg'
+                avatar: 'https://randomuser.me/api/portraits/men/7.jpg',
+                isActive: true
             },
             // 文学院 - 文学少女
             {
@@ -92,7 +99,8 @@ function initializeData() {
                 nickname: '文学少女',
                 bio: '文学院中文系，热爱写作和诗歌。用文字记录青春的美好时光。',
                 interests: ['literature', 'writing', 'poetry'],
-                avatar: 'https://randomuser.me/api/portraits/women/8.jpg'
+                avatar: 'https://randomuser.me/api/portraits/women/8.jpg',
+                isActive: true
             },
             // 个人账号 - 梁智炜
             {
@@ -102,7 +110,8 @@ function initializeData() {
                 bio: '文明其精神，野蛮其体魄。',
                 interests: ['E', 'G', 'E'],
                 avatar: 'pic/avatar/lGSLAxQ1ux0WEDE.jpeg',
-                role: 'admin'
+                role: 'admin',
+                isActive: true
             }
         ];
         ensureUserRelations(defaultUsers);

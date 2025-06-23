@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>校园生活交友平台</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="search.css">
+</head>
+<body>
+<header>
+    <div class="logo">校园生活交友平台</div>
+    <nav>
+        <ul></ul>
+    </nav>
+</header>
+<main>
+    <div class="search-container">
+        <input id="searchInput" type="text" class="search-input" placeholder="搜索用户、动态">
+        <button id="searchButton" class="search-button"><i class="fa fa-search"></i> 搜索</button>
+    </div>
+    <div class="suggestions">
+        <section class="hot-search">
+            <div class="section-title"><i class="fa fa-fire"></i> 热搜榜</div>
+            <ul class="hot-list">
+                <li><span class="rank">1</span><span class="term">抖音挑战</span></li>
+                <li><span class="rank">2</span><span class="term">校园日记</span></li>
+                <li><span class="rank">3</span><span class="term">美食探店</span></li>
+                <li><span class="rank">4</span><span class="term">旅行攻略</span></li>
+                <li><span class="rank">5</span><span class="term">健身打卡</span></li>
+            </ul>
+        </section>
+        <section class="recommend-section">
+            <div class="section-title"><i class="fa fa-tags"></i> 热门话题</div>
+            <div class="recommend-list">
+                <div class="recommend-item">
+                    <img src="pic/flower.png" alt="话题" class="recommend-cover">
+                    <div class="recommend-info"><div class="recommend-title">校园日常</div></div>
+                </div>
+                <div class="recommend-item">
+                    <img src="pic/default.png" alt="话题" class="recommend-cover">
+                    <div class="recommend-info"><div class="recommend-title">快乐学习</div></div>
+                </div>
+                <div class="recommend-item">
+                    <img src="pic/flower.png" alt="话题" class="recommend-cover">
+                    <div class="recommend-info"><div class="recommend-title">美味午餐</div></div>
+                </div>
+                <div class="recommend-item">
+                    <img src="pic/default.png" alt="话题" class="recommend-cover">
+                    <div class="recommend-info"><div class="recommend-title">运动健身</div></div>
+                </div>
+            </div>
+        </section>
+        <section class="search-history">
+            <div class="section-title"><i class="fa fa-history"></i> 历史记录 <span class="clear-history">清空</span></div>
+            <div class="history-tags">
+                <span class="history-tag">编程</span>
+                <span class="history-tag">舞蹈</span>
+                <span class="history-tag">美食</span>
+            </div>
+        </section>
+    </div>
+    <div id="results" class="search-results"><p>请输入关键字并点击搜索。</p></div>
+    
+    <!-- 静态搜索内容已移除，使用动态搜索结果 -->
+
+    <script src="data.js"></script>
+    <script src="common.js"></script>
+    <script src="search.js"></script>
+</main>
+<footer>
+    <p>&copy; 2025 校园生活交友平台</p>
+</footer>
+</body>
+</html>

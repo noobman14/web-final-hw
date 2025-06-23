@@ -1,9 +1,12 @@
 // 权限检查
-const currentUser = JSON.parse(localStorage.getItem('loggedInUser') || '{}');
+const studentId = localStorage.getItem('loggedInUser');
+const currentUser = studentId ? getUserByStudentId(studentId) : null;
+
 if (!currentUser || currentUser.role !== 'admin') {
     alert('无权访问管理员页面！');
     window.location.href = 'login.html';
 }
+
 
 // DOM元素
 const elements = {
@@ -38,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function loadUserData(filter = '') {
     const users = getUsers().map(user => ({
         ...user,
-        registerTime: user.registerTime || '2023-01-01' // 默认注册时间
+        registerTime: user.registerTime || '2025-01-01' // 默认注册时间
     }));
 
     // 过滤用户
@@ -128,7 +131,7 @@ function handleTableActions(e) {
     } else if (e.target.classList.contains('reset-btn')) {
         showModal(
             '重置密码',
-            `确定要将用户 ${user.nickname} 的密码重置为 "123456" 吗？`,
+            `确定要将用户 ${user.nickname} 的密码重置为 "123456AA" 吗？`,
             'resetPassword'
         );
     } else if (e.target.classList.contains('view-btn')) {
@@ -168,9 +171,9 @@ function resetUserPassword() {
     const user = users.find(u => u.studentId === state.selectedUserId);
 
     if (user) {
-        user.password = '123456';
+        user.password = '123456AA';
         saveUsers(users);
-        showToast(`用户 ${user.nickname} 的密码已重置为 123456`);
+        showToast(`用户 ${user.nickname} 的密码已重置为 123456AA`);
     }
 }
 
@@ -180,10 +183,12 @@ function viewUserDetails(user) {
         <strong>昵称:</strong> ${user.nickname}<br>
         <strong>简介:</strong> ${user.bio || '无'}<br>
         <strong>兴趣标签:</strong> ${user.interests?.join(', ') || '无'}<br>
-        <strong>状态:</strong> ${user.isActive !== false ? '正常' : '封禁'}
+        <strong>状态:</strong> ${user.isActive !== false ? '正常' : '封禁'}<br>
+        <strong>用户类型:</strong> ${user.role === 'admin' ? '管理员' : '普通用户'}
     `;
     showModal('用户详情', details);
 }
+
 
 // 模态框控制
 function showModal(title, message, actionType = null) {
@@ -207,11 +212,19 @@ function hideModal() {
 
 function confirmAction() {
     switch (state.currentAction) {
-        case 'toggleBan': toggleUserBan(); break;
-        case 'resetPassword': resetUserPassword(); break;
+        case 'toggleBan':
+            if (toggleUserBan(state.selectedUserId)) {
+                loadUserData(); // 成功后刷新表格
+            }
+            break;
+        case 'resetPassword':
+            resetUserPassword();
+            loadUserData(); // 可选：刷新表格
+            break;
     }
     hideModal();
 }
+
 
 // 辅助功能
 function logout() {
