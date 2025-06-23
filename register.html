@@ -45,18 +45,18 @@
             <form id="registerForm">
                 <div class="input-group">
                     <label for="studentId">学号</label>
-                    <input type="text" id="studentId" name="studentId" required>
+                    <input type="text" id="studentId" name="studentId" required placeholder="请输入10位学号">
                     <span class="error-message" id="studentIdError"></span>
                 </div>
                 <div class="input-group">
                     <label for="nickname">昵称</label>
-                    <input type="text" id="nickname" name="nickname" required>
+                    <input type="text" id="nickname" name="nickname" required placeholder="请输入昵称，2-20位中英文/数字/下划线">
                     <span class="error-message" id="nicknameError"></span>
                 </div>
                 <div class="input-group">
                     <label for="password">密码</label>
                     <div class="input-wrapper">
-                        <input type="password" id="password" name="password" required>
+                        <input type="password" id="password" name="password" required placeholder="请输入密码，至少8位且含大写字母">
                         <button type="button" id="togglePassword" class="toggle-password"><i class="fas fa-eye-slash"></i></button>
                     </div>
                     <span class="error-message" id="passwordError"></span>
@@ -64,7 +64,7 @@
                 <div class="input-group">
                     <label for="confirmPassword">确认密码</label>
                     <div class="input-wrapper">
-                        <input type="password" id="confirmPassword" name="confirmPassword" required>
+                        <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="请再次输入密码">
                         <button type="button" id="toggleConfirmPassword" class="toggle-password"><i class="fas fa-eye-slash"></i></button>
                     </div>
                     <span class="error-message" id="confirmPasswordError"></span>
