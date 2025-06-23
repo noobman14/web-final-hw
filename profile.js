@@ -31,32 +31,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 return params.get('id') || localStorage.getItem('loggedInUser'); // 获取用户ID或当前登录用户
             };
 
-            const currentUserId = getUserIdFromUrl(); // 获取当前查看的用户ID
-            let currentUser = currentUserId ? getUserByStudentId(currentUserId) : null; // 获取用户信息
-            let isFollowing = false; // 关注状态（模拟数据）
-
-            // 检查当前查看的是否是登录用户自己的资料页面
-            const isOwnProfile = localStorage.getItem('loggedInUser') === currentUserId;
-
-            /**
-             * 渲染用户资料信息
-             */
+            // 渲染用户资料信息，每次都获取最新数据
             const renderProfile = () => {
+                    const currentUserId = getUserIdFromUrl();
+                    const currentUser = currentUserId ? getUserByStudentId(currentUserId) : null;
+                    const isOwnProfile = localStorage.getItem('loggedInUser') === currentUserId;
                     if (!currentUser) {
-                        // 如果用户不存在，显示提示信息
                         profileNickname.textContent = '请登录查看个人主页';
                         profileBio.textContent = '或在URL中指定用户ID，例如: profile.html?id=20230001';
                         profileAvatar.src = 'https://via.placeholder.com/100';
                         followingCount.textContent = '0';
                         followersCount.textContent = '0';
-                        followButton.style.display = 'none'; // 隐藏关注按钮
-                        editProfileButton.style.display = 'none'; // 隐藏编辑按钮
+                        followButton.style.display = 'none';
+                        editProfileButton.style.display = 'none';
                         interestsList.innerHTML = '<p>无兴趣标签。</p>';
                         userPostsFeed.innerHTML = '<p style="text-align: center;">暂无动态或需要登录。</p>';
                         return;
                     }
-
-                    // 设置用户基本信息
                     profileAvatar.src = currentUser.avatar || 'https://via.placeholder.com/100';
                     profileNickname.textContent = currentUser.nickname;
                     profileBio.textContent = currentUser.bio;
@@ -70,22 +61,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     } else {
                         followersCount.textContent = '0';
                     }
-
-                    // 根据是否为用户自己的资料页面显示/隐藏编辑按钮
                     if (isOwnProfile) {
                         editProfileButton.style.display = 'block';
-                        followButton.style.display = 'none'; // 在自己的资料页面隐藏关注按钮
+                        followButton.style.display = 'none';
                     } else {
                         editProfileButton.style.display = 'none';
-                        // 只有在有登录用户的情况下才显示关注按钮
                         if (getLoggedInUser()) {
                             followButton.style.display = 'block';
                         } else {
                             followButton.style.display = 'none';
                         }
                     }
-
-                    // 渲染兴趣标签
                     interestsList.innerHTML = '';
                     if (currentUser.interests && currentUser.interests.length > 0) {
                         currentUser.interests.forEach(interest => {
@@ -96,15 +82,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     } else {
                         interestsList.innerHTML = '<p>暂无兴趣标签。</p>';
                     }
-
                     // 渲染用户动态列表
-                    const userPosts = getPostsByAuthorId(currentUserId); // 获取用户的动态
+                    const userPosts = getPostsByAuthorId(currentUserId);
                     userPostsFeed.innerHTML = '';
                     if (userPosts.length > 0) {
                         userPosts.forEach(post => {
                                     const postElement = document.createElement('div');
                                     postElement.classList.add('post');
-                                    let postImage = post.image ? `<img src="${post.image}" alt="Post Image">` : ''; // 处理动态图片
+                                    let postImage = post.image ? `<img src="${post.image}" alt="Post Image">` : '';
                                     const highlightedContent = highlightHashtags(post.content);
                                     postElement.innerHTML = `
                     <h3><a href="post_detail.html?id=${post.id}">${post.content.substring(0, 50)}...</a></h3>
@@ -121,33 +106,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
                 userPostsFeed.appendChild(postElement);
             });
-
-
-            // 为用户动态的删除按钮添加事件监听器
             if (isOwnProfile) {
                 document.querySelectorAll('.delete-button').forEach(button => {
                     button.addEventListener('click', (e) => {
                         const postId = parseInt(e.target.dataset.postId);
                         if (confirm('确定要删除这条动态吗？')) {
-                            handleDeletePost(postId, renderProfile); // 调用全局删除函数，传入重新渲染回调
+                            handleDeletePost(postId, renderProfile);
                         }
                     });
                 });
                 document.querySelectorAll('.edit-button').forEach(button => {
                     button.addEventListener('click', (e) => {
-                    const postId = parseInt(e.target.dataset.postId);
-                    window.location.href = `edit_post.html?id=${postId}`; // 跳转到编辑动态页面
+                        const postId = parseInt(e.target.dataset.postId);
+                        window.location.href = `edit_post.html?id=${postId}`;
                     });
                 });
             }
         } else {
             userPostsFeed.innerHTML = '<p style="text-align: center;">暂无动态。</p>';
         }
-
-        // 更新关注按钮状态（仅当不是自己的资料页面时）
+        // 更新关注按钮状态
         if (!isOwnProfile) {
             if (getLoggedInUser()) {
-                if (checkIsFollowing()) {
+                if (checkIsFollowing(currentUserId, isOwnProfile)) {
                     followButton.textContent = '已关注';
                     followButton.classList.add('following');
                 } else {
@@ -158,10 +139,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 followButton.style.display = 'none';
             }
         }
+        // 关注/取消关注功能
+        if (currentUser && !isOwnProfile && getLoggedInUser()) {
+            followButton.onclick = () => handleFollowToggle(currentUserId, isOwnProfile, renderProfile);
+        }
+        // 编辑资料功能
+        if (isOwnProfile) {
+            editProfileButton.onclick = () => {
+                window.location.href = `edit_profile.html?id=${currentUserId}`;
+            };
+        }
     };
 
     // 判断当前登录用户是否已关注该用户
-    function checkIsFollowing() {
+    function checkIsFollowing(currentUserId, isOwnProfile) {
         const loggedInUserId = getLoggedInUser();
         if (!loggedInUserId || isOwnProfile) return false;
         const loggedInUser = getUserByStudentId(loggedInUserId);
@@ -171,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 关注/取关功能
-    function handleFollowToggle() {
+    function handleFollowToggle(currentUserId, isOwnProfile, renderProfile) {
         const loggedInUserId = getLoggedInUser();
         if (!loggedInUserId || isOwnProfile) return;
         const loggedInUser = getUserByStudentId(loggedInUserId);
@@ -180,7 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!Array.isArray(loggedInUser.friends)) loggedInUser.friends = [];
         if (!Array.isArray(targetUser.followers)) targetUser.followers = [];
         let changed = false;
-        if (checkIsFollowing()) {
+        if (checkIsFollowing(currentUserId, isOwnProfile)) {
             // 取关
             loggedInUser.friends = loggedInUser.friends.filter(id => id !== currentUserId);
             targetUser.followers = targetUser.followers.filter(id => id !== loggedInUserId);
@@ -200,27 +191,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 关注/取消关注功能
-    if (currentUser && !isOwnProfile && getLoggedInUser()) {
-        followButton.onclick = handleFollowToggle;
-    }
-
-    // 编辑资料功能
-    if (isOwnProfile) {
-        editProfileButton.addEventListener('click', () => {
-            window.location.href = `edit_profile.html?id=${currentUserId}`; // 跳转到编辑资料页面
-        });
-    }
-
     // 初始渲染
     renderProfile();
 
     // 监听存储事件以处理跨标签页/窗口的登录/登出
     window.addEventListener('storage', (e) => {
         if (e.key === 'loggedInUser' || e.key === 'userNickname') {
-            // 当登录状态改变时重新评估当前用户并重新渲染资料页面
-            const currentUserId = getUserIdFromUrl();
-            currentUser = currentUserId ? getUserByStudentId(currentUserId) : null;
             renderProfile();
         }
     });

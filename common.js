@@ -9,7 +9,16 @@
 document.addEventListener('DOMContentLoaded', () => {
     const nav = document.querySelector('nav ul'); // 获取导航菜单
     const loggedInUser = localStorage.getItem('loggedInUser'); // 获取登录用户ID
-    const userNickname = localStorage.getItem('userNickname'); // 获取用户昵称
+    let userNickname = localStorage.getItem('userNickname'); // 获取用户昵称
+    // 如果已登录，尝试从最新 users 数据获取昵称
+    if (loggedInUser) {
+        const users = JSON.parse(localStorage.getItem('users')) || [];
+        const user = users.find(u => u.studentId === loggedInUser);
+        if (user && user.nickname) {
+            userNickname = user.nickname;
+            localStorage.setItem('userNickname', userNickname);
+        }
+    }
 
     // 如果用户已登录，显示登录后的导航菜单
     if (loggedInUser) {

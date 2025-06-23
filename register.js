@@ -11,12 +11,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const passwordInput = document.getElementById('password');
     const confirmPasswordInput = document.getElementById('confirmPassword');
     const nicknameInput = document.getElementById('nickname');
+    const avatarUrlInput = document.getElementById('avatarUrl');
+    const avatarFileInput = document.getElementById('avatarFile');
 
     // 实时学号验证
     studentIdInput.addEventListener('input', (e) => {
         const studentId = e.target.value;
         const errorElement = document.getElementById('studentIdError');
-        
+
         if (studentId.length > 0 && !/^\d*$/.test(studentId)) {
             errorElement.textContent = '学号只能包含数字';
         } else if (studentId.length > 0 && studentId.length < 10) {
@@ -32,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     passwordInput.addEventListener('input', (e) => {
         const password = e.target.value;
         const errorElement = document.getElementById('passwordError');
-        
+
         if (password.length > 0 && password.length < 8) {
             errorElement.textContent = '密码至少需要8个字符';
         } else if (password.length >= 8 && !/[A-Z]/.test(password)) {
@@ -40,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             errorElement.textContent = '';
         }
-        
+
         // 触发密码确认验证
         if (confirmPasswordInput.value.length > 0) {
             confirmPasswordInput.dispatchEvent(new Event('input'));
@@ -52,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const confirmPassword = e.target.value;
         const password = passwordInput.value;
         const errorElement = document.getElementById('confirmPasswordError');
-        
+
         if (confirmPassword.length > 0 && password !== confirmPassword) {
             errorElement.textContent = '两次输入的密码不一致';
         } else {
@@ -64,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
     nicknameInput.addEventListener('input', (e) => {
         const nickname = e.target.value;
         const errorElement = document.getElementById('nicknameError');
-        
+
         if (!/^[\u4e00-\u9fa5a-zA-Z0-9_]{0,20}$/.test(nickname)) {
             errorElement.textContent = '只能包含中文、字母、数字和下划线';
         } else if (nickname.length > 20) {
@@ -81,8 +83,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 学号最终验证
         const studentId = studentIdInput.value;
-        if (!/^\d{8}$/.test(studentId)) {
-            showError('studentIdError', '学号必须是8位数字');
+        if (!/^\d{10}$/.test(studentId)) {
+            showError('studentIdError', '学号必须是10位数字');
             isValid = false;
         }
 
@@ -133,7 +135,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function registerUser(userData) {
         try {
-            console.log('注册用户数据:', userData);
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+            if (users.some(u => u.studentId === userData.studentId)) {
+                alert('该学号已注册，请直接登录');
+                return;
+            }
+            // 头像处理
+            let avatar = 'pic/avatar/defaultava.png';
+            if (avatarFileInput && avatarFileInput.files.length > 0) {
+                avatar = 'pic/avatar/' + avatarFileInput.files[0].name;
+            } else if (avatarUrlInput && avatarUrlInput.value.trim()) {
+                avatar = avatarUrlInput.value.trim();
+            }
+            const newUser = {
+                studentId: userData.studentId,
+                password: userData.password,
+                nickname: userData.nickname,
+                avatar,
+                friends: [],
+                followers: []
+            };
+            users.push(newUser);
+            localStorage.setItem('users', JSON.stringify(users));
             alert('注册成功！即将跳转到登录页面');
             window.location.href = 'login.html';
         } catch (error) {

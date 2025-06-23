@@ -60,9 +60,12 @@
             </div>
             <!-- 头像URL编辑组 -->
             <div class="form-group">
-                <label for="editAvatar">头像 (URL):</label>
-                <!-- 头像URL输入框，支持外部图片链接 -->
-                <input type="url" id="editAvatar" name="editAvatar">
+                <label for="avatarUrl">头像URL（可选）</label>
+                <input type="text" id="avatarUrl" name="avatarUrl" placeholder="头像URL（可选）">
+            </div>
+            <div class="form-group">
+                <label for="avatarFile">选择头像文件（可选）</label>
+                <input type="file" id="avatarFile" name="avatarFile" accept="image/*">
             </div>
             <!-- 保存修改按钮 -->
             <button type="submit">保存修改</button>

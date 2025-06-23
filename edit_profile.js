@@ -12,8 +12,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const editNickname = document.getElementById('editNickname'); // 昵称输入框
     const editBio = document.getElementById('editBio'); // 简介输入框
     const editInterests = document.getElementById('editInterests'); // 兴趣标签输入框
-    const editAvatar = document.getElementById('editAvatar'); // 头像URL输入框
     const editNicknameError = document.getElementById('editNicknameError'); // 昵称错误提示
+    const avatarUrlInput = document.getElementById('avatarUrl');
+    const avatarFileInput = document.getElementById('avatarFile');
 
     // 获取登录用户的ID（目前使用模拟数据）
     const loggedInUserId = localStorage.getItem('loggedInUser') || '20230001'; // 如果未登录则默认使用模拟用户
@@ -24,7 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
         editNickname.value = currentUser.nickname || ''; // 设置昵称
         editBio.value = currentUser.bio || ''; // 设置简介
         editInterests.value = currentUser.interests ? currentUser.interests.join(', ') : ''; // 设置兴趣标签（用逗号分隔）
-        editAvatar.value = currentUser.avatar || ''; // 设置头像URL
     } else {
         alert('未找到用户信息，请先登录。');
         // 可选择重定向到登录页面
@@ -46,17 +46,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // 如果验证通过且用户存在
-        if (isValid && currentUser) {
+        if (isValid && loggedInUserId) {
+            // 每次保存前都获取最新对象
+            let currentUser = getUserByStudentId(loggedInUserId);
+            let avatar = 'pic/avatar/defaultava.png';
+            if (avatarFileInput && avatarFileInput.files.length > 0) {
+                avatar = 'pic/avatar/' + avatarFileInput.files[0].name;
+            } else if (avatarUrlInput && avatarUrlInput.value.trim()) {
+                avatar = avatarUrlInput.value.trim();
+            }
             // 更新用户信息
-            currentUser.nickname = editNickname.value.trim(); // 更新昵称
-            currentUser.bio = editBio.value.trim(); // 更新简介
-            currentUser.interests = editInterests.value.split(',').map(tag => tag.trim()).filter(tag => tag !== ''); // 更新兴趣标签
-            currentUser.avatar = editAvatar.value.trim(); // 更新头像URL
-
-            updateUser(currentUser); // 将更新后的用户数据保存到localStorage
-            alert('个人资料更新成功！');
-            window.location.href = `profile.html?id=${loggedInUserId}`; // 重定向到更新后的个人资料页面
-        } else if (!currentUser) {
+            currentUser.nickname = editNickname.value.trim();
+            currentUser.bio = editBio.value.trim();
+            currentUser.interests = editInterests.value.split(',').map(tag => tag.trim()).filter(tag => tag !== '');
+            currentUser.avatar = avatar;
+            updateUser(currentUser);
+            alert('资料修改成功！');
+            window.location.href = `profile.html?id=${loggedInUserId}`;
+        } else if (!loggedInUserId) {
             alert('无法保存：未找到用户数据。');
         }
     });
