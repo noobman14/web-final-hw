@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             userNickname = localStorage.getItem('userNickname'); // 获取用户昵称
             const currentUser = loggedInUser ? getUserByStudentId(loggedInUser) : null;
-            const isAdmin = currentUser ? .role === 'admin';
+            const isAdmin = currentUser ? currentUser.role === 'admin' : false;
 
             if (loggedInUser) {
                 nav.innerHTML = `
@@ -187,3 +187,6 @@ function toggleComments(commentsContainerId) {
         commentsSection.style.display = commentsSection.style.display === 'block' ? 'none' : 'block';
     }
 }
+
+window.renderComments = renderComments;
+window.toggleComments = toggleComments;
