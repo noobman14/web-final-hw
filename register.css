@@ -47,7 +47,7 @@
 .input-group input:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.15);
 }
 
 .error-message {
@@ -111,8 +111,13 @@ button:hover {
     border: none;
     cursor: pointer;
     visibility: hidden;
-    /* Hide the icon by default */
     color: #888;
+    padding: 0;
+    height: 24px;
+    width: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .form-group input::placeholder,
@@ -127,6 +132,12 @@ button:hover {
     /* 文本域可垂直缩放，最小高度100px */
     resize: vertical;
     min-height: 100px;
+}
+
+.input-wrapper input:focus+.toggle-password,
+.input-wrapper .toggle-password:active,
+.input-wrapper .toggle-password:focus {
+    visibility: visible;
 }
 
 
