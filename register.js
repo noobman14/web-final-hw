@@ -11,6 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const passwordInput = document.getElementById('password');
     const confirmPasswordInput = document.getElementById('confirmPassword');
     const nicknameInput = document.getElementById('nickname');
+    const bioInput = document.getElementById('bio');
+    const interestsInput = document.getElementById('interests');
     const avatarUrlInput = document.getElementById('avatarUrl');
     const avatarFileInput = document.getElementById('avatarFile');
     const togglePassword = document.getElementById('togglePassword');
@@ -157,9 +159,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (isValid) {
             registerUser({
-                studentId,
-                password,
-                nickname
+                studentId: studentIdInput.value,
+                password: passwordInput.value,
+                nickname: nicknameInput.value,
+                bio: bioInput.value,
+                interests: interestsInput.value,
             });
         } else {
             alert('请检查您的输入是否正确');
@@ -187,10 +191,15 @@ document.addEventListener('DOMContentLoaded', () => {
             } else if (avatarUrlInput && avatarUrlInput.value.trim()) {
                 avatar = avatarUrlInput.value.trim();
             }
+
+            const interests = userData.interests ? userData.interests.split(',').map(tag => tag.trim()).filter(tag => tag) : [];
+
             const newUser = {
                 studentId: userData.studentId,
                 password: userData.password,
                 nickname: userData.nickname,
+                bio: userData.bio,
+                interests: interests,
                 avatar,
                 friends: [],
                 followers: []

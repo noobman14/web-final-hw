@@ -4,21 +4,28 @@
  * 设计理念：简洁、现代、易用，适配不同屏幕
  */
 
+[data-theme="dark"] body {
+    background-color: var(--bg-color);
+}
+
 .login-container {
     /* 主要容器，居中显示，白色背景，圆角和阴影提升层次感 */
     max-width: 550px;
     margin: 50px auto;
-    padding: 35px;
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    padding: 40px;
+    background-color: var(--bg-color-alt);
+    border-radius: 10px;
+    box-shadow: 0 8px 30px var(--shadow-color);
+    width: 100%;
+    text-align: center;
+    transition: background-color 0.3s, box-shadow 0.3s;
 }
 
 .login-container h2 {
     /* 标题居中，深色字体，突出显示 */
     text-align: center;
-    color: #2c3e50;
-    margin-bottom: 30px;
+    color: var(--text-color);
+    margin-bottom: 25px;
     font-size: 28px;
     font-weight: 700;
 }
@@ -48,7 +55,7 @@
     /* 标签样式，增强可读性 */
     display: block;
     margin-bottom: 8px;
-    color: #555;
+    color: var(--text-color-secondary);
     font-weight: 600;
 }
 
@@ -56,20 +63,20 @@
 .form-group input[type="password"] {
     /* 输入框样式，圆角、内边距、过渡动画 */
     width: 100%;
-    padding: 12px 40px 12px 15px;
-    ;
-    border: 1px solid #e0e0e0;
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-color);
     border-radius: 8px;
     font-size: 16px;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    box-sizing: border-box;
+    color: var(--text-color);
+    transition: border-color 0.3s, background-color 0.3s;
 }
 
 .form-group input:focus {
     /* 输入聚焦时高亮边框和阴影，提升交互体验 */
-    border-color: #007bff;
     outline: none;
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
 }
 
 .form-group input[type="checkbox"]+label {
@@ -81,8 +88,8 @@
 
 .error-message {
     /* 错误提示信息，红色字体，适当缩小字号 */
-    color: #e74c3c;
-    font-size: 13px;
+    color: #dc3545;
+    font-size: 14px;
     margin-top: 5px;
     display: block;
 }
@@ -98,34 +105,33 @@
 
 .pw-options a {
     /* 链接样式，蓝色高亮，悬停变色 */
-    color: #007bff;
+    color: var(--primary-color);
     text-decoration: none;
     font-weight: 600;
     transition: color 0.3s ease;
 }
 
 .pw-options a:hover {
-    color: #0056b3;
+    color: var(--primary-color-hover);
 }
 
 button[type="submit"] {
     /* 提交按钮样式，蓝色背景，圆角，交互动画 */
     width: 100%;
-    padding: 15px;
-    background-color: #007bff;
-    color: white;
+    padding: 12px;
+    background-color: var(--primary-color);
     border: none;
+    color: white;
     border-radius: 8px;
-    font-size: 18px;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 700;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition: background-color 0.3s ease;
 }
 
 button[type="submit"]:hover {
     /* 按钮悬停时变深色并微微上移，增强反馈 */
-    background-color: #0056b3;
-    transform: translateY(-2px);
+    background-color: var(--primary-color-hover);
 }
 
 .register-prompt {
@@ -138,15 +144,56 @@ button[type="submit"]:hover {
 
 .register-prompt a {
     /* 注册链接样式，蓝色高亮，悬停变色 */
-    color: #007bff;
+    color: var(--primary-color);
     text-decoration: none;
     font-weight: 600;
     transition: color 0.3s ease;
 }
 
 .register-prompt a:hover {
-    color: #0056b3;
+    color: var(--primary-color-hover);
     text-decoration: underline;
+}
+
+.extra-links {
+    margin-top: 20px;
+}
+
+.extra-links a {
+    color: var(--primary-color);
+    text-decoration: none;
+    margin: 0 10px;
+    transition: color 0.3s;
+}
+
+.extra-links a:hover {
+    text-decoration: underline;
+}
+
+
+/* 引入主题切换的暗色模式样式 */
+
+
+/* 注意：这里只处理本页面特有的元素，通用元素样式由 style.css 控制 */
+
+[data-theme="dark"] .login-container {
+    background-color: var(--bg-color-alt);
+    box-shadow: 0 8px 30px var(--shadow-color);
+}
+
+[data-theme="dark"] .input-group input {
+    background-color: var(--bg-color);
+    border-color: var(--border-color);
+    color: var(--text-color);
+}
+
+[data-theme="dark"] .input-group input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.25);
+}
+
+[data-theme="dark"] .extra-links a {
+    color: var(--primary-color);
 }
 
 

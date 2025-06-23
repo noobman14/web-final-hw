@@ -1,12 +1,20 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>编辑动态 - 校园生活交友平台</title>
+    <script>
+        (function() {
+            const theme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', theme)
+        })();
+    </script>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="edit_post.css">
 </head>
+
 <body>
     <!-- 页面头部区域 -->
     <header>
@@ -72,4 +80,5 @@
     <script src="common.js"></script>
     <script src="edit_post.js"></script>
 </body>
+
 </html>

@@ -11,6 +11,12 @@
     <!-- 响应式视口设置，确保在移动设备上正常显示 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>注册 - 校园生活交友平台</title>
+    <script>
+        (function() {
+            const theme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', theme)
+        })();
+    </script>
     <!-- 引入全局样式和注册页面专用样式 -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="register.css">
@@ -33,67 +39,52 @@
     </header>
 
     <!-- 主要内容区域 - 注册表单 -->
-    <main class="register-container">
-        <!-- 页面标题 -->
-        <h2>用户注册</h2>
-        <!-- 注册表单 -->
-        <form id="registerForm">
-            <!-- 学号输入组 -->
-            <div class="form-group">
-                <label for="studentId">学号:</label>
-                <input type="text" id="studentId" name="studentId" required placeholder="请输入正确的学号">
-                <!-- 学号错误提示信息 -->
-                <span class="error-message" id="studentIdError"></span>
-            </div>
-            <!-- 密码输入组 -->
-            <div class="form-group">
-                <label for="password">密码:</label>
-                <div class="input-wrapper">
-                    <input type="password" id="password" name="password" required placeholder="至少8位且包含大写字母">
-                    <button type="button" id="togglePassword" class="toggle-password"><i class="fas fa-eye-slash"></i></button>
+    <main>
+        <div class="register-container">
+            <h2>创建您的校园账户</h2>
+            <form id="registerForm">
+                <div class="input-group">
+                    <label for="studentId">学号</label>
+                    <input type="text" id="studentId" name="studentId" required>
+                    <span class="error-message" id="studentIdError"></span>
                 </div>
-                <!-- 密码错误提示信息 -->
-                <span class="error-message" id="passwordError"></span>
-            </div>
-            <!-- 确认密码输入组 -->
-            <div class="form-group">
-                <label for="confirmPassword">确认密码:</label>
-                <div class="input-wrapper">
-                    <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="请再次输入密码">
-                    <button type="button" id="toggleConfirmPassword" class="toggle-password"><i class="fas fa-eye-slash"></i></button>
+                <div class="input-group">
+                    <label for="nickname">昵称</label>
+                    <input type="text" id="nickname" name="nickname" required>
+                    <span class="error-message" id="nicknameError"></span>
                 </div>
-                <!-- 确认密码错误提示信息 -->
-                <span class="error-message" id="confirmPasswordError"></span>
+                <div class="input-group">
+                    <label for="password">密码</label>
+                    <input type="password" id="password" name="password" required>
+                    <span class="error-message" id="passwordError"></span>
+                </div>
+                <div class="input-group">
+                    <label for="confirmPassword">确认密码</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                    <span class="error-message" id="confirmPasswordError"></span>
+                </div>
+                <div class="input-group">
+                    <label for="bio">个人简介 (可选)</label>
+                    <textarea id="bio" name="bio" placeholder="简单介绍一下自己吧"></textarea>
+                </div>
+                <div class="input-group">
+                    <label for="interests">兴趣标签 (可选, 逗号分隔)</label>
+                    <input type="text" id="interests" name="interests" placeholder="例如: 编程, 阅读">
+                </div>
+                <div class="input-group">
+                    <label for="avatarUrl">头像URL (可选)</label>
+                    <input type="url" id="avatarUrl" name="avatarUrl" placeholder="输入图片URL">
+                </div>
+                <div class="input-group">
+                    <label for="avatarFile">或上传头像 (可选)</label>
+                    <input type="file" id="avatarFile" name="avatarFile" accept="image/*">
+                </div>
+                <button type="submit">立即注册</button>
+            </form>
+            <div class="login-link">
+                <p>已有账户？ <a href="login.html">立即登录</a></p>
             </div>
-            <!-- 昵称输入组 -->
-            <div class="form-group">
-                <label for="nickname">昵称:</label>
-                <input type="text" id="nickname" name="nickname" required placeholder="不能包含特殊符号">
-                <!-- 昵称错误提示信息 -->
-                <span class="error-message" id="nicknameError"></span>
-            </div>
-            <!-- 个人简介输入组 -->
-            <div class="form-group">
-                <label for="bio">个人简介:</label>
-                <textarea id="bio" name="bio" placeholder="简单介绍一下自己吧"></textarea>
-            </div>
-            <!-- 兴趣标签输入组 -->
-            <div class="form-group">
-                <label for="interests">兴趣标签:</label>
-                <input type="text" id="interests" name="interests" placeholder="例如：#coding #reading">
-            </div>
-            <!-- 头像URL输入组 -->
-            <div class="form-group">
-                <label for="avatarUrl">头像URL（可选）</label>
-                <input type="text" id="avatarUrl" name="avatarUrl" placeholder="头像URL（可选）">
-            </div>
-            <div class="form-group">
-                <label for="avatarFile">选择头像文件（可选）</label>
-                <input type="file" id="avatarFile" name="avatarFile" accept="image/*">
-            </div>
-            <!-- 注册提交按钮 -->
-            <button type="submit">注册</button>
-        </form>
+        </div>
     </main>
 
     <!-- 页面底部 -->

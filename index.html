@@ -10,9 +10,16 @@
     <meta charset="UTF-8">
     <!-- 响应式视口设置，确保在移动设备上正常显示 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>校园生活</title>
+    <title>首页 - 校园生活交友平台</title>
+    <script>
+        (function() {
+            const theme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', theme)
+        })();
+    </script>
     <!-- 引入全局样式文件 -->
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 
 <body>

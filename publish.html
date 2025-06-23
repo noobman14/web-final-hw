@@ -11,6 +11,12 @@
     <!-- 响应式视口设置，确保在移动设备上正常显示 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>发布动态 - 校园生活交友平台</title>
+    <script>
+        (function() {
+            const theme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', theme)
+        })();
+    </script>
     <!-- 引入全局样式和发布页面专用样式 -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="publish.css">

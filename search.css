@@ -1,31 +1,36 @@
 /* search.css - 搜索页面样式 */
+
 .search-container {
     max-width: 800px;
     margin: 20px auto;
     display: flex;
     align-items: center;
     gap: 8px;
+    background-color: var(--bg-color-alt);
+    box-shadow: 0 4px 15px var(--shadow-color);
 }
 
 .search-input {
     flex: 1;
-    border: 1px solid #ccc;
+    border: 1px solid var(--border-color);
     border-radius: 6px;
     padding: 8px 12px;
     font-size: 14px;
     outline: none;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: var(--bg-color);
+    color: var(--text-color);
 }
 
 .search-input:focus {
-    border-color: #007aff;
+    border-color: var(--primary-color);
     box-shadow: 0 0 6px rgba(0, 122, 255, 0.4);
 }
 
 .search-button {
     border: none;
-    background-color: #007aff;
-    color: #fff;
+    background: var(--primary-color);
+    color: var(--text-color-light);
     padding: 8px 16px;
     border-radius: 6px;
     cursor: pointer;
@@ -37,7 +42,7 @@
 }
 
 .search-button:hover {
-    background-color: #005fcc;
+    background: var(--primary-color-hover);
     box-shadow: 0 2px 8px rgba(0, 122, 255, 0.3);
 }
 
@@ -48,12 +53,15 @@
 
 .search-results-section {
     margin-top: 20px;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
 }
 
 .search-results-section h3 {
     font-size: 18px;
-    color: #2c3e50;
+    color: var(--text-color);
     margin-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .search-results-section ul {
@@ -89,18 +97,24 @@
     background-color: rgba(0, 122, 255, 0.1);
 }
 
+
 /* 建议区块样式 */
+
 .suggestions {
     max-width: 800px;
     margin: 20px auto;
     padding: 0 20px;
 }
 
-.hot-search, .recommend-section, .search-history {
+.hot-search,
+.recommend-section,
+.search-history {
     margin-top: 20px;
 }
 
-.hot-search .section-title, .recommend-section .section-title, .search-history .section-title {
+.hot-search .section-title,
+.recommend-section .section-title,
+.search-history .section-title {
     font-size: 18px;
     color: var(--primary-color);
     margin-bottom: 10px;
@@ -142,7 +156,7 @@
 }
 
 .recommend-item {
-    background-color: var(--main-bg);
+    background-color: var(--bg-color);
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
@@ -167,6 +181,11 @@
 .recommend-title {
     font-size: 14px;
     font-weight: 500;
+    color: var(--text-color);
+}
+
+.recommend-desc {
+    color: var(--text-color-secondary);
 }
 
 .search-history .history-tags {
@@ -176,15 +195,31 @@
 }
 
 .history-tag {
-    background-color: var(--main-bg);
+    background-color: var(--bg-color);
     border-radius: 12px;
     padding: 6px 12px;
     font-size: 14px;
     cursor: pointer;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     transition: background-color 0.2s ease;
+    color: var(--text-color-secondary);
+    border: 1px solid var(--border-color);
 }
 
 .history-tag:hover {
-    background-color: rgba(0, 191, 165, 0.1);
-} 
+    background-color: var(--primary-color);
+    color: var(--text-color-light);
+    border-color: var(--primary-color);
+}
+
+.hot-list .term {
+    color: var(--text-color);
+}
+
+.hot-list .desc {
+    color: var(--text-color-secondary);
+}
+
+#results p {
+    color: var(--text-color-secondary);
+}

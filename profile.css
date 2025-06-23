@@ -11,8 +11,10 @@
     display: flex;
     align-items: center;
     padding-bottom: 25px;
-    border-bottom: 1px solid #eef2f5;
-    margin-bottom: 25px;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 0;
+    background: transparent;
+    color: var(--text-color);
 }
 
 .profile-avatar {
@@ -21,7 +23,7 @@
     border-radius: 50%;
     object-fit: cover;
     margin-right: 30px;
-    border: 4px solid #007bff;
+    border: 5px solid var(--bg-color-alt);
     padding: 3px;
     box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
 }
@@ -32,13 +34,13 @@
 
 .profile-info h2 {
     margin: 0 0 8px 0;
-    color: #2c3e50;
+    color: var(--text-color);
     font-size: 28px;
     font-weight: 700;
 }
 
 .profile-info p {
-    color: #666;
+    color: var(--text-color-secondary);
     margin: 0 0 15px 0;
     line-height: 1.6;
     font-size: 15px;
@@ -51,7 +53,7 @@
 }
 
 .profile-stats span {
-    color: #555;
+    color: var(--text-color-secondary);
     font-size: 16px;
     font-weight: 600;
 }
@@ -111,13 +113,17 @@
 .profile-interests,
 .profile-posts {
     margin-bottom: 30px;
+    background-color: transparent;
+    padding: 0;
+    border: none;
+    box-shadow: none;
 }
 
 .profile-interests h3,
 .profile-posts h3 {
-    color: #2c3e50;
+    color: var(--text-color);
     margin-bottom: 20px;
-    border-bottom: 2px solid #eef2f5;
+    border-bottom: 1px solid var(--border-color);
     padding-bottom: 10px;
     font-size: 22px;
     font-weight: 700;
@@ -131,13 +137,14 @@
 }
 
 #interestsList span {
-    background-color: #e7f3ff;
-    color: #007bff;
+    background-color: var(--bg-color);
+    color: var(--text-color-secondary);
     padding: 8px 15px;
     border-radius: 20px;
     font-size: 14px;
     font-weight: 500;
     transition: background-color 0.3s ease, color 0.3s ease;
+    border: 1px solid var(--border-color);
 }
 
 #interestsList span:hover {
@@ -164,7 +171,7 @@
 }
 
 .profile-posts .post h3 {
-    color: #2c3e50;
+    color: var(--text-color);
     margin-top: 0;
     font-size: 18px;
     font-weight: 600;
@@ -180,7 +187,7 @@
 }
 
 .profile-posts .post p {
-    color: #333;
+    color: var(--text-color-secondary);
     line-height: 1.7;
     margin-bottom: 15px;
 }
@@ -206,7 +213,7 @@
 
 .profile-posts .post-meta {
     font-size: 13px;
-    color: #999;
+    color: var(--text-color-secondary);
     margin-top: 10px;
     display: flex;
     gap: 15px;
@@ -295,4 +302,30 @@
 
 .action-button:hover {
     background-color: #0056b3;
+}
+
+.profile-details {
+    padding: 30px;
+}
+
+.interests-card,
+.posts-card {
+    background: var(--bg-color-alt);
+    border: 1px solid var(--border-color);
+}
+
+.interests-card h3,
+.posts-card h3 {
+    color: var(--text-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.interests-list span {
+    background-color: var(--bg-color);
+    color: var(--text-color-secondary);
+    border: 1px solid var(--border-color);
+}
+
+.post-meta span {
+    color: var(--text-color-secondary);
 }

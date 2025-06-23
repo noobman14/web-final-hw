@@ -5,27 +5,91 @@
  */
 
 .register-container {
-    /* 主要容器，居中显示，白色背景，圆角和阴影提升层次感 */
-    max-width: 550px;
-    margin: 50px auto;
-    padding: 35px;
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 30px;
+    text-align: center;
 }
 
 .register-container h2 {
     /* 标题居中，深色字体，突出显示 */
-    text-align: center;
-    color: #2c3e50;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
+    color: var(--text-color);
     font-size: 28px;
     font-weight: 700;
 }
 
-.form-group {
-    /* 每个表单项的间距 */
+.input-group {
     margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--text-color-secondary);
+    font-weight: 600;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-color);
+    border-radius: 8px;
+    font-size: 16px;
+    color: var(--text-color);
+    box-sizing: border-box;
+    /* To ensure padding is included in the width */
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+}
+
+.error-message {
+    /* 错误提示信息，红色字体，适当缩小字号 */
+    color: #dc3545;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--primary-color);
+    border: none;
+    color: white;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: var(--primary-color-hover);
+}
+
+.login-link {
+    margin-top: 20px;
+}
+
+.login-link a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+[data-theme="dark"] body {
+    background-color: var(--bg-color);
 }
 
 
@@ -51,37 +115,6 @@
     color: #888;
 }
 
-.form-group label {
-    /* 标签样式，增强可读性 */
-    display: block;
-    margin-bottom: 8px;
-    color: #555;
-    font-weight: 600;
-}
-
-.form-group input[type="text"],
-.form-group input[type="password"],
-.form-group input[type="url"],
-.form-group textarea {
-    /* 输入框和文本域样式，圆角、内边距、过渡动画 */
-    width: 100%;
-    /* Use 100% width and box-sizing */
-    padding: 12px 40px 12px 15px;
-    /* Add right padding for the icon */
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    font-size: 16px;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    box-sizing: border-box;
-    /* Ensure padding is included in the width */
-}
-
-.form-group textarea {
-    /* 文本域可垂直缩放，最小高度100px */
-    resize: vertical;
-    min-height: 100px;
-}
-
 .form-group input::placeholder,
 .form-group textarea::placeholder {
     color: #999;
@@ -90,40 +123,10 @@
     opacity: 1;
 }
 
-.form-group input:focus,
-.form-group textarea:focus {
-    /* 输入聚焦时高亮边框和阴影，提升交互体验 */
-    border-color: #007bff;
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
-}
-
-.error-message {
-    /* 错误提示信息，红色字体，适当缩小字号 */
-    color: #e74c3c;
-    font-size: 13px;
-    margin-top: 5px;
-    display: block;
-}
-
-button[type="submit"] {
-    /* 提交按钮样式，蓝色背景，圆角，交互动画 */
-    width: 100%;
-    padding: 15px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 18px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-button[type="submit"]:hover {
-    /* 按钮悬停时变深色并微微上移，增强反馈 */
-    background-color: #0056b3;
-    transform: translateY(-2px);
+.form-group textarea {
+    /* 文本域可垂直缩放，最小高度100px */
+    resize: vertical;
+    min-height: 100px;
 }
 
 

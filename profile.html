@@ -11,6 +11,12 @@
     <!-- 响应式视口设置，确保在移动设备上正常显示 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>用户主页 - 校园生活交友平台</title>
+    <script>
+        (function() {
+            const theme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', theme)
+        })();
+    </script>
     <!-- 引入全局样式和个人主页专用样式 -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="profile.css">
@@ -32,10 +38,8 @@
         </nav>
     </header>
 
-    <!-- 主要内容区域 - 用户资料展示 -->
-    <main class="profile-container">
-        <!-- 用户资料头部区域 -->
-        <div class="profile-header">
+    <main>
+        <section class="profile-header">
             <!-- 用户头像 -->
             <img src="https://via.placeholder.com/100" alt="Avatar" class="profile-avatar" id="profileAvatar">
             <!-- 用户基本信息 -->
@@ -57,23 +61,25 @@
                     <button id="messageButton" class="profile-action-btn" style="display: none;">私信</button>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- 用户兴趣标签区域 -->
-        <div class="profile-interests">
-            <h3>兴趣标签</h3>
-            <!-- 兴趣标签列表容器 -->
-            <div id="interestsList"></div>
-        </div>
-
-        <!-- 用户动态展示区域 -->
-        <div class="profile-posts">
-            <h3>TA的动态</h3>
-            <!-- 动态列表容器 -->
-            <div class="feed" id="userPostsFeed">
-                <!-- 用户动态将通过JavaScript动态加载到这里 -->
+        <section class="profile-details">
+            <!-- 用户兴趣标签区域 -->
+            <div class="profile-interests">
+                <h3>兴趣标签</h3>
+                <!-- 兴趣标签列表容器 -->
+                <div id="interestsList"></div>
             </div>
-        </div>
+
+            <!-- 用户动态展示区域 -->
+            <div class="profile-posts">
+                <h3>TA的动态</h3>
+                <!-- 动态列表容器 -->
+                <div class="feed" id="userPostsFeed">
+                    <!-- 用户动态将通过JavaScript动态加载到这里 -->
+                </div>
+            </div>
+        </section>
     </main>
 
     <!-- 页面底部 -->
