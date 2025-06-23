@@ -105,7 +105,7 @@ function performSearch(query) {
             const div = document.createElement('div');
             div.classList.add('post-snippet');
             div.innerHTML = `<i class="fa fa-paper-plane"></i> ${p.content.slice(0, 50)}...`;
-            div.addEventListener('click', () => window.location.href = `post_detail.html?postId=${p.id}`);
+            div.addEventListener('click', () => window.location.href = `post_detail.html?id=${p.id}`);
             postSection.appendChild(div);
         });
     }
