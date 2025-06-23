@@ -124,6 +124,12 @@ header {
     transition: color 0.3s;
 }
 
+.logo img {
+    height: 40px;
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
 
 /* 导航菜单容器 */
 
