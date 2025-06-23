@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const interestsList = document.getElementById('interestsList'); // 兴趣标签列表
             const userPostsFeed = document.getElementById('userPostsFeed'); // 用户动态列表
             const editProfileButton = document.getElementById('editProfileButton'); // 编辑资料按钮
+            const messageButton = document.getElementById('messageButton'); // 私信按钮
 
             /**
              * 从URL参数中获取用户ID，如果没有则默认为当前登录用户
@@ -28,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
              */
             const getUserIdFromUrl = () => {
                 const params = new URLSearchParams(window.location.search); // 解析URL参数
-                return params.get('id') || localStorage.getItem('loggedInUser'); // 获取用户ID或当前登录用户
+                return params.get('user') || params.get('id') || localStorage.getItem('loggedInUser'); // 优先user参数
             };
 
             // 渲染用户资料信息，每次都获取最新数据
@@ -44,6 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         followersCount.textContent = '0';
                         followButton.style.display = 'none';
                         editProfileButton.style.display = 'none';
+                        messageButton.style.display = 'none';
                         interestsList.innerHTML = '<p>无兴趣标签。</p>';
                         userPostsFeed.innerHTML = '<p style="text-align: center;">暂无动态或需要登录。</p>';
                         return;
@@ -64,12 +66,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (isOwnProfile) {
                         editProfileButton.style.display = 'block';
                         followButton.style.display = 'none';
+                        messageButton.style.display = 'none';
                     } else {
                         editProfileButton.style.display = 'none';
                         if (getLoggedInUser()) {
                             followButton.style.display = 'block';
+                            messageButton.style.display = 'block';
                         } else {
                             followButton.style.display = 'none';
+                            messageButton.style.display = 'none';
                         }
                     }
                     interestsList.innerHTML = '';
@@ -83,7 +88,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         interestsList.innerHTML = '<p>暂无兴趣标签。</p>';
                     }
                     // 渲染用户动态列表
-                    const userPosts = getPostsByAuthorId(currentUserId);
+                    const allVisiblePosts = getVisiblePostsForUser();
+                    const userPosts = allVisiblePosts.filter(post => post.authorId === currentUserId);
                     userPostsFeed.innerHTML = '';
                     if (userPosts.length > 0) {
                         userPosts.forEach(post => {
@@ -142,6 +148,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // 关注/取消关注功能
         if (currentUser && !isOwnProfile && getLoggedInUser()) {
             followButton.onclick = () => handleFollowToggle(currentUserId, isOwnProfile, renderProfile);
+            messageButton.onclick = () => {
+                window.location.href = `chat.html?with=${currentUserId}`;
+            };
         }
         // 编辑资料功能
         if (isOwnProfile) {

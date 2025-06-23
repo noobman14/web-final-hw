@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // 热门推荐逻辑不变
             const getHotPosts = () => {
-                const posts = getPosts();
+                const posts = getVisiblePostsForUser();
                 return posts
                     .sort((a, b) => b.likes - a.likes)
                     .slice(0, 3)
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
             hotPostsSection.appendChild(postElement);
         });
 
-        addPostEventListeners(hotPostsSection);
+        addPostEventListeners(hotPostsSection, hotPosts);
     };
 
     function highlightHashtags(text) {
@@ -96,16 +96,16 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         // 3. 数据源选择
-        let postsAll = getPosts();
+        const visiblePosts = getVisiblePostsForUser();
         let posts;
         if (currentFeedType === "all") {
-            posts = postsAll;
+            posts = visiblePosts;
         } else {
             const loggedInUser = getLoggedInUser();
             if (loggedInUser) {
                 const me = getUserByStudentId(loggedInUser);
                 const friends = me && me.friends ? me.friends : [];
-                posts = postsAll.filter(post => friends.includes(post.authorId));
+                posts = visiblePosts.filter(post => friends.includes(post.authorId));
             } else {
                 posts = [];
             }
@@ -158,11 +158,11 @@ document.addEventListener('DOMContentLoaded', () => {
             feedSection.appendChild(postElement);
         });
 
-        addPostEventListeners(feedSection);
+        addPostEventListeners(feedSection, posts);
     };
 
     // 其余事件监听等内容不变
-    const addPostEventListeners = (container) => {
+    const addPostEventListeners = (container, posts) => {
         // 点赞按钮
         container.querySelectorAll('.like-button').forEach(button => {
             button.addEventListener('click', (e) => {
@@ -217,7 +217,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // 初始化评论
-        const posts = getPosts();
         posts.forEach(post => renderComments(`comments-${post.id}`, post.comments));
 
     };

@@ -4,11 +4,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const button = document.getElementById('searchButton');
     button.addEventListener('click', () => performSearch(input.value));
     input.addEventListener('keypress', (e) => { if (e.key === 'Enter') performSearch(input.value); });
+    // 动态渲染历史记录
+    renderSearchHistory();
     // 建议点击操作
-    const suggestions = document.querySelector('.suggestions');
-    document.querySelectorAll('.history-tag').forEach(tag => {
-        tag.addEventListener('click', () => { input.value = tag.textContent; performSearch(tag.textContent); });
-    });
     document.querySelectorAll('.hot-list li').forEach(item => {
         item.addEventListener('click', () => {
             const term = item.querySelector('.term').textContent;
@@ -23,7 +21,46 @@ document.addEventListener('DOMContentLoaded', () => {
             performSearch(term);
         });
     });
+    // 清空历史
+    const clearBtn = document.querySelector('.clear-history');
+    if (clearBtn) {
+        clearBtn.addEventListener('click', () => {
+            localStorage.removeItem('searchHistory');
+            renderSearchHistory();
+        });
+    }
 });
+
+function saveSearchHistory(keyword) {
+    let history = JSON.parse(localStorage.getItem('searchHistory') || '[]');
+    keyword = keyword.trim();
+    if (!keyword) return;
+    history = history.filter(item => item !== keyword); // 去重
+    history.unshift(keyword); // 新的放前面
+    if (history.length > 10) history = history.slice(0, 10);
+    localStorage.setItem('searchHistory', JSON.stringify(history));
+}
+
+function renderSearchHistory() {
+    const history = JSON.parse(localStorage.getItem('searchHistory') || '[]');
+    const container = document.querySelector('.history-tags');
+    if (!container) return;
+    container.innerHTML = '';
+    if (history.length === 0) {
+        container.innerHTML = '<span style="color:#aaa;">暂无历史</span>';
+        return;
+    }
+    history.forEach(tag => {
+        const span = document.createElement('span');
+        span.className = 'history-tag';
+        span.textContent = tag;
+        span.onclick = () => {
+            document.getElementById('searchInput').value = tag;
+            performSearch(tag);
+        };
+        container.appendChild(span);
+    });
+}
 
 function performSearch(query) {
     // 搜索时隐藏建议区块
@@ -36,6 +73,8 @@ function performSearch(query) {
         container.innerHTML = '<p>请输入搜索关键字。</p>';
         return;
     }
+    saveSearchHistory(q);
+    renderSearchHistory();
     // 搜索用户
     const users = getUsers().filter(u => u.nickname.includes(q) || u.studentId.includes(q));
     const userSection = document.createElement('div');
@@ -55,7 +94,7 @@ function performSearch(query) {
     userSection.appendChild(userList);
     container.appendChild(userSection);
     // 搜索动态
-    const posts = getPosts().filter(p => p.content.includes(q));
+    const posts = getVisiblePostsForUser().filter(p => p.content.includes(q));
     const postSection = document.createElement('div');
     postSection.classList.add('search-results-section');
     postSection.innerHTML = '<h3><i class="fa fa-paper-plane"></i> 动态结果</h3>';
@@ -71,4 +110,14 @@ function performSearch(query) {
         });
     }
     container.appendChild(postSection);
-} 
+    // 添加返回按钮
+    const backBtn = document.createElement('button');
+    backBtn.textContent = '返回搜索';
+    backBtn.style = 'margin: 24px auto 0; display: block; padding: 10px 28px; border-radius: 6px; background: #007bff; color: #fff; border: none; font-size: 16px; cursor: pointer;';
+    backBtn.onclick = () => {
+        // 显示建议区块，清空结果
+        if (suggestions) suggestions.style.display = '';
+        container.innerHTML = '<p>请输入关键字并点击搜索。</p>';
+    };
+    container.appendChild(backBtn);
+}

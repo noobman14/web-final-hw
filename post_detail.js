@@ -44,13 +44,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const renderPostDetail = (postId) => {
         if (!checkLogin()) return;
 
-        const posts = getPosts();
-        const post = posts.find(p => p.id === postId);
+        const visiblePosts = getVisiblePostsForUser();
+        const post = visiblePosts.find(p => p.id === postId);
         currentPostId = postId;
         currentPost = post;
 
         if (!post) {
-            postDetailContent.innerHTML = '<p>动态未找到。</p>';
+            postDetailContent.innerHTML = '<p>动态未找到或您没有权限查看。</p>';
             commentsList.innerHTML = '';
             commentInputDetail.style.display = 'none';
             submitCommentDetail.style.display = 'none';
@@ -78,36 +78,59 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 更新评论区标题和点赞数
         const commentsSectionTitle = document.querySelector('.comments-section-detail h3');
+        const loggedInUser = localStorage.getItem('loggedInUser');
         if (commentsSectionTitle) {
-            commentsSectionTitle.innerHTML = `评论 <span class="post-likes" id="likeCount">👍 ${post.likes}</span> <button id="likeBtn" class="like-btn">点赞</button>`;
+            let buttonsHtml = `<span class="post-likes" id="likeCount">👍 ${post.likes}</span>`;
+            if (loggedInUser) {
+                buttonsHtml += ` <button id="likeBtn" class="like-btn">点赞</button>`;
+                buttonsHtml += ` <button id="shareBtn" class="like-btn">转发</button>`;
+                buttonsHtml += ` <button id="favoriteBtn" class="like-btn">收藏</button>`;
+            }
+            commentsSectionTitle.innerHTML = `评论 ${buttonsHtml}`;
         }
 
         renderComments(post.comments);
 
-        const loggedInUser = localStorage.getItem('loggedInUser');
-        if (post.authorId === loggedInUser) {
-            editPostButton.style.display = 'block';
+        if (loggedInUser) {
+            if (post.authorId === loggedInUser) {
+                editPostButton.style.display = 'block';
+            } else {
+                editPostButton.style.display = 'none';
+            }
+            commentInputDetail.style.display = 'block';
+            submitCommentDetail.style.display = 'block';
+
+            // 绑定点赞按钮事件
+            const likeBtn = document.getElementById('likeBtn');
+            if (likeBtn) {
+                likeBtn.onclick = () => {
+                    handleLike(postId, () => {
+                        // 重新渲染点赞数
+                        const posts = getPosts();
+                        const post = posts.find(p => p.id === postId);
+                        const likeCount = document.getElementById('likeCount');
+                        if (likeCount && post) {
+                            likeCount.innerHTML = `👍 ${post.likes}`;
+                        }
+                    });
+                };
+            }
+
+            // 绑定转发按钮事件
+            const shareBtn = document.getElementById('shareBtn');
+            if (shareBtn) {
+                shareBtn.addEventListener('click', () => alert('链接已复制到剪贴板！'));
+            }
+
+            // 绑定收藏按钮事件
+            const favoriteBtn = document.getElementById('favoriteBtn');
+            if (favoriteBtn) {
+                favoriteBtn.addEventListener('click', () => alert('收藏成功！'));
+            }
         } else {
             editPostButton.style.display = 'none';
-        }
-
-        commentInputDetail.style.display = loggedInUser ? 'block' : 'none';
-        submitCommentDetail.style.display = loggedInUser ? 'block' : 'none';
-
-        // 绑定点赞按钮事件
-        const likeBtn = document.getElementById('likeBtn');
-        if (likeBtn) {
-            likeBtn.onclick = () => {
-                handleLike(postId, () => {
-                    // 重新渲染点赞数
-                    const posts = getPosts();
-                    const post = posts.find(p => p.id === postId);
-                    const likeCount = document.getElementById('likeCount');
-                    if (likeCount && post) {
-                        likeCount.innerHTML = `👍 ${post.likes}`;
-                    }
-                });
-            };
+            commentInputDetail.style.display = 'none';
+            submitCommentDetail.style.display = 'none';
         }
     };
 

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>私信 - 校园生活交友平台</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .chat-container {
+            max-width: 800px;
+            margin: 20px auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            height: 80vh;
+        }
+        
+        .chat-header {
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+            background-color: #f7f7f7;
+        }
+        
+        .chat-messages {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: #fff;
+        }
+        
+        .chat-input-area {
+            display: flex;
+            padding: 15px;
+            border-top: 1px solid #ddd;
+        }
+        
+        .chat-input-area input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        .chat-input-area button {
+            padding: 10px 20px;
+            margin-left: 10px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo">校园生活交友平台</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">首页</a></li>
+                <li><a href="javascript:history.back()">返回</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="chat-container">
+        <div class="chat-header">
+            <h2 id="chatWithUser">正在私信...</h2>
+        </div>
+        <div class="chat-messages">
+            <!-- 消息将显示在这里 -->
+            <p style="text-align: center; color: #aaa;">开始你们的对话吧！</p>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="messageInput" placeholder="输入消息...">
+            <button id="sendMessageBtn">发送</button>
+        </div>
+    </main>
+
+    <script src="data.js"></script>
+    <script src="chat.js"></script>
+</body>
+
+</html>

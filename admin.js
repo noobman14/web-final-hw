@@ -67,9 +67,12 @@ function renderUserTable(users) {
                 ${user.isActive !== false ? '✅ 正常' : '❌ 封禁'}
             </td>
             <td class="action-btns">
-                <button class="btn ${user.isActive !== false ? 'btn-danger' : 'btn-success'} ban-btn">
-                    ${user.isActive !== false ? '封禁' : '解封'}
-                </button>
+                ${user.role === 'admin'
+                    ? '<span style="color:#888; font-weight:bold;">管理员！</span>'
+                    : `<button class="btn ${user.isActive !== false ? 'btn-danger' : 'btn-success'} ban-btn">
+                        ${user.isActive !== false ? '封禁' : '解封'}
+                       </button>`
+                }
                 <button class="btn btn-primary reset-btn">重置密码</button>
                 <button class="btn view-btn">查看详情</button>
             </td>
@@ -123,6 +126,11 @@ function handleTableActions(e) {
     const user = getUsers().find(u => u.studentId === state.selectedUserId);
 
     if (e.target.classList.contains('ban-btn')) {
+        // 增加管理员检查
+        if (user.role === 'admin') {
+            alert('不能对管理员执行此操作。');
+            return;
+        }
         showModal(
             user.isActive !== false ? '封禁用户' : '解封用户',
             `确定要${user.isActive !== false ? '封禁' : '解封'}用户 ${user.nickname} 吗？`,

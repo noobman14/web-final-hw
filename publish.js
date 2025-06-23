@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 如果校验通过
         if (isValid) {
             // 获取可见范围
-            const visible = visibilitySelect.value;
+            const visibility = visibilitySelect.value;
             // 处理图片字段
             let image = '';
             if (imageUpload.files.length > 0) {

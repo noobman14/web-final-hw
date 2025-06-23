@@ -68,31 +68,44 @@
     margin-top: 10px;
 }
 
-#followButton,
+.profile-actions button {
+    padding: 8px 16px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    color: #333;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.profile-actions button:hover {
+    background-color: #f0f0f0;
+}
+
 #editProfileButton {
     background-color: #007bff;
     color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 25px;
-    cursor: pointer;
-    font-size: 15px;
-    font-weight: 600;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    border-color: #007bff;
 }
 
-#followButton.following {
-    background-color: #6c757d;
-}
-
-#followButton:hover,
 #editProfileButton:hover {
     background-color: #0056b3;
-    transform: translateY(-2px);
 }
 
-#followButton.following:hover {
-    background-color: #5a6268;
+.profile-action-btn {
+    background-color: #28a745;
+    color: white;
+    border-color: #28a745;
+}
+
+.profile-action-btn.following {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+#followButton {
+    /* Styles are now in .profile-action-btn */
 }
 
 .profile-interests,
@@ -253,7 +266,9 @@
     }
 }
 
+
 /* 表情选择框样式 */
+
 #emojiPicker {
     position: absolute;
     background-color: white;
@@ -264,7 +279,9 @@
     z-index: 10;
 }
 
+
 /* 自定义按钮样式 */
+
 .action-button {
     background-color: #007bff;
     color: white;

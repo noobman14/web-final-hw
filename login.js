@@ -11,20 +11,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.getElementById('loginForm'); // 登录表单
     const studentIdInput = document.getElementById('studentId'); // 学号输入框
     const passwordInput = document.getElementById('password'); // 密码输入框
-    const togglePasswordButton = document.getElementById('togglePassword'); // 显示密码复选框
+    const togglePasswordButton = document.getElementById('togglePassword'); // 显示密码按钮
     const rememberMeCheckbox = document.getElementById('rememberMe'); // 记住我复选框
     const forgotPasswordLink = document.getElementById('forgotPassword'); // 忘记密码链接
     const icon = document.querySelector('i');
     togglePasswordButton.type = 'button';
-    // 眼睛图标"显示密码"功能
-    togglePasswordButton.addEventListener('click', (e) => {
-        e.preventDefault();
+
+    // 控制密码可见性图标的显示和隐藏
+    passwordInput.addEventListener('focus', () => {
+        togglePasswordButton.style.visibility = 'visible';
+    });
+
+    passwordInput.addEventListener('blur', () => {
+        togglePasswordButton.style.visibility = 'hidden';
+    });
+
+    // 切换密码可见性
+    togglePasswordButton.addEventListener('mousedown', (e) => {
+        e.preventDefault(); // 防止输入框失焦
+        const icon = togglePasswordButton.querySelector('i');
         if (passwordInput.type === 'password') {
-            passwordInput.type = 'text'; // 显示密码
-            togglePasswordButton.querySelector('i').classList.replace('fa-eye-slash', 'fa-eye');
+            passwordInput.type = 'text';
+            icon.classList.replace('fa-eye-slash', 'fa-eye');
         } else {
-            passwordInput.type = 'password'; // 隐藏密码
-            togglePasswordButton.querySelector('i').classList.replace('fa-eye', 'fa-eye-slash');
+            passwordInput.type = 'password';
+            icon.classList.replace('fa-eye', 'fa-eye-slash');
         }
     });
 
@@ -32,6 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 如果存在保存的学号，则加载到输入框中
     if (localStorage.getItem('rememberedStudentId')) {
         studentIdInput.value = localStorage.getItem('rememberedStudentId');
+        passwordInput.value = localStorage.getItem('rememberedPassword') || ''; // 加载密码
         rememberMeCheckbox.checked = true; // 自动勾选记住我
     }
     document.addEventListener('keydown', (e) => {
@@ -82,11 +94,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     return;
                 }
 
-                // 如果勾选了"记住我"，保存学号
+                // 如果勾选了"记住我"，保存学号和密码
                 if (rememberMeCheckbox.checked) {
                     localStorage.setItem('rememberedStudentId', studentIdInput.value);
+                    localStorage.setItem('rememberedPassword', passwordInput.value); // 保存密码
                 } else {
                     localStorage.removeItem('rememberedStudentId');
+                    localStorage.removeItem('rememberedPassword'); // 移除密码
                 }
 
                 // 设置登录状态

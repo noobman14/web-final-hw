@@ -28,6 +28,29 @@
     margin-bottom: 20px;
 }
 
+
+/* Wrapper for password fields to contain the toggle button */
+
+.input-wrapper {
+    position: relative;
+}
+
+
+/* Style for the password toggle button (eye icon) */
+
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    visibility: hidden;
+    /* Hide the icon by default */
+    color: #888;
+}
+
 .form-group label {
     /* 标签样式，增强可读性 */
     display: block;
@@ -41,13 +64,16 @@
 .form-group input[type="url"],
 .form-group textarea {
     /* 输入框和文本域样式，圆角、内边距、过渡动画 */
-    width: calc(100% - 24px);
-    /* Adjust for padding */
-    padding: 12px;
+    width: 100%;
+    /* Use 100% width and box-sizing */
+    padding: 12px 40px 12px 15px;
+    /* Add right padding for the icon */
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     font-size: 16px;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box;
+    /* Ensure padding is included in the width */
 }
 
 .form-group textarea {
@@ -60,8 +86,8 @@
 .form-group textarea::placeholder {
     color: #999;
     font-size: 14px;
-    font-family: inherit; 
-    opacity: 1; 
+    font-family: inherit;
+    opacity: 1;
 }
 
 .form-group input:focus,

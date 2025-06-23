@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isValid && loggedInUserId) {
             // 每次保存前都获取最新对象
             let currentUser = getUserByStudentId(loggedInUserId);
-            let avatar = 'pic/avatar/defaultava.png';
+            let avatar = currentUser.avatar;
             if (avatarFileInput && avatarFileInput.files.length > 0) {
                 avatar = 'pic/avatar/' + avatarFileInput.files[0].name;
             } else if (avatarUrlInput && avatarUrlInput.value.trim()) {

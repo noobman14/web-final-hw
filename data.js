@@ -345,12 +345,36 @@ function getVisiblePostsForUser() {
     const currentUserId = getLoggedInUser();
 
     return posts.filter(post => {
-        if (post.visibility === 'public') return true;
-        if (!currentUserId) return false;
+        // 为了兼容旧数据，如果 visibility 未定义，则默认为 'public'
+        const visibility = post.visibility || 'public';
 
-        if (post.visibility === 'friends') {
+        if (visibility === 'public') {
+            return true;
+        }
+
+        // 如果动态是 'friends'，则必须是登录用户才能查看
+        if (!currentUserId) {
+            return false;
+        }
+
+        // 用户永远可以看到自己的动态
+        if (post.authorId === currentUserId) {
+            return true;
+        }
+
+        // 检查好友关系：粉丝或关注的人
+        if (visibility === 'friends') {
             const author = getUserByStudentId(post.authorId);
-            return author && author.friends && author.friends.includes(currentUserId);
+            if (!author) {
+                return false; // 如果找不到作者信息，则隐藏
+            }
+
+            // 检查当前用户是否是作者的粉丝
+            const isFollower = author.followers && author.followers.includes(currentUserId);
+            // 检查作者是否关注了当前用户
+            const isFollowing = author.friends && author.friends.includes(currentUserId);
+
+            return isFollower || isFollowing;
         }
 
         return false;

@@ -13,6 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const nicknameInput = document.getElementById('nickname');
     const avatarUrlInput = document.getElementById('avatarUrl');
     const avatarFileInput = document.getElementById('avatarFile');
+    const togglePassword = document.getElementById('togglePassword');
+    const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
 
     // 实时学号验证
     studentIdInput.addEventListener('input', (e) => {
@@ -75,6 +77,44 @@ document.addEventListener('DOMContentLoaded', () => {
             errorElement.textContent = '';
         }
     });
+
+    /**
+     * 设置密码可见性切换功能
+     * @param {HTMLInputElement} inputEl - 密码输入框
+     * @param {HTMLButtonElement} buttonEl - 切换按钮
+     */
+    const setupPasswordToggle = (inputEl, buttonEl) => {
+        // 点击输入框时显示图标
+        inputEl.addEventListener('focus', () => {
+            buttonEl.style.visibility = 'visible';
+        });
+
+        // 离开输入框时隐藏图标
+        inputEl.addEventListener('blur', () => {
+            buttonEl.style.visibility = 'hidden';
+        });
+
+        // 点击图标切换密码可见性
+        buttonEl.addEventListener('mousedown', (e) => {
+            e.preventDefault(); // 防止输入框失焦
+            const icon = buttonEl.querySelector('i');
+            if (inputEl.type === 'password') {
+                inputEl.type = 'text';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            } else {
+                inputEl.type = 'password';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            }
+        });
+    };
+
+    // 为两个密码框设置切换功能
+    if (passwordInput && togglePassword) {
+        setupPasswordToggle(passwordInput, togglePassword);
+    }
+    if (confirmPasswordInput && toggleConfirmPassword) {
+        setupPasswordToggle(confirmPasswordInput, toggleConfirmPassword);
+    }
 
     // 表单提交验证
     registerForm.addEventListener('submit', (e) => {

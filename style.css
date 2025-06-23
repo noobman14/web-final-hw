@@ -1,4 +1,5 @@
 /* 引入 FontAwesome 图标库 */
+
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css");
 
 /**
@@ -17,19 +18,23 @@
  * - 辅助色：#777 (中灰) - 次要信息
  */
 
+
 /* 主题变量 */
+
 :root {
     --bg-color: #eef2f5;
     --main-bg: #ffffff;
     --text-color: #333;
     --primary-color: #007aff;
 }
+
 [data-theme="dark"] {
     --bg-color: #1e1e1e;
     --main-bg: #2e2e2e;
     --text-color: #ddd;
     --primary-color: #0a84ff;
 }
+
 
 /* ==================== 基础样式 ==================== */
 
@@ -135,10 +140,13 @@ nav a:hover {
 
 /* ==================== 主要内容区域 ==================== */
 
+
 /* 添加的視圖轉換按鈕的樣式*/
+
 .feed-switch {
     margin-bottom: 15px;
 }
+
 .feed-switch button {
     border: none;
     background: #eee;
@@ -148,6 +156,7 @@ nav a:hover {
     border-radius: 4px;
     cursor: pointer;
 }
+
 .feed-switch button.active,
 .feed-switch button:hover {
     background: #007bff;
@@ -366,9 +375,9 @@ main {
 /* 用户头像样式 */
 
 .post-avatar {
-    width: 48px;
+    width: 48px !important;
     /* 宽度 */
-    height: 48px;
+    height: 48px !important;
     /* 高度 */
     border-radius: 50%;
     /* 圆形 */
@@ -883,9 +892,12 @@ footer {
     }
 }
 
+
 /* 在原有样式基础上添加 */
 
+
 /* 编辑按钮样式 */
+
 .edit-button {
     cursor: pointer;
     display: flex;
@@ -894,24 +906,30 @@ footer {
     padding: 8px 12px;
     border-radius: 20px;
     transition: background-color 0.3s ease, color 0.3s ease;
-    color: #27ae60; /* 绿色表示编辑 */
+    color: #27ae60;
+    /* 绿色表示编辑 */
 }
+
 
 /* 编辑按钮悬停效果 */
+
 .edit-button:hover {
-    background-color: #eafaf1; /* 浅绿色背景 */
-    color: #219653; /* 深绿色文字 */
+    background-color: #eafaf1;
+    /* 浅绿色背景 */
+    color: #219653;
+    /* 深绿色文字 */
 }
 
+
 /* 移动端响应式调整 */
+
 @media (max-width: 768px) {
     .post-actions {
         /* 确保在移动端按钮有足够空间 */
         flex-wrap: wrap;
         gap: 8px;
     }
-    
-    .edit-button, 
+    .edit-button,
     .delete-button {
         flex: 1;
         text-align: center;
@@ -930,8 +948,13 @@ footer {
     text-decoration: underline;
 }
 
+
 /* ==================== 通用控件样式 (macOS 风格) ==================== */
-button, input[type="button"], input[type="submit"], .toggle-password {
+
+button,
+input[type="button"],
+input[type="submit"],
+.toggle-password {
     border: none;
     border-radius: 8px;
     background-color: #007aff;
@@ -942,12 +965,17 @@ button, input[type="button"], input[type="submit"], .toggle-password {
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-button:hover, input[type="button"]:hover, input[type="submit"]:hover, .toggle-password:hover {
+button:hover,
+input[type="button"]:hover,
+input[type="submit"]:hover,
+.toggle-password:hover {
     background-color: #005fcc;
     box-shadow: 0 2px 8px rgba(0, 122, 255, 0.3);
 }
 
-input, textarea, select {
+input,
+textarea,
+select {
     border: 1px solid #ccc;
     border-radius: 6px;
     padding: 8px;
@@ -955,7 +983,9 @@ input, textarea, select {
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-input:focus, textarea:focus, select:focus {
+input:focus,
+textarea:focus,
+select:focus {
     border-color: #007aff;
     outline: none;
     box-shadow: 0 0 6px rgba(0, 122, 255, 0.4);

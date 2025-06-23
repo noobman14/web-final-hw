@@ -28,18 +28,20 @@
     margin-bottom: 20px;
 }
 
-#password-wrapper {
-  position: relative;
+.input-wrapper {
+    position: relative;
 }
 
 .toggle-password {
-  position: absolute;
-  right: 10px; 
-  top: 50%;
-  transform: translateY(50%);
-  background: none;
-  border: none;
-  cursor: pointer;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    visibility: hidden;
+    color: #888;
 }
 
 .form-group label {
@@ -54,7 +56,8 @@
 .form-group input[type="password"] {
     /* 输入框样式，圆角、内边距、过渡动画 */
     width: 100%;
-    padding: 12px 40px 12px 15px;;
+    padding: 12px 40px 12px 15px;
+    ;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     font-size: 16px;
